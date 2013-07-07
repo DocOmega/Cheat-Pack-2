@@ -12,17 +12,17 @@ public abstract class Mod {
 		name = mod.getName( );
 	}
 	
-	public final void turnOn( ) {
+	public void turnOn( ) {
 		active = true;
 		onEnable( );
 	}
 	
-	public final void turnOff( ) {
+	public void turnOff( ) {
 		active = false;
 		onDisable( );
 	}
 	
-	public final void toggle( ) {
+	public void toggle( ) {
 		active = !active;
 		if ( active ) {
 			onEnable( );
@@ -31,11 +31,11 @@ public abstract class Mod {
 		}
 	}
 	
-	public final boolean isActive( ) {
+	public boolean isActive( ) {
 		return active;
 	}
 	
-	public final String getActive( ) {
+	public String getActive( ) {
 		if ( active ) {
 			return ChatColour.WHITE + name + ChatColour.GREEN + " Active";
 		} else {

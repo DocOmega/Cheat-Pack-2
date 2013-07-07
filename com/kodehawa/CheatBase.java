@@ -281,9 +281,9 @@ public class CheatBase {
             minecraft.displayGuiScreen(modgui);
         
         if (ck.checkKey(Keyboard.KEY_X)) {
-        	xray.onEnable();
+        	xray.toggle();
         }
-
+        
 
             for (Map.Entry<Mod, Integer> e : keyShit.entrySet()) {
                 if (ck.checkKey(e.getKey().keyBind)) {

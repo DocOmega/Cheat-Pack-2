@@ -6,10 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.kodehawa.CheatBase;
+import com.kodehawa.core.CheckKey;
+import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleFullbright;
+import com.kodehawa.mods.ModuleXray;
 
 public class GuiIngame extends Gui
 {
@@ -40,6 +45,12 @@ public class GuiIngame extends Gui
     /** The ItemStack that is currently being highlighted */
     private ItemStack highlightingItemStack;
     protected static CheatBase cheatbase;
+    private CheckKey checkKey;
+    private ModuleXray xray;
+    private ModuleFly fly;
+    private ModuleFullbright fullbright;
+	private boolean keyStates[] = new boolean[ 256 ];
+
 
     public GuiIngame(Minecraft par1Minecraft)
     {
@@ -316,6 +327,23 @@ public class GuiIngame extends Gui
             GL11.glPopMatrix();
             this.mc.mcProfiler.endSection();
         }
+        
+       /** if(checkKey(Keyboard.KEY_X))
+    	{
+    		xray.onEnable();
+    	}
+    	if(checkKey(Keyboard.KEY_F))
+    	{
+    		fly.toggle();
+    	}
+    	if(checkKey(Keyboard.KEY_Y))
+    	{
+    		fullbright.toggle();
+    	}
+    	
+    	
+        */
+        
 
         if (this.recordPlayingUpFor > 0)
         {
@@ -386,6 +414,8 @@ public class GuiIngame extends Gui
             {
                 var45 = 150;
             }
+            
+            
 
             int var19 = (var6 - var17 * var45) / 2;
             byte var47 = 10;
@@ -505,6 +535,10 @@ public class GuiIngame extends Gui
                     drawRect(var24 - 2, var19 - par4FontRenderer.FONT_HEIGHT - 1, var20, var19 - 1, 1610612736);
                     drawRect(var24 - 2, var19 - 1, var20, var19, 1342177280);
                     par4FontRenderer.drawString(var21, var24 + var7 / 2 - par4FontRenderer.getStringWidth(var21) / 2, var19 - par4FontRenderer.FONT_HEIGHT, 553648127);
+                
+                	
+                
+                
                 }
             }
         }
@@ -937,6 +971,7 @@ public class GuiIngame extends Gui
             itemRenderer.func_110794_c(this.mc.fontRenderer, this.mc.func_110434_K(), var5, par2, par3);
         }
     }
+ 
 
     /**
      * The update tick for the ingame UI

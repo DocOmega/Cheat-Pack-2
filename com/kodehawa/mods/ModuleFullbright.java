@@ -34,8 +34,9 @@ public class ModuleFullbright extends Mod implements Tickable {
 		super( Mods.Fullbright );
 		cb = rc;
 		minecraft = mc;
-		oldGamma = minecraft.gameSettings.gammaSetting;
 	}
+	
+	
 	
 	@Override
 	public void onEnable( ) {
@@ -53,11 +54,10 @@ public class ModuleFullbright extends Mod implements Tickable {
 	
 	@Override
 	public void tick( ) {
-		minecraft.gameSettings.gammaSetting = 100000000.0F;
+		minecraft.gameSettings.gammaSetting++;
 	}
 	
 	private final CheatBase cb;
 	private final Minecraft minecraft;
-	public float oldGamma;
-	
+
 }

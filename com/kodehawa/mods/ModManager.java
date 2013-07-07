@@ -43,6 +43,7 @@ public class ModManager {
         addWMod(new ModuleWaterwalk(c, c.minecraft));
         addWMod(new ModuleXray(c, c.minecraft));
         addWMod(new ModuleAutoRespawn(c, c.minecraft));
+        addWMod(new ModuleTestChestFinder(c, c.minecraft));
         //addWMod(new ModuleDayTime(c, c.minecraft));
 
 

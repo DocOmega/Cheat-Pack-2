@@ -30,8 +30,8 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleXray extends Mod implements Tickable {
 	
-	private static CheatBase cheatbase;
-	private static Minecraft mc;
+	public CheatBase cheatbase;
+	private Minecraft mc;
 	
 	public ModuleXray( CheatBase cb, Minecraft m ) {
 		super( Mods.Xray );

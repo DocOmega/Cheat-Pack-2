@@ -363,7 +363,9 @@ public class Block
      */
     public boolean renderAsNormalBlock()
     {
-        return true;
+     
+    	return true;	
+      
     }
 
     public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)

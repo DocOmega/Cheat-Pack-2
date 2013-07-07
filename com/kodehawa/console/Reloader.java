@@ -9,10 +9,10 @@ public class Reloader implements BaseCommand {
 	public void onRun( String[ ] cmd ) {
 		// TODO Auto-generated method stub
 		try {
-			CGuiIngame.cb.instance.minecraft.thePlayer.addChatMessage( ChatColour.RED + "Reloading. Please hold still." );
-			CGuiIngame.cb.reload( );
-			CGuiIngame.cb.instance.minecraft.renderGlobal.loadRenderers( );
-			CGuiIngame.cb.instance.minecraft.thePlayer.addChatMessage( ChatColour.RED + "Reload complete!" );
+			CGuiIngame.cheatbase.instance.minecraft.thePlayer.addChatMessage( ChatColour.RED + "Reloading. Please hold still." );
+			CGuiIngame.cheatbase.reload( );
+			CGuiIngame.cheatbase.instance.minecraft.renderGlobal.loadRenderers( );
+			CGuiIngame.cheatbase.instance.minecraft.thePlayer.addChatMessage( ChatColour.RED + "Reload complete!" );
 		} catch ( Exception e ) {
 			showHelp( );
 		}

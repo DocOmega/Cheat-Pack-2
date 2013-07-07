@@ -29,7 +29,7 @@ import net.minecraft.src.EntityPlayer;
 import com.kodehawa.CheatBase;
 
 public class Vars {
-	public static boolean tracer, pesp, cesp, xray, doublespeed, rearv;
+	public static boolean tracer, pesp, cesp, xray, doublespeed, rearv, ChestESP = true;
 	public static double speedbonus = 2;
 	
 	/**
