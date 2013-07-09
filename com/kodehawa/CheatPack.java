@@ -1,4 +1,3 @@
-
 package com.kodehawa;
 
 import java.io.BufferedReader;
@@ -49,19 +48,18 @@ public final class CheatPack
     public final File settings = new File(field_CE_oi, "/CheatPackSettings.dat");
     public final Properties transTable = new Properties();
     public final Properties cfgTable = new Properties();
-    
 
     public CheatPack instance;
     public Minecraft mc;
-    
-    public static void settings(File par6File){
-    	
+
+    public static void settings(File par6File)
+    {
     }
-    
+
     /**
      * Really this code does nothing important :)
      */
-    
+
     protected static void checkEnvironment()
     {
         hasModLoader = coreBase.classExists("ModLoader");
@@ -69,9 +67,8 @@ public final class CheatPack
         if (hasModLoader)
         {
             System.out.println("Cheating Essentials: ModLoader Initialization Complete. All mods OK.");
-        }}
-    
-      
+        }
+    }
 
     public static void loadDimensions()
     {
@@ -261,7 +258,6 @@ public final class CheatPack
     public static CBOriginal getBase(Minecraft minecraft)
     {
         return minecraft.theWorld.isRemote ? smpBase : sspBase;
-        
     }
 
     public static String translate(String s)
@@ -271,37 +267,28 @@ public final class CheatPack
 
     public static void loopCheats(Minecraft minecraft)
     {
-       getBase(minecraft).setInvulnerable(minecraft.thePlayer, invulnerable);
-       getBase(minecraft).setFlying(minecraft.thePlayer, flying);
-
+        getBase(minecraft).setInvulnerable(minecraft.thePlayer, invulnerable);
+        getBase(minecraft).setFlying(minecraft.thePlayer, flying);
     }
-    
+
     public boolean showModGui(Minecraft minecraft, int i, GuiScreen guiscreen)
     {
-       if (i == minecraft.gameSettings.keyBindInventory.keyCode)
-       {
-    	   
-       minecraft.displayGuiScreen(guiscreen);
-       return true;
-       
-       }
-    
-    if (i == escapeKey)
-       {
-    	
-        minecraft.displayGuiScreen(null);
-        return true;
-        
-       }
-    else
-       {
-    	
-        return false;
-        
-       }
-    }
+        if (i == minecraft.gameSettings.keyBindInventory.keyCode)
+        {
+            minecraft.displayGuiScreen(guiscreen);
+            return true;
+        }
 
-    
+        if (i == escapeKey)
+        {
+            minecraft.displayGuiScreen(null);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public static boolean escapeGui(Minecraft minecraft, int i, GuiScreen guiscreen)
     {
@@ -403,7 +390,7 @@ public final class CheatPack
         }
     }
 
-    public Minecraft getMinecraft( )
+    public Minecraft getMinecraft()
     {
         Minecraft minecraft = null;
 
@@ -443,8 +430,7 @@ public final class CheatPack
 
         return minecraft;
     }
-      
-    
+
     public void throwException(String s, Throwable throwable)
     {
         //System.out.println((new StringBuilder()).append("Cheat Pack 2 - ").append(s).append(" -//- ").append(throwable.toString()).toString());
@@ -460,7 +446,6 @@ public final class CheatPack
             return;
         }
     }
-    
 
     public World getWorld()
     {
@@ -472,9 +457,7 @@ public final class CheatPack
         return getMinecraft().thePlayer;
     }
 
-    
- 
-   public static void init()
+    public static void init()
     {
         coreBase = new CheatPack();
         System.out.println("Cheating Essentials: Corebase Started");
@@ -482,7 +465,6 @@ public final class CheatPack
         checkEnvironment();
         //loadDimensions();
         loadSettings();
-       
 
         try
         {
@@ -498,6 +480,4 @@ public final class CheatPack
 
         loadConfig();
     }
-    
- 
 }

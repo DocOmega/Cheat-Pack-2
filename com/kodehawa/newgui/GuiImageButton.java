@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 
-
 package com.kodehawa.newgui;
 
 import net.minecraft.src.GuiButton;
@@ -31,8 +30,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiImageButton extends GuiButton
 {
-	
-	protected Minecraft mc;
+    protected Minecraft mc;
     public static String texture;
     public int imgxpos;
     public int imgypos;
@@ -80,7 +78,7 @@ public class GuiImageButton extends GuiButton
         }
         else
         {
-        	mc.func_110434_K().func_110577_a(field_CP2_oi);
+            mc.func_110434_K().func_110577_a(field_CP2_oi);
             //this.mc.renderEngine.bindTexture(texture);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             boolean flag = enabled && drawButton && i >= xPosition && j >= yPosition && i < xPosition && j < yPosition;

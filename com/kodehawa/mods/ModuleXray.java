@@ -28,41 +28,43 @@ import com.kodehawa.CheatBase;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.Tickable;
 
-public class ModuleXray extends Mod implements Tickable {
-	
-	public CheatBase cheatbase;
-	private Minecraft mc;
-	
-	public ModuleXray( CheatBase cb, Minecraft m ) {
-		super( Mods.Xray );
-		cheatbase = cb;
-		mc = m;
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	public void tick( ) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void onEnable( ) {
-		cheatbase.addToTick( this );
-		Vars.xray = true;
-		mc.gameSettings.gammaSetting = 99999999.0F;
-		mc.renderGlobal.loadRenderers( );
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-		cheatbase.getUtils( ).addChatMessage("Good luck finding Diamonds! Disable Smooth Lighting.");
-	}
-	
-	@Override
-	public void onDisable( ) {
-		cheatbase.removeFromTick( this );
-		Vars.xray = false;
-		mc.gameSettings.gammaSetting = 0.5F;
-		mc.renderGlobal.loadRenderers( );
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-	}
-	
+public class ModuleXray extends Mod implements Tickable
+{
+    public CheatBase cheatbase;
+    private Minecraft mc;
+
+    public ModuleXray(CheatBase cb, Minecraft m)
+    {
+        super(Mods.Xray);
+        cheatbase = cb;
+        mc = m;
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void tick()
+    {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onEnable()
+    {
+        cheatbase.addToTick(this);
+        Vars.xray = true;
+        mc.gameSettings.gammaSetting = 99999999.0F;
+        mc.renderGlobal.loadRenderers();
+        cheatbase.getUtils().addChatMessage(getActive());
+        cheatbase.getUtils().addChatMessage("Good luck finding Diamonds! Disable Smooth Lighting.");
+    }
+
+    @Override
+    public void onDisable()
+    {
+        cheatbase.removeFromTick(this);
+        Vars.xray = false;
+        mc.gameSettings.gammaSetting = 0.5F;
+        mc.renderGlobal.loadRenderers();
+        cheatbase.getUtils().addChatMessage(getActive());
+    }
 }

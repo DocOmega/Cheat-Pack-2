@@ -1,5 +1,3 @@
-
-
 package com.kodehawa.newgui;
 
 import net.minecraft.src.Enchantment;
@@ -66,11 +64,9 @@ public class GuiEnchanting extends GuiContainer
      */
     public void drawGuiContainerBackgroundLayer(float f, int i, int j)
     {
-        
-    	mc.func_110434_K().func_110577_a(field_CP2_oi);
+        mc.func_110434_K().func_110577_a(field_CP2_oi);
         //mc.renderEngine.bindTexture("/CP2/resources/guienchanting.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
         drawTexturedModalRect((width - xSize) / 2, (height - ySize) / 2, 0, 0, xSize, ySize);
         level.drawScreen(i, j, f);
     }

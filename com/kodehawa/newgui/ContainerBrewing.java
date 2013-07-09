@@ -15,18 +15,18 @@ public class ContainerBrewing extends Container
         {
             for (int l = 0; l < 9; l++)
             {
-            	addSlotToContainer(new Slot(iinventory, l + i * 9 + 9, 48 + l * 18, 10 + i * 18));
+                addSlotToContainer(new Slot(iinventory, l + i * 9 + 9, 48 + l * 18, 10 + i * 18));
             }
         }
 
         for (int j = 0; j < 9; j++)
         {
-        	addSlotToContainer(new Slot(iinventory, j, 48 + j * 18, 68));
+            addSlotToContainer(new Slot(iinventory, j, 48 + j * 18, 68));
         }
 
         for (int k = 0; k < 4; k++)
         {
-        	addSlotToContainer(new Slot(invBrew, k, 16, 12 + 18 * k));
+            addSlotToContainer(new Slot(invBrew, k, 16, 12 + 18 * k));
         }
     }
 

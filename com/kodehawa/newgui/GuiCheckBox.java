@@ -22,7 +22,6 @@
 
 package com.kodehawa.newgui;
 
-
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.Minecraft;
 

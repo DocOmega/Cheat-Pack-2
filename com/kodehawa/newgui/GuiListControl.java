@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 
-
 package com.kodehawa.newgui;
 
 import java.util.ArrayList;

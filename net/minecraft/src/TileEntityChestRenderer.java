@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 import java.util.Calendar;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -41,14 +40,14 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
      */
     public void renderTileEntityChestAt(TileEntityChest par1TileEntityChest, double par2, double par4, double par6, float par8)
     {
-    	
+    
     	if(!Vars.ChestESP){
-    	ChestFinderContainer.chestFinder(par2, par4, par6);
+    		ChestFinderContainer.chestFinder(par2, par4, par6);
     	}
-    	
+    
         int var9;
 
-        if (!par1TileEntityChest.func_70309_m())
+        if (!par1TileEntityChest.hasWorldObj())
         {
             var9 = 0;
         }

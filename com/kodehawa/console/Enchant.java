@@ -34,87 +34,104 @@ import net.minecraft.src.Packet;
 import com.kodehawa.CheatBase;
 import com.kodehawa.util.ChatColour;
 
-public class Enchant implements BaseCommand {
-	String endres = "";
-	private Minecraft mc;
-	
-	@Override
-	public void onRun( String[ ] cmd ) {
-		// TODO Auto-generated method stub
-		endres = output( cmd );
-	}
-	
-	@Override
-	public String getName( ) {
-		// TODO Auto-generated method stub
-		return "enchant";
-	}
-	
-	@Override
-	public String showHelp( ) {
-		// TODO Auto-generated method stub
-		return new String( ChatColour.RED + "Usage: " + ChatColour.AQUA + this.getName( ) + " <enchantment> <level>" );
-	}
+public class Enchant implements BaseCommand
+{
+    String endres = "";
+    private Minecraft mc;
 
-	private void enchantStack( ItemStack i, String ench, int level ) {
-        for( Enchantment e : Enchantment.enchantmentsList ) {
-            if( e == null ) {
+    @Override
+    public void onRun(String[ ] cmd)
+    {
+        // TODO Auto-generated method stub
+        endres = output(cmd);
+    }
+
+    @Override
+    public String getName()
+    {
+        // TODO Auto-generated method stub
+        return "enchant";
+    }
+
+    @Override
+    public String showHelp()
+    {
+        // TODO Auto-generated method stub
+        return new String(ChatColour.RED + "Usage: " + ChatColour.AQUA + this.getName() + " <enchantment> <level>");
+    }
+
+    private void enchantStack(ItemStack i, String ench, int level)
+    {
+        for (Enchantment e : Enchantment.enchantmentsList)
+        {
+            if (e == null)
+            {
                 continue;
             }
-            
-            String en = e.getName( );
-            
-            if( en != null ) {
-                String ename = mc.func_135016_M().func_135041_c( ).func_135034_a( );
-                if( ename.replaceAll( " ", "" ).equalsIgnoreCase( ench ) ) {
-                    i.addEnchantment( e, level );
+
+            String en = e.getName();
+
+            if (en != null)
+            {
+                String ename = mc.func_135016_M().func_135041_c().func_135034_a();
+
+                if (ename.replaceAll(" ", "").equalsIgnoreCase(ench))
+                {
+                    i.addEnchantment(e, level);
                 }
             }
         }
-        
-        this.writeStack( i );
+
+        this.writeStack(i);
     }
-	
-	private void writeStack( ItemStack i ) {
-		ByteArrayOutputStream bytestream = new ByteArrayOutputStream( );
-		DataOutputStream datastream = new DataOutputStream( bytestream );
-		
-		try {
-			Packet.writeItemStack( i, datastream );
-		} catch ( Exception e ) {
-			Minecraft.getMinecraft( ).thePlayer.addChatMessage( e.toString( ) );
-		}
-	}
-	
-	@Override
-	public String output( ) {
-		// TODO Auto-generated method stub
-		return endres;
-	}
-	
-	String output( String[ ] cmd ) {
-		/*try {
-			EntityClientPlayerMP thePlayer = Minecraft.getMinecraft( ).thePlayer;
-			{
-				ItemStack stack = thePlayer.inventory.getCurrentItem( );
-				enchantStack( stack, cmd [ 1 ], Integer.parseInt( cmd [ 2 ] ) );
-				return "Item enchanted successfully!";
-			}
-		}
-	      catch ( Exception e ) {
-			return showHelp( );
-		}*/
-		try {
-            EntityClientPlayerMP thePlayer = CheatBase.getInstance( ).getWrapper.getMinecraft( ).thePlayer;
-                ItemStack stack = thePlayer.inventory.getCurrentItem( );
-                enchantStack( stack, cmd[ 1 ], Integer.parseInt( cmd[ 2 ] ) );
-                return "Item " + stack.getItemName( ) + " enchanted with a level " + cmd[ 2 ] + " " + cmd[ 1 ]
-                        + " enchantment!";
-            } 
-		catch( Exception e ) {
-            e.printStackTrace( );
+
+    private void writeStack(ItemStack i)
+    {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        DataOutputStream datastream = new DataOutputStream(bytestream);
+
+        try
+        {
+            Packet.writeItemStack(i, datastream);
+        }
+        catch (Exception e)
+        {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(e.toString());
+        }
+    }
+
+    @Override
+    public String output()
+    {
+        // TODO Auto-generated method stub
+        return endres;
+    }
+
+    String output(String[ ] cmd)
+    {
+        /*try {
+        	EntityClientPlayerMP thePlayer = Minecraft.getMinecraft( ).thePlayer;
+        	{
+        		ItemStack stack = thePlayer.inventory.getCurrentItem( );
+        		enchantStack( stack, cmd [ 1 ], Integer.parseInt( cmd [ 2 ] ) );
+        		return "Item enchanted successfully!";
+        	}
+        }
+          catch ( Exception e ) {
+        	return showHelp( );
+        }*/
+        try
+        {
+            EntityClientPlayerMP thePlayer = CheatBase.getInstance().getWrapper.getMinecraft().thePlayer;
+            ItemStack stack = thePlayer.inventory.getCurrentItem();
+            enchantStack(stack, cmd[ 1 ], Integer.parseInt(cmd[ 2 ]));
+            return "Item " + stack.getItemName() + " enchanted with a level " + cmd[ 2 ] + " " + cmd[ 1 ]
+                    + " enchantment!";
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
             return "Oh teh noes! The enchantment failed! See the console for more info...";
         }
-	}
+    }
 }
-

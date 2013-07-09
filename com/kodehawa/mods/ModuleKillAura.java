@@ -32,61 +32,66 @@ import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Watcher;
 
-public class ModuleKillAura extends Mod implements Tickable {
-	
-	private final CheatBase cheatbase;
-	private EntityLiving elb;
-	
-	public ModuleKillAura( CheatBase rc, Minecraft mc ) {
-		super( Mods.Killaura );
-		cheatbase = rc;
-		minecraft = mc;
-	}
-	
-	@Override
-	public void onEnable( ) {
-		cheatbase.addToTick( this );
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-	    cheatbase.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Kill all... Kill :)");
-	}
+public class ModuleKillAura extends Mod implements Tickable
+{
+    private final CheatBase cheatbase;
+    private EntityLiving elb;
 
-	
-	@Override
-	public void onDisable( ) {
-		cheatbase.removeFromTick( this );
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-	}
-	
-	@Override
-	public void tick( ) {
-		
-		for ( int i = 0; i < minecraft.theWorld.loadedEntityList.size( ); i++ ) {
-			Entity ent = (Entity) minecraft.theWorld.loadedEntityList.get( i );
-			
-			int id = ent.entityId;
-			long now = System.currentTimeMillis( );
-			Watcher tracked = EntityUtils.getLastAffected( id );
-			if ( tracked != null ) {
-				if ( tracked.matches( ent, now ) ) {
-					continue;
-				}
-			}
-			
-			EntityUtils.setLastAffected( id, ent );
-			
-			if ( ( ent == minecraft.thePlayer ) || !( ent instanceof EntityLiving ) || ent.isDead ) {
-				continue;
-			}
-			
-			if ( ( minecraft.thePlayer.getDistanceSqToEntity( ent ) <= 36D ) && !ent.isDead && minecraft.thePlayer.canEntityBeSeen( ent ) ) {
-				//elb.faceEntity( ent, 100F, 100F );
-				minecraft.playerController.attackEntity( minecraft.thePlayer, ent );
-				minecraft.thePlayer.swingItem( );
-			}
-		}
-	}
-	
-	
-	private final Minecraft minecraft;
-	
+    public ModuleKillAura(CheatBase rc, Minecraft mc)
+    {
+        super(Mods.Killaura);
+        cheatbase = rc;
+        minecraft = mc;
+    }
+
+    @Override
+    public void onEnable()
+    {
+        cheatbase.addToTick(this);
+        cheatbase.getUtils().addChatMessage(getActive());
+        cheatbase.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Kill all... Kill :)");
+    }
+
+    @Override
+    public void onDisable()
+    {
+        cheatbase.removeFromTick(this);
+        cheatbase.getUtils().addChatMessage(getActive());
+    }
+
+    @Override
+    public void tick()
+    {
+        for (int i = 0; i < minecraft.theWorld.loadedEntityList.size(); i++)
+        {
+            Entity ent = (Entity) minecraft.theWorld.loadedEntityList.get(i);
+            int id = ent.entityId;
+            long now = System.currentTimeMillis();
+            Watcher tracked = EntityUtils.getLastAffected(id);
+
+            if (tracked != null)
+            {
+                if (tracked.matches(ent, now))
+                {
+                    continue;
+                }
+            }
+
+            EntityUtils.setLastAffected(id, ent);
+
+            if ((ent == minecraft.thePlayer) || !(ent instanceof EntityLiving) || ent.isDead)
+            {
+                continue;
+            }
+
+            if ((minecraft.thePlayer.getDistanceSqToEntity(ent) <= 36D) && !ent.isDead && minecraft.thePlayer.canEntityBeSeen(ent))
+            {
+                //elb.faceEntity( ent, 100F, 100F );
+                minecraft.playerController.attackEntity(minecraft.thePlayer, ent);
+                minecraft.thePlayer.swingItem();
+            }
+        }
+    }
+
+    private final Minecraft minecraft;
 }

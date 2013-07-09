@@ -32,25 +32,23 @@ import net.minecraft.src.NetClientHandler;
 
 public class CNetClientHandler extends NetClientHandler
 {
-	
-	public Minecraft mc;
-	
-	/** RNG. */
-	Random rand = new Random( );
-	
-	public CNetClientHandler( Minecraft par1Minecraft, String par2Str, int par3 ) throws IOException
-	{
-		super( par1Minecraft, par2Str, par3 );
-	}
-	
-	public CNetClientHandler( Minecraft par1Minecraft, String par2Str, int par3, GuiScreen par4GuiScreen ) throws IOException
-	{
-		super( par1Minecraft, par2Str, par3, par4GuiScreen );
-		
-	}
-	
-	public CNetClientHandler( Minecraft par1Minecraft, IntegratedServer par2IntegratedServer ) throws IOException
-	{
-		super( par1Minecraft, par2IntegratedServer );
-	}
+    public Minecraft mc;
+
+    /** RNG. */
+    Random rand = new Random();
+
+    public CNetClientHandler(Minecraft par1Minecraft, String par2Str, int par3) throws IOException
+    {
+        super(par1Minecraft, par2Str, par3);
+    }
+
+    public CNetClientHandler(Minecraft par1Minecraft, String par2Str, int par3, GuiScreen par4GuiScreen) throws IOException
+    {
+        super(par1Minecraft, par2Str, par3, par4GuiScreen);
+    }
+
+    public CNetClientHandler(Minecraft par1Minecraft, IntegratedServer par2IntegratedServer) throws IOException
+    {
+        super(par1Minecraft, par2IntegratedServer);
+    }
 }

@@ -22,7 +22,6 @@
 
 package com.kodehawa.newgui;
 
-
 import net.minecraft.src.InventoryBasic;
 
 public class InventoryEnchanting extends InventoryBasic

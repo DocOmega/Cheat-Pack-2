@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 
-
 package com.kodehawa.newgui;
 
 import net.minecraft.src.GuiButton;
@@ -93,7 +92,6 @@ public class GuiMoreOptions extends GuiScreen
         mc.func_110434_K().func_110577_a(field_CP2_oi);
         //this.mc.renderEngine.bindTexture("/CP2/resources/guimoreoptions.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
         drawTexturedModalRect((width - 256) / 2, (height - 116) / 2, 0, 0, 256, 116);
         drawCenteredString(fontRenderer, CheatPack.translate("GuiMoreOptions.LabelTitle"), width / 2, 20, 0xffffff);
         super.drawScreen(i, j, f);

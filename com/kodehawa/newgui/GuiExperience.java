@@ -64,7 +64,7 @@ public class GuiExperience extends GuiScreen
     public void drawScreen(int i, int j, float f)
     {
         drawDefaultBackground();
-    	mc.func_110434_K().func_110577_a(field_CP2_oi);
+        mc.func_110434_K().func_110577_a(field_CP2_oi);
         //mc.renderEngine.bindTexture("/CP2/resources/guiexperience.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         int l = (width - 218) / 2;
@@ -114,7 +114,6 @@ public class GuiExperience extends GuiScreen
         super.mouseClicked(i, j, k);
         level.mouseClicked(i, j, k);
         percentage.mouseClicked(i, j, k);
-        
     }
 
     /**
@@ -124,7 +123,6 @@ public class GuiExperience extends GuiScreen
     {
         level.updateScreen();
         percentage.updateScreen();
-        
     }
 
     /**

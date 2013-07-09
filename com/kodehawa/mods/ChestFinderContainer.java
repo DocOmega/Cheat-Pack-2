@@ -6,16 +6,13 @@ import net.minecraft.src.RenderGlobal;
 
 import org.lwjgl.opengl.GL11;
 
-public class ChestFinderContainer extends RenderGlobal {
-	
-	private static AxisAlignedBB ax;
+public class ChestFinderContainer extends RenderGlobal
+{
+    private static AxisAlignedBB ax;
 
-	public ChestFinderContainer(Minecraft par1Minecraft) {
-		super(par1Minecraft);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-		
-	}
-
+    public ChestFinderContainer(Minecraft par1Minecraft)
+    {
+        super(par1Minecraft);
+        // TODO Auto-generated constructor stub
+    }
+}

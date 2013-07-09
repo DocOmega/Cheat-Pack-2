@@ -48,7 +48,6 @@ public class GuiItemSelection extends GuiContainer
     private static boolean k;
     private static InventoryBasic inventory = new InventoryBasic("tmp", k, 72);
     protected static final ResourceLocation field_CP2_oi = new ResourceLocation("/gui/allitems.png");
-    
 
     public GuiItemSelection(GuiScreen guiscreen, EntityPlayer entityplayer)
     {
@@ -272,8 +271,7 @@ public class GuiItemSelection extends GuiContainer
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         //mc.renderEngine.bindTexture("/gui/allitems.png");
-    	mc.func_110434_K().func_110577_a(field_CP2_oi);
-
+        mc.func_110434_K().func_110577_a(field_CP2_oi);
         int k1 = guiLeft;
         int l1 = guiTop;
         drawTexturedModalRect(k1, l1, 0, 0, xSize, ySize);

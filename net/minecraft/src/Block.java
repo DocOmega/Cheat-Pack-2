@@ -363,9 +363,7 @@ public class Block
      */
     public boolean renderAsNormalBlock()
     {
-     
-    	return true;	
-      
+        return true;
     }
 
     public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
@@ -478,7 +476,6 @@ public class Block
 		}
     	
     }
-	
 
     /**
      * Returns Returns true if the given side of this block type should be rendered (if it's solid or not), if the
@@ -554,7 +551,8 @@ public class Block
     }
 
     /**
-     * Returns whether this block is collideable based on the arguments passed in Args: blockMetaData, unknownFlag
+     * Returns whether this block is collideable based on the arguments passed in \n@param par1 block metaData \n@param
+     * par2 whether the player right-clicked while holding a boat
      */
     public boolean canCollideCheck(int par1, boolean par2)
     {

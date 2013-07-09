@@ -20,9 +20,7 @@
 * THE SOFTWARE.
 */
 
-
 package com.kodehawa.newgui;
-
 
 public class FloatBuilder extends Builder
 {

@@ -22,14 +22,14 @@
 
 package com.kodehawa.mods;
 
-public enum Mods {
-	
-	Fullbright, Killaura, ChestESP, Fly, Nofall, Sprint, Xray, Waterwalk, NoKnockback,
-	Fastplace, Autorespawn, SetDay, Waypoints, Invulnerable, Fasterwalk, Autohealth;
-	
-	// This is just for my convenience
-	public String getName( ) {
-		return this.name( );
-	}
-	
+public enum Mods
+{
+    Fullbright, Killaura, ChestESP, Fly, Nofall, Sprint, Xray, Waterwalk, NoKnockback,
+    Fastplace, Autorespawn, SetDay, Waypoints, Invulnerable, Fasterwalk, Autohealth;
+
+    // This is just for my convenience
+    public String getName()
+    {
+        return this.name();
+    }
 }

@@ -39,6 +39,7 @@ import com.kodehawa.CheatBase;
 public class Minecraft implements IPlayerUsage
 {
     private static final ResourceLocation field_110444_H = new ResourceLocation("textures/gui/title/mojang.png");
+    public static final boolean field_142025_a = Util.func_110647_a() == EnumOS.MACOS;
 
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */
     public static byte[] memoryReserve = new byte[10485760];
@@ -129,7 +130,7 @@ public class Minecraft implements IPlayerUsage
      * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
      * the usage snooping.
      */
-    public static int debugFPS;
+    private static int debugFPS;
 
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
@@ -187,15 +188,14 @@ public class Minecraft implements IPlayerUsage
     /** holds the current fps */
     int fpsCounter;
     long prevFrameTime = -1L;
+
+    /** Profiler currently displayed in the debug screen pie chart */
+    private String debugProfilerName = "root";
     
     /** Holds the current CE instance */
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
     protected CheatBase cheatbase;
-    
-
-    /** Profiler currently displayed in the debug screen pie chart */
-    private String debugProfilerName = "root";
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
@@ -220,12 +220,9 @@ public class Minecraft implements IPlayerUsage
         this.fullscreen = par4;
         ImageIO.setUseCache(false);
         StatList.nopInit();
-        
         compat = new HashMap<String, Integer>();
         System.out.println("Cheating Essentials: Pre-Initialization Event");
-        //cheatbase.tick();
         checkCompatibility("ModLoader");
-        
     }
 
     private void startTimerHackThread()
@@ -308,7 +305,7 @@ public class Minecraft implements IPlayerUsage
         }
 
         Display.setResizable(true);
-        Display.setTitle("Minecraft 1.6.1");
+        Display.setTitle("Minecraft 1.6.2");
         this.getLogAgent().logInfo("LWJGL Version: " + Sys.getVersion());
 
         if (Util.func_110647_a() != EnumOS.MACOS)
@@ -375,6 +372,8 @@ public class Minecraft implements IPlayerUsage
         }
 
         this.standardGalacticFontRenderer = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii_sga.png"), this.renderEngine, false);
+        this.field_110451_am.func_110542_a(this.fontRenderer);
+        this.field_110451_am.func_110542_a(this.standardGalacticFontRenderer);
         this.field_110451_am.func_110542_a(new GrassColorReloadListener());
         this.field_110451_am.func_110542_a(new FoliageColorReloadListener());
         RenderManager.instance.itemRenderer = new ItemRenderer(this);
@@ -396,8 +395,8 @@ public class Minecraft implements IPlayerUsage
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         this.checkGLError("Startup");
         this.renderGlobal = new RenderGlobal(this);
-        this.renderEngine.func_130088_a(TextureMap.field_110575_b, new TextureMap(0, "textures/blocks/"));
-        this.renderEngine.func_130088_a(TextureMap.field_110576_c, new TextureMap(1, "textures/items/"));
+        this.renderEngine.func_130088_a(TextureMap.field_110575_b, new TextureMap(0, "textures/blocks"));
+        this.renderEngine.func_130088_a(TextureMap.field_110576_c, new TextureMap(1, "textures/items"));
         GL11.glViewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
@@ -681,7 +680,7 @@ public class Minecraft implements IPlayerUsage
         System.gc();
     }
 
-    public void run()
+    public void func_99999_d()
     {
         this.running = true;
         CrashReport var2;
@@ -1198,7 +1197,7 @@ public class Minecraft implements IPlayerUsage
                 int var5 = this.objectMouseOver.blockZ;
                 this.playerController.onPlayerDamageBlock(var3, var4, var5, this.objectMouseOver.sideHit);
 
-                if (this.thePlayer.canCurrentToolHarvestBlock(var3, var4, var5))
+                if (this.thePlayer.isCurrentToolAdventureModeExempt(var3, var4, var5))
                 {
                     this.effectRenderer.addBlockHitEffects(var3, var4, var5, this.objectMouseOver.sideHit);
                     this.thePlayer.swingItem();
@@ -1439,9 +1438,9 @@ public class Minecraft implements IPlayerUsage
             {
                 this.currentScreen.handleInput();
             }
-            catch (Throwable var5)
+            catch (Throwable var6)
             {
-                var2 = CrashReport.makeCrashReport(var5, "Updating screen events");
+                var2 = CrashReport.makeCrashReport(var6, "Updating screen events");
                 var3 = var2.makeCategory("Affected screen");
                 var3.addCrashSectionCallable("Screen name", new CallableUpdatingScreenName(this));
                 throw new ReportedException(var2);
@@ -1453,9 +1452,9 @@ public class Minecraft implements IPlayerUsage
                 {
                     this.currentScreen.updateScreen();
                 }
-                catch (Throwable var4)
+                catch (Throwable var5)
                 {
-                    var2 = CrashReport.makeCrashReport(var4, "Ticking screen");
+                    var2 = CrashReport.makeCrashReport(var5, "Ticking screen");
                     var3 = var2.makeCategory("Affected screen");
                     var3.addCrashSectionCallable("Screen name", new CallableParticleScreenName(this));
                     throw new ReportedException(var2);
@@ -1466,39 +1465,47 @@ public class Minecraft implements IPlayerUsage
         if (this.currentScreen == null || this.currentScreen.allowUserInput)
         {
             this.mcProfiler.endStartSection("mouse");
+            int var1;
 
             while (Mouse.next())
             {
-                KeyBinding.setKeyBindState(Mouse.getEventButton() - 100, Mouse.getEventButtonState());
+                var1 = Mouse.getEventButton();
+
+                if (field_142025_a && var1 == 0 && (Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157)))
+                {
+                    var1 = 1;
+                }
+
+                KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
 
                 if (Mouse.getEventButtonState())
                 {
-                    KeyBinding.onTick(Mouse.getEventButton() - 100);
+                    KeyBinding.onTick(var1 - 100);
                 }
 
-                long var1 = getSystemTime() - this.systemTime;
+                long var9 = getSystemTime() - this.systemTime;
 
-                if (var1 <= 200L)
+                if (var9 <= 200L)
                 {
-                    int var9 = Mouse.getEventDWheel();
+                    int var4 = Mouse.getEventDWheel();
 
-                    if (var9 != 0)
+                    if (var4 != 0)
                     {
-                        this.thePlayer.inventory.changeCurrentItem(var9);
+                        this.thePlayer.inventory.changeCurrentItem(var4);
 
                         if (this.gameSettings.noclip)
                         {
-                            if (var9 > 0)
+                            if (var4 > 0)
                             {
-                                var9 = 1;
+                                var4 = 1;
                             }
 
-                            if (var9 < 0)
+                            if (var4 < 0)
                             {
-                                var9 = -1;
+                                var4 = -1;
                             }
 
-                            this.gameSettings.noclipRate += (float)var9 * 0.25F;
+                            this.gameSettings.noclipRate += (float)var4 * 0.25F;
                         }
                     }
 
@@ -1522,7 +1529,7 @@ public class Minecraft implements IPlayerUsage
             }
 
             this.mcProfiler.endStartSection("keyboard");
-            boolean var7;
+            boolean var8;
 
             while (Keyboard.next())
             {
@@ -1581,8 +1588,8 @@ public class Minecraft implements IPlayerUsage
 
                             if (Keyboard.getEventKey() == 33 && Keyboard.isKeyDown(61))
                             {
-                                var7 = Keyboard.isKeyDown(42) | Keyboard.isKeyDown(54);
-                                this.gameSettings.setOptionValue(EnumOptions.RENDER_DISTANCE, var7 ? -1 : 1);
+                                var8 = Keyboard.isKeyDown(42) | Keyboard.isKeyDown(54);
+                                this.gameSettings.setOptionValue(EnumOptions.RENDER_DISTANCE, var8 ? -1 : 1);
                             }
 
                             if (Keyboard.getEventKey() == 30 && Keyboard.isKeyDown(61))
@@ -1634,13 +1641,11 @@ public class Minecraft implements IPlayerUsage
                             }
                         }
 
-                        int var8;
-
-                        for (var8 = 0; var8 < 9; ++var8)
+                        for (var1 = 0; var1 < 9; ++var1)
                         {
-                            if (Keyboard.getEventKey() == 2 + var8)
+                            if (Keyboard.getEventKey() == 2 + var1)
                             {
-                                this.thePlayer.inventory.currentItem = var8;
+                                this.thePlayer.inventory.currentItem = var1;
                             }
                         }
 
@@ -1651,11 +1656,11 @@ public class Minecraft implements IPlayerUsage
                                 this.updateDebugProfilerName(0);
                             }
 
-                            for (var8 = 0; var8 < 9; ++var8)
+                            for (var1 = 0; var1 < 9; ++var1)
                             {
-                                if (Keyboard.getEventKey() == 2 + var8)
+                                if (Keyboard.getEventKey() == 2 + var1)
                                 {
-                                    this.updateDebugProfilerName(var8 + 1);
+                                    this.updateDebugProfilerName(var1 + 1);
                                 }
                             }
                         }
@@ -1663,7 +1668,7 @@ public class Minecraft implements IPlayerUsage
                 }
             }
 
-            var7 = this.gameSettings.chatVisibility != 2;
+            var8 = this.gameSettings.chatVisibility != 2;
 
             while (this.gameSettings.keyBindInventory.isPressed())
             {
@@ -1682,12 +1687,12 @@ public class Minecraft implements IPlayerUsage
                 this.thePlayer.dropOneItem(GuiScreen.isCtrlKeyDown());
             }
 
-            while (this.gameSettings.keyBindChat.isPressed() && var7)
+            while (this.gameSettings.keyBindChat.isPressed() && var8)
             {
                 this.displayGuiScreen(new GuiChat());
             }
 
-            if (this.currentScreen == null && this.gameSettings.keyBindCommand.isPressed() && var7)
+            if (this.currentScreen == null && this.gameSettings.keyBindCommand.isPressed() && var8)
             {
                 this.displayGuiScreen(new GuiChat("/"));
             }
@@ -1699,7 +1704,7 @@ public class Minecraft implements IPlayerUsage
                     this.playerController.onStoppedUsingItem(this.thePlayer);
                 }
 
-                label376:
+                label381:
 
                 while (true)
                 {
@@ -1717,7 +1722,7 @@ public class Minecraft implements IPlayerUsage
                                 continue;
                             }
 
-                            break label376;
+                            break label381;
                         }
                     }
                 }
@@ -1795,9 +1800,9 @@ public class Minecraft implements IPlayerUsage
                 {
                     this.theWorld.tick();
                 }
-                catch (Throwable var6)
+                catch (Throwable var7)
                 {
-                    var2 = CrashReport.makeCrashReport(var6, "Exception in world tick");
+                    var2 = CrashReport.makeCrashReport(var7, "Exception in world tick");
 
                     if (this.theWorld == null)
                     {
@@ -2027,11 +2032,13 @@ public class Minecraft implements IPlayerUsage
         this.theWorld.setSpawnLocation();
         this.theWorld.removeAllEntities();
         int var2 = 0;
+        String var3 = null;
 
         if (this.thePlayer != null)
         {
             var2 = this.thePlayer.entityId;
             this.theWorld.removeEntity(this.thePlayer);
+            var3 = this.thePlayer.func_142021_k();
         }
 
         this.renderViewEntity = null;
@@ -2039,6 +2046,7 @@ public class Minecraft implements IPlayerUsage
         this.thePlayer.dimension = par1;
         this.renderViewEntity = this.thePlayer;
         this.thePlayer.preparePlayerToSpawn();
+        this.thePlayer.func_142020_c(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
         this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
@@ -2141,6 +2149,10 @@ public class Minecraft implements IPlayerUsage
                 {
                     var2 = Item.painting.itemID;
                 }
+                else if (this.objectMouseOver.entityHit instanceof EntityLeashKnot)
+                {
+                    var2 = Item.field_111214_ch.itemID;
+                }
                 else if (this.objectMouseOver.entityHit instanceof EntityItemFrame)
                 {
                     EntityItemFrame var10 = (EntityItemFrame)this.objectMouseOver.entityHit;
@@ -2219,8 +2231,9 @@ public class Minecraft implements IPlayerUsage
         par1CrashReport.func_85056_g().addCrashSectionCallable("Is Modded", new CallableModded(this));
         par1CrashReport.func_85056_g().addCrashSectionCallable("Type", new CallableType2(this));
         par1CrashReport.func_85056_g().addCrashSectionCallable("Resource Pack", new CallableTexturePack(this));
-        par1CrashReport.func_85056_g().addCrashSectionCallable("Profiler Position", new CallableClientProfiler(this));
-        par1CrashReport.func_85056_g().addCrashSectionCallable("Vec3 Pool Size", new CallableClientMemoryStats(this));
+        par1CrashReport.func_85056_g().addCrashSectionCallable("Current Language", new CallableClientProfiler(this));
+        par1CrashReport.func_85056_g().addCrashSectionCallable("Profiler Position", new CallableClientMemoryStats(this));
+        par1CrashReport.func_85056_g().addCrashSectionCallable("Vec3 Pool Size", new MinecraftINNER13(this));
 
         if (this.theWorld != null)
         {
@@ -2413,26 +2426,32 @@ public class Minecraft implements IPlayerUsage
         return par0Minecraft.field_110447_Z;
     }
 
-//Exalm's code.
+    static LanguageManager func_142024_b(Minecraft par0Minecraft)
+    {
+        return par0Minecraft.field_135017_as;
+    }
+    
+  //Exalm's code.
 
-private void checkCompatibility(String mod){
-  try{
-      Class.forName(mod);
-  }catch(ClassNotFoundException e){
+    private void checkCompatibility(String mod){
       try{
-          Class.forName("net.minecraft.src."+mod);
-      }
-      catch(ClassNotFoundException ex){
-          compat.put(mod, 0);
+          Class.forName(mod);
+      }catch(ClassNotFoundException e){
+          try{
+              Class.forName("net.minecraft.src."+mod);
+          }
+          catch(ClassNotFoundException ex){
+              compat.put(mod, 0);
+              return;
+          }
+          System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatibility....");
+          System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
+          compat.put(mod, 2);
           return;
       }
-      System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatibility....");
+      System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatiblity..... ");
       System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
-      compat.put(mod, 2);
-      return;
-  }
-  System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatiblity..... ");
-  System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
-  compat.put(mod, 1);
-}}
-
+      compat.put(mod, 1);
+    }
+    
+}

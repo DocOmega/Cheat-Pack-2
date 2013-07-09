@@ -91,7 +91,6 @@ public class GuiPotionEffects extends GuiScreen
         drawDefaultBackground();
         //this.mc.renderEngine.bindTexture("/CP2/resources/guipotioneffects.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
         int l = (width - 218) / 2;
         int i1 = (height - 148) / 2;
         drawTexturedModalRect(l, i1, 0, 0, 218, 148);

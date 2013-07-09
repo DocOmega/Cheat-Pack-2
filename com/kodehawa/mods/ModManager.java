@@ -25,19 +25,18 @@ import java.util.ArrayList;
 
 import com.kodehawa.CheatBase;
 
-public class ModManager {
-
+public class ModManager
+{
     public ArrayList<Mod> mods;
     public ArrayList<Mod> worldMods;
     public ArrayList<Mod> playerMods;
 
-    public ModManager(CheatBase c) {
+    public ModManager(CheatBase c)
+    {
         mods = new ArrayList<Mod>();
         worldMods = new ArrayList<Mod>();
         playerMods = new ArrayList<Mod>();
-
         // World mods
-        
         addWMod(new ModuleFastPlace(c, c.minecraft));
         addWMod(new ModuleFullbright(c, c.minecraft));
         addWMod(new ModuleWaterwalk(c, c.minecraft));
@@ -45,10 +44,7 @@ public class ModManager {
         addWMod(new ModuleAutoRespawn(c, c.minecraft));
         addWMod(new ModuleTestChestFinder(c, c.minecraft));
         //addWMod(new ModuleDayTime(c, c.minecraft));
-
-
-       // Player mods
-        
+        // Player mods
         addPMod(new ModuleFly(c, c.minecraft));
         addPMod(new ModuleKillAura(c, c.minecraft));
         addPMod(new ModuleNoFall(c, c.minecraft));
@@ -57,37 +53,44 @@ public class ModManager {
         addPMod(new ModuleAutoHealth(c, c.minecraft));
         addPMod(new ModuleInvulnerable(c, c.minecraft));
         addPMod(new ModuleNoKnockback(c, c.minecraft));
- 
-
-
 
         // Main mod list
-        for (Mod m : worldMods) {
+        for (Mod m : worldMods)
+        {
             mods.add(m);
         }
-        for (Mod m : playerMods) {
+
+        for (Mod m : playerMods)
+        {
             mods.add(m);
         }
     }
 
-    public void addMod(Mod m) {
+    public void addMod(Mod m)
+    {
         mods.add(m);
     }
 
-    public void addWMod(Mod m) {
+    public void addWMod(Mod m)
+    {
         worldMods.add(m);
     }
 
-    public void addPMod(Mod m) {
+    public void addPMod(Mod m)
+    {
         playerMods.add(m);
     }
 
-    public Mod getCheatsByName(String name) {
-        for (int i = 0; i < mods.size(); i++) {
-            if (name.equalsIgnoreCase(mods.get(i).name)) {
+    public Mod getCheatsByName(String name)
+    {
+        for (int i = 0; i < mods.size(); i++)
+        {
+            if (name.equalsIgnoreCase(mods.get(i).name))
+            {
                 return mods.get(i);
             }
         }
+
         return null;
     }
 }

@@ -6,15 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.kodehawa.CheatBase;
-import com.kodehawa.core.CheckKey;
-import com.kodehawa.mods.ModuleFly;
-import com.kodehawa.mods.ModuleFullbright;
-import com.kodehawa.mods.ModuleXray;
 
 public class GuiIngame extends Gui
 {
@@ -45,12 +40,6 @@ public class GuiIngame extends Gui
     /** The ItemStack that is currently being highlighted */
     private ItemStack highlightingItemStack;
     protected static CheatBase cheatbase;
-    private CheckKey checkKey;
-    private ModuleXray xray;
-    private ModuleFly fly;
-    private ModuleFullbright fullbright;
-	private boolean keyStates[] = new boolean[ 256 ];
-
 
     public GuiIngame(Minecraft par1Minecraft)
     {
@@ -58,6 +47,7 @@ public class GuiIngame extends Gui
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
         cheatbase = new CheatBase( this.mc );
     }
+   
 
     /**
      * Render the ingame overlay with quick icon bar, ...
@@ -278,7 +268,7 @@ public class GuiIngame extends Gui
             }
             else
             {
-                var36 = String.format(I18n.func_135053_a("demo.remainingTime"), new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - this.mc.theWorld.getTotalWorldTime()))});
+                var36 = I18n.func_135052_a("demo.remainingTime", new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - this.mc.theWorld.getTotalWorldTime()))});
             }
 
             var13 = var8.getStringWidth(var36);
@@ -294,7 +284,7 @@ public class GuiIngame extends Gui
         {
             this.mc.mcProfiler.startSection("debug");
             GL11.glPushMatrix();
-            var8.drawStringWithShadow("Minecraft 1.6.1 (" + this.mc.debug + ")", 2, 2, 16777215);
+            var8.drawStringWithShadow("Minecraft 1.6.2 (" + this.mc.debug + ")", 2, 2, 16777215);
             var8.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
             var8.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
             var8.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -327,23 +317,6 @@ public class GuiIngame extends Gui
             GL11.glPopMatrix();
             this.mc.mcProfiler.endSection();
         }
-        
-       /** if(checkKey(Keyboard.KEY_X))
-    	{
-    		xray.onEnable();
-    	}
-    	if(checkKey(Keyboard.KEY_F))
-    	{
-    		fly.toggle();
-    	}
-    	if(checkKey(Keyboard.KEY_Y))
-    	{
-    		fullbright.toggle();
-    	}
-    	
-    	
-        */
-        
 
         if (this.recordPlayingUpFor > 0)
         {
@@ -414,8 +387,6 @@ public class GuiIngame extends Gui
             {
                 var45 = 150;
             }
-            
-            
 
             int var19 = (var6 - var17 * var45) / 2;
             byte var47 = 10;
@@ -433,7 +404,7 @@ public class GuiIngame extends Gui
                 {
                     GuiPlayerInfo var49 = (GuiPlayerInfo)var44.get(var21);
                     ScorePlayerTeam var48 = this.mc.theWorld.getScoreboard().getPlayersTeam(var49.name);
-                    String var52 = ScorePlayerTeam.func_96667_a(var48, var49.name);
+                    String var52 = ScorePlayerTeam.formatPlayerName(var48, var49.name);
                     var8.drawStringWithShadow(var52, var22, var23, 16777215);
 
                     if (var43 != null)
@@ -444,7 +415,7 @@ public class GuiIngame extends Gui
                         if (var28 - var27 > 5)
                         {
                             Score var29 = var43.getScoreboard().func_96529_a(var49.name, var43);
-                            String var30 = EnumChatFormatting.YELLOW + "" + var29.func_96652_c();
+                            String var30 = EnumChatFormatting.YELLOW + "" + var29.getScorePoints();
                             var8.drawStringWithShadow(var30, var28 - var8.getStringWidth(var30), var23, 16777215);
                         }
                     }
@@ -505,8 +476,8 @@ public class GuiIngame extends Gui
             for (Iterator var8 = var6.iterator(); var8.hasNext(); var7 = Math.max(var7, par4FontRenderer.getStringWidth(var11)))
             {
                 Score var9 = (Score)var8.next();
-                ScorePlayerTeam var10 = var5.getPlayersTeam(var9.func_96653_e());
-                var11 = ScorePlayerTeam.func_96667_a(var10, var9.func_96653_e()) + ": " + EnumChatFormatting.RED + var9.func_96652_c();
+                ScorePlayerTeam var10 = var5.getPlayersTeam(var9.getPlayerName());
+                var11 = ScorePlayerTeam.formatPlayerName(var10, var9.getPlayerName()) + ": " + EnumChatFormatting.RED + var9.getScorePoints();
             }
 
             int var22 = var6.size() * par4FontRenderer.FONT_HEIGHT;
@@ -520,9 +491,9 @@ public class GuiIngame extends Gui
             {
                 Score var14 = (Score)var13.next();
                 ++var12;
-                ScorePlayerTeam var15 = var5.getPlayersTeam(var14.func_96653_e());
-                String var16 = ScorePlayerTeam.func_96667_a(var15, var14.func_96653_e());
-                String var17 = EnumChatFormatting.RED + "" + var14.func_96652_c();
+                ScorePlayerTeam var15 = var5.getPlayersTeam(var14.getPlayerName());
+                String var16 = ScorePlayerTeam.formatPlayerName(var15, var14.getPlayerName());
+                String var17 = EnumChatFormatting.RED + "" + var14.getScorePoints();
                 int var19 = var23 - var12 * par4FontRenderer.FONT_HEIGHT;
                 int var20 = par3 - var25 + 2;
                 drawRect(var24 - 2, var19, var20, var19 + par4FontRenderer.FONT_HEIGHT, 1342177280);
@@ -535,10 +506,6 @@ public class GuiIngame extends Gui
                     drawRect(var24 - 2, var19 - par4FontRenderer.FONT_HEIGHT - 1, var20, var19 - 1, 1610612736);
                     drawRect(var24 - 2, var19 - 1, var20, var19, 1342177280);
                     par4FontRenderer.drawString(var21, var24 + var7 / 2 - par4FontRenderer.getStringWidth(var21) / 2, var19 - par4FontRenderer.FONT_HEIGHT, 553648127);
-                
-                	
-                
-                
                 }
             }
         }
@@ -961,17 +928,16 @@ public class GuiIngame extends Gui
                 GL11.glTranslatef((float)(-(par2 + 8)), (float)(-(par3 + 12)), 0.0F);
             }
 
-            itemRenderer.func_110797_b(this.mc.fontRenderer, this.mc.func_110434_K(), var5, par2, par3);
+            itemRenderer.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), var5, par2, par3);
 
             if (var6 > 0.0F)
             {
                 GL11.glPopMatrix();
             }
 
-            itemRenderer.func_110794_c(this.mc.fontRenderer, this.mc.func_110434_K(), var5, par2, par3);
+            itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), var5, par2, par3);
         }
     }
- 
 
     /**
      * The update tick for the ingame UI

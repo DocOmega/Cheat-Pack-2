@@ -38,9 +38,8 @@ import com.kodehawa.mods.Vars;
 
 //Julialy's GUI System.
 
-public class GuiXraySelectedBlock extends GuiScreen {
-	
-	
+public class GuiXraySelectedBlock extends GuiScreen
+{
     List fullList = new ArrayList();
     List invisible = new ArrayList();
     int listpos = 0;
@@ -57,23 +56,21 @@ public class GuiXraySelectedBlock extends GuiScreen {
         }
     }
 
-
     /**
-* Adds the buttons (and other controls) to the screen in question.
-*/
+    * Adds the buttons (and other controls) to the screen in question.
+    */
     public void initGui()
     {
         //for (int var1 = 0; var1 < XrayMain.getXrayInstance().blackList.length; ++var1)
         {
             this.invisible.add(Vars.xrayBlocks);
         }
-
         Keyboard.enableRepeatEvents(true);
     }
 
     /**
-* Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
-*/
+    * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
+    */
     protected void actionPerformed(GuiButton var1)
     {
         if (var1.id != 0)
@@ -83,8 +80,8 @@ public class GuiXraySelectedBlock extends GuiScreen {
     }
 
     /**
-* Handles mouse input.
-*/
+    * Handles mouse input.
+    */
     public void handleMouseInput()
     {
         super.handleMouseInput();
@@ -121,8 +118,8 @@ public class GuiXraySelectedBlock extends GuiScreen {
     }
 
     /**
-* Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
-*/
+    * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
+    */
     protected void keyTyped(char var1, int var2)
     {
         if (var2 != 1 && var2 != 14 && var2 != 29 && var2 != 157)
@@ -141,39 +138,34 @@ public class GuiXraySelectedBlock extends GuiScreen {
             }
             else
             {
-             java.awt.Toolkit.getDefaultToolkit().beep(); //Beep!
+                java.awt.Toolkit.getDefaultToolkit().beep(); //Beep!
             }
         }
         else
         {
-
             Minecraft.getMinecraft().displayGuiScreen(null);
-
-           /* if (xray.onEnable());
-            {
-             XrayMain.getXrayInstance().rerendereverything(true);*/
-            }
+            /* if (xray.onEnable());
+             {
+              XrayMain.getXrayInstance().rerendereverything(true);*/
         }
-    
+    }
 
     /**
-* Called when the screen is unloaded. Used to disable keyboard repeat events
-*/
+    * Called when the screen is unloaded. Used to disable keyboard repeat events
+    */
     public void onGuiClosed()
     {
-     
-
         for (int var1 = 0; var1 < this.invisible.size(); ++var1)
         {
-         //Vars.xrayBlocks = Integer.valueOf(((Integer)this.invisible.get(var1)).intValue()).intValue();
+            //Vars.xrayBlocks = Integer.valueOf(((Integer)this.invisible.get(var1)).intValue()).intValue();
         }
 
         //XrayMain.getXrayInstance().saveCurrentBlackList();
     }
 
     /**
-* Draws the screen and all the components in it.
-*/
+    * Draws the screen and all the components in it.
+    */
     public void drawScreen(int var1, int var2, float var3)
     {
         int var4 = this.width / 2 + 100;
@@ -204,10 +196,7 @@ public class GuiXraySelectedBlock extends GuiScreen {
                 }
 
                 this.drawCenteredString(this.fontRenderer, var9, this.width / 2, var6 - 60 + 7 + var8 * 24, 16777215);
-                
                 //TODO: fix icons
-                
-  
             }
 
             ++var7;
@@ -217,5 +206,3 @@ public class GuiXraySelectedBlock extends GuiScreen {
     }
     public ModuleXray xray;
 }
-
-

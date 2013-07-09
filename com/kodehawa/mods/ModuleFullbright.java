@@ -28,36 +28,37 @@ import com.kodehawa.CheatBase;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.Tickable;
 
-public class ModuleFullbright extends Mod implements Tickable {
-	
-	public ModuleFullbright( CheatBase rc, Minecraft mc ) {
-		super( Mods.Fullbright );
-		cb = rc;
-		minecraft = mc;
-	}
-	
-	
-	
-	@Override
-	public void onEnable( ) {
-		cb.getUtils( ).addChatMessage( getActive( ) );
-		cb.addToTick( this );
-		cb.getUtils( ).addChatMessage( ChatColour.DARK_GRAY + "Now you can see any block in the darkness!");
-	}
-	
-	@Override
-	public void onDisable( ) {
-		cb.getUtils( ).addChatMessage( getActive( ) );
-		minecraft.gameSettings.gammaSetting = 0.5F;
-		cb.removeFromTick( this );
-	}
-	
-	@Override
-	public void tick( ) {
-		minecraft.gameSettings.gammaSetting++;
-	}
-	
-	private final CheatBase cb;
-	private final Minecraft minecraft;
+public class ModuleFullbright extends Mod implements Tickable
+{
+    public ModuleFullbright(CheatBase rc, Minecraft mc)
+    {
+        super(Mods.Fullbright);
+        cb = rc;
+        minecraft = mc;
+    }
 
+    @Override
+    public void onEnable()
+    {
+        cb.getUtils().addChatMessage(getActive());
+        cb.addToTick(this);
+        cb.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Now you can see any block in the darkness!");
+    }
+
+    @Override
+    public void onDisable()
+    {
+        cb.getUtils().addChatMessage(getActive());
+        minecraft.gameSettings.gammaSetting = 0.5F;
+        cb.removeFromTick(this);
+    }
+
+    @Override
+    public void tick()
+    {
+        minecraft.gameSettings.gammaSetting++;
+    }
+
+    private final CheatBase cb;
+    private final Minecraft minecraft;
 }

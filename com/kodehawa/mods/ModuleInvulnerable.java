@@ -29,43 +29,44 @@ import net.minecraft.src.Minecraft;
 import com.kodehawa.CheatBase;
 import com.kodehawa.util.Tickable;
 
-public class ModuleInvulnerable extends Mod implements Tickable {
+public class ModuleInvulnerable extends Mod implements Tickable
+{
+    private Entity entity;
+    private EntityLivingBase entitylivingb;
 
-	private Entity entity;
-	private EntityLivingBase entitylivingb;
-	
-	public ModuleInvulnerable( CheatBase c, Minecraft m ) {
-		super( Mods.Invulnerable );
-		cheatbase = c;
-		mc = m;
-		// TODO Auto-generated constructor stub
-	}
-	
-	/**
-	 * How many "9"'s I can put? A LOT
-	 */
+    public ModuleInvulnerable(CheatBase c, Minecraft m)
+    {
+        super(Mods.Invulnerable);
+        cheatbase = c;
+        mc = m;
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void tick() {
-		mc.thePlayer.setHealth(999999999999999.0F);
-	}
+    /**
+     * How many "9"'s I can put? A LOT
+     */
 
-	@Override
-	public void onEnable() {
-		cheatbase.addToTick( this );
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-	}
+    @Override
+    public void tick()
+    {
+        mc.thePlayer.setHealth(999999999999999.0F);
+    }
 
-	@Override
-	public void onDisable() {
-		cheatbase.removeFromTick( this );
-		mc.thePlayer.setHealth(20.0F);
-		cheatbase.getUtils( ).addChatMessage( getActive( ) );
-		
-	}
-	
-	
+    @Override
+    public void onEnable()
+    {
+        cheatbase.addToTick(this);
+        cheatbase.getUtils().addChatMessage(getActive());
+    }
+
+    @Override
+    public void onDisable()
+    {
+        cheatbase.removeFromTick(this);
+        mc.thePlayer.setHealth(20.0F);
+        cheatbase.getUtils().addChatMessage(getActive());
+    }
+
     public CheatBase cheatbase;
     public Minecraft mc;
-    
 }

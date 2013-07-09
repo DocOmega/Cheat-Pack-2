@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 
-
 package com.kodehawa.newgui;
 
 import java.util.*;
@@ -78,13 +77,13 @@ class ContainerItemSelection extends Container
         {
             for (int l1 = 0; l1 < 8; l1++)
             {
-            	addSlotToContainer(new Slot(GuiItemSelection.g(), l1 + j1 * 8, 8 + l1 * 18, 18 + j1 * 18));
+                addSlotToContainer(new Slot(GuiItemSelection.g(), l1 + j1 * 8, 8 + l1 * 18, 18 + j1 * 18));
             }
         }
 
         for (int k1 = 0; k1 < 9; k1++)
         {
-        	addSlotToContainer(new Slot(entityplayer.inventory, k1, 8 + k1 * 18, 184));
+            addSlotToContainer(new Slot(entityplayer.inventory, k1, 8 + k1 * 18, 184));
         }
 
         Integer integer;
@@ -105,7 +104,6 @@ class ContainerItemSelection extends Container
             {
                 return 17;
             }
-
 
             if (i == Block.planks.blockID)
             {

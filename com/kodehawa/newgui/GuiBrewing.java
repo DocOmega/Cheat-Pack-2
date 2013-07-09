@@ -87,7 +87,6 @@ public class GuiBrewing extends GuiContainer
         //Tanto lio para PONER UNA TEXTURA ENSERIO? ._.
         mc.func_110434_K().func_110577_a(field_CP2_oi);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
         int l = (width - xSize) / 2;
         int i1 = (height - ySize) / 2;
         drawTexturedModalRect(l, i1, 0, 0, xSize, ySize);
