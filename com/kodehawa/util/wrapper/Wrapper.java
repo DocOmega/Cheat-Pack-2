@@ -20,15 +20,20 @@ import com.kodehawa.mods.ModManager;
 
 public class Wrapper
 {
+	
+	
     public Minecraft getMinecraft()
     {
         try
         {
+        	
+            // 
             Field minecraft = CheatBase.class.getDeclaredField("mc");
             minecraft.setAccessible(true);
             Minecraft mc = (Minecraft) minecraft.get(null);
             return mc;
         }
+        
         catch (Exception e)
         {
             System.err.println("********COULD NOT GET MINECRAFT********");
@@ -39,6 +44,21 @@ public class Wrapper
         }
     }
 
+    public static Minecraft getrightClickDelayTimer(){
+    	
+    	try{
+    	Field field = Minecraft.class.getDeclaredField("rightClickDelayTimer");
+        field.setAccessible(true);
+        Minecraft mine = (Minecraft) field.get(null);
+    	}
+    	catch (Exception e)
+        {
+            System.err.println("Test");
+            e.printStackTrace();
+        }
+		return null;
+    }
+    
     public ScaledResolution getScaledResolution()
     {
         Minecraft mc = getMinecraft();
@@ -56,6 +76,8 @@ public class Wrapper
         return getScaledResolution().getScaledHeight();
     }
 
+    
+    
     public ModManager getModuleManager()
     {
         try

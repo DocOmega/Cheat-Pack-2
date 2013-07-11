@@ -1,7 +1,9 @@
 package net.minecraft.src;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.Proxy;
 import java.nio.ByteBuffer;
@@ -35,6 +37,8 @@ import org.lwjgl.util.glu.GLU;
 
 import com.google.common.collect.Lists;
 import com.kodehawa.CheatBase;
+import com.kodehawa.core.CheckKey;
+import com.kodehawa.mods.Vars;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -196,6 +200,8 @@ public class Minecraft implements IPlayerUsage
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
     protected CheatBase cheatbase;
+    private KeyBinding key;
+    private CheckKey ckey;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
@@ -223,6 +229,7 @@ public class Minecraft implements IPlayerUsage
         compat = new HashMap<String, Integer>();
         System.out.println("Cheating Essentials: Pre-Initialization Event");
         checkCompatibility("ModLoader");
+        cheatbase = new CheatBase( this.theMinecraft );
     }
 
     private void startTimerHackThread()
@@ -1378,7 +1385,9 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
-        if (this.rightClickDelayTimer > 0)
+    	
+    	
+    	if (this.rightClickDelayTimer > 0)
         {
             --this.rightClickDelayTimer;
         }
@@ -1840,7 +1849,12 @@ public class Minecraft implements IPlayerUsage
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
+        //Tickable CE Init.
+        cheatbase.tick();
+
     }
+    
+	
 
     /**
      * Arguments: World foldername,  World ingame name, WorldSettings
@@ -2453,5 +2467,42 @@ public class Minecraft implements IPlayerUsage
       System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
       compat.put(mod, 1);
     }
+    
+    public static void registerKey(KeyBinding key){
+        GameSettings s = getMinecraft().gameSettings;
+        KeyBinding[] newb = new KeyBinding[s.keyBindings.length + 1];
+        for (int i = 0; i < s.keyBindings.length; i++){
+                newb[i] = s.keyBindings[i];
+        }
+        newb[s.keyBindings.length] = key;
+        s.keyBindings = newb;
+        try{
+                File optionsFile = new File(theMinecraft.mcDataDir, "options.txt");
+                if (!optionsFile.exists()){
+                        return;
+                }
+                BufferedReader bufferedreader = new BufferedReader(new FileReader(optionsFile));
+                for (String str = ""; (str = bufferedreader.readLine()) != null;){
+                        try{
+                                String as[] = str.split(":");
+                                if (as[0].equals((new StringBuilder()).append("key_").append(key.keyDescription).toString())){
+                                        key.keyCode = Integer.parseInt(as[1]);
+                                }
+                        }catch (Exception exception1){
+                                System.out.println((new StringBuilder()).append("Skipping bad option: ").append(s).toString());
+                        }
+                }
+                bufferedreader.close();
+        }
+        catch (Exception exception){
+                System.out.println("Failed to load options");
+                exception.printStackTrace();
+        }
+        KeyBinding.resetKeyBindingArrayAndHash();
+        return;
+        
+}
+    
+
     
 }

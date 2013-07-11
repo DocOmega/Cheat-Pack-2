@@ -43,6 +43,7 @@ public class ModuleFullbright extends Mod implements Tickable
         cb.getUtils().addChatMessage(getActive());
         cb.addToTick(this);
         cb.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Now you can see any block in the darkness!");
+        
     }
 
     @Override

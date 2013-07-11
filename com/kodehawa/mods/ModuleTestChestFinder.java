@@ -32,17 +32,26 @@ public class ModuleTestChestFinder extends Mod implements Tickable
         // TODO Auto-generated method stub
     }
 
+    /**
+     * False=enabled, True=disabled.. FUCK THE LOGIC! :D
+     */
+    
     @Override
     public void onEnable()
     {
-        cb.getUtils().addChatMessage("For enable Chest ESP press N!");
+    	Vars.ChestESP = false;
+        cb.getUtils().addChatMessage(getActive());
+        cb.getUtils().addChatMessage("We need dungeons.. DUNGEONS EVERYWHERE");
         // TODO Auto-generated method stub
     }
 
+    
+   
     @Override
     public void onDisable()
     {
         // TODO Auto-generated method stub
-        cb.getUtils().addChatMessage("Thanks for understanding :)");
+    	Vars.ChestESP = true;
+        cb.getUtils().addChatMessage(getActive());
     }
 }

@@ -277,7 +277,7 @@ public class ModuleGui extends GuiScreen
     public void makeRadarFrame()
     {
         final Radar r = new Radar();
-        Frame rFrame = new Frame(CheatBase.instance, 10, 30, 120, 20, 0xff550055, 0xaa000000, "Radar")
+        Frame rFrame = new Frame(CheatBase.instance, 250, 30, 120, 20, 0xff550055, 0xaa000000, "Radar")
         {
             @Override
             public void update()
@@ -385,7 +385,8 @@ public class ModuleGui extends GuiScreen
 
     public void makeInfoFrame()
     {
-        final Frame iFrame = new Frame(CheatBase.instance, 250, 30, 120, 20, 0xff550055, 0xaa000000, "Player Info")
+    	//10, 10, 120, 20
+        final Frame iFrame = new Frame(CheatBase.instance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Player Info")
         {
             @Override
             public void update()
@@ -608,8 +609,6 @@ public class ModuleGui extends GuiScreen
         makeWorldFrame();
         makePlayerFrame();
         makeRadarFrame();
-        //makeActivesFrame( );
-        makeInfoFrame();
-        makeTestFrame();
+        makeActivesFrame( );
     }
 }

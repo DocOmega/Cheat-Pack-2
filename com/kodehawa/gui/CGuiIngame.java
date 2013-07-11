@@ -31,6 +31,7 @@ public class CGuiIngame extends GuiIngame
     public CGuiIngame(Minecraft par1Minecraft)
     {
         super(par1Minecraft);
+        
         // TODO Auto-generated constructor stub
     }
 
@@ -40,13 +41,9 @@ public class CGuiIngame extends GuiIngame
     @Override
     public void renderGameOverlay(float par1, boolean par2, int par3, int par4)
     {
-        super.renderGameOverlay(par1, par2, par3, par4);
-
-        if (checkKey(Keyboard.KEY_N))
-        {
-            Vars.ChestESP = !Vars.ChestESP;
-        }
-
+    	super.renderGameOverlay(par1, par2, par3, par4);
+        
+        
         GL11.glPushMatrix();
         GL11.glPopMatrix();
     }

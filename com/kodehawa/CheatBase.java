@@ -2,15 +2,11 @@
  * Base Classes Modified:
  *
  * @Block.java
- * @GuiIngame.java
  * @Minecraft.java
  * @EntityPlayer.java
+ * @TileEntityChestRenderer.java
  */
 
-/**
- * I does the most because I can (8) lalalalala
- * @PlayPortalNow
- */
 
 package com.kodehawa;
 
@@ -75,6 +71,7 @@ public class CheatBase
 
     /**
      * Field for MC 1.6
+     * Public because... BECAUSE I CAN :)
      */
 
     public static File field_CP2_ol;
@@ -85,23 +82,18 @@ public class CheatBase
 
     public static CustomFont guiFont;
 
-    /**
-     * Generic random thing that it's really not used.
-     */
-
-    public static boolean truelyinstalled = true;
 
     /**
      * Get variables for console printing.
      */
 
-    public String modName = "Cheating Essentials";
-    public String mcversion = "Minecraft 1.5.2";
-    public String modversion = "Cheating Essentials 2.6";
-    public String build = "Build 5 - 01.07.2013";
+    private String modName = "Cheating Essentials";
+    private String mcversion = "Minecraft 1.6.2";
+    private String modversion = "Version 2.8";
+    private String build = "Build 2 - 09-07-2013";
 
     /**
-     * I don't remember for what it's this. I'm too lazy.
+     * I don't remember for what it's this. I'm too lazy to remember it.
      */
 
     long now;
@@ -122,7 +114,6 @@ public class CheatBase
         instance = this;
         minecraft = mc;
         ck = new CheckKey(mc);
-        ck6.init();
         init();
     }
     public static ArrayList<String> enabledMods = new ArrayList<String>();
@@ -144,9 +135,7 @@ public class CheatBase
         translations = new TranslationWritter();
         femanager = new FrenemyManager();
         console = new Console();
-        ck6 = new CheatPack();
         LogAgent.logInfo("Initialization Complete");
-        LogAgent.logInfo("SSP/SMP mode enabled.");
         guiFont = new CustomFont(minecraft, "Bauhaus", 20);
 
         for (Mod m : mmanager.mods)
@@ -154,11 +143,11 @@ public class CheatBase
             keyShit.put(m, m.keyBind);
         }
 
-        LogAgent.logInfo(modversion + " - " + build);
+        LogAgent.logInfo(modName + ": " + modversion + " - " + build + " " + "for" + " " + mcversion);
     }
 
     /**
-     * Get a Callable reflector mains for Corebase (com.kodehawa.Cheatxx) xx = Anything
+     * Get a Callable reflector for Corebase (com.kodehawa.Cheatxx) xx = Anything
      * @Reflection Main
      */
 
@@ -229,13 +218,6 @@ public class CheatBase
             tick.tick();
         }
 
-        /**
-         * Swaps out the GuiIngame
-         */
-        if (this.minecraft.ingameGUI.getClass() != CGuiIngame.class)
-        {
-            this.minecraft.ingameGUI = new CGuiIngame(this.minecraft);
-        }
 
         updateArray();
         checkForKeyPress();
@@ -253,7 +235,7 @@ public class CheatBase
     }
 
     /**
-     * NOT USED Update pinned frames.
+     * Update pinned frames.
      */
 
     public void updatePinnedFrames()
@@ -295,16 +277,13 @@ public class CheatBase
      * Checkkey... umad?
      */
 
-    public void checkForKeyPress()
+   public void checkForKeyPress()
     {
         if (ck.checkKey(Keyboard.KEY_G))
         {
             minecraft.displayGuiScreen(modgui);
 
-            if (ck.checkKey(Keyboard.KEY_X))
-            {
-                xray.toggle();
-            }
+            
 
             for (Map.Entry<Mod, Integer> e : keyShit.entrySet())
             {
@@ -350,6 +329,8 @@ public class CheatBase
 
         return false;
     }
+    
+    
 
     /**
      * Log references and printing
