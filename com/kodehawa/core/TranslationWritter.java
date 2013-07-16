@@ -33,14 +33,12 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 import com.kodehawa.CheatBase;
-import com.kodehawa.CheatPack;
 
 public class TranslationWritter
 {
     //Only for en_EN locale. For other please check the post.
 
     public File translationFile;
-    public CheatPack init;
     public CheatBase cb;
 
     public TranslationWritter()
@@ -55,7 +53,7 @@ public class TranslationWritter
                 translationFile.createNewFile();
                 FileWriter fstream = new FileWriter(translationFile);
                 BufferedWriter out = new BufferedWriter(fstream);
-                cb.LogAgent.logInfo("Writting Translation File...");
+                cb.CELogAgent.logInfo("Writting Translation File...");
                 out.write("GuiInventory.LabelCrafting=Crafting" + "\r\n");
                 out.write("GuiItemSelection.LabelItemSelection=Item selection" + "\r\n");
                 out.write("GuiHealthFood.LabelTitle=Health and food" + "\r\n");
@@ -107,7 +105,7 @@ public class TranslationWritter
             }
             catch (Exception e)       // Catch exception if any
             {
-                cb.LogAgent.logInfo("Error writing the Translation File!: " + e.getMessage());
+                cb.CELogAgent.logInfo("Error writing the Translation File!: " + e.getMessage());
             }
 
             Reader();

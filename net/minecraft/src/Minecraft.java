@@ -227,7 +227,6 @@ public class Minecraft implements IPlayerUsage
         ImageIO.setUseCache(false);
         StatList.nopInit();
         compat = new HashMap<String, Integer>();
-        System.out.println("Cheating Essentials: Pre-Initialization Event");
         checkCompatibility("ModLoader");
         cheatbase = new CheatBase( this.theMinecraft );
     }

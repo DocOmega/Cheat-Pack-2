@@ -7,7 +7,6 @@
  * @TileEntityChestRenderer.java
  */
 
-
 package com.kodehawa;
 
 import java.io.File;
@@ -28,14 +27,12 @@ import com.kodehawa.core.CheckKey;
 import com.kodehawa.core.KeyManager;
 import com.kodehawa.core.TranslationWritter;
 import com.kodehawa.event.EventHandler;
-import com.kodehawa.gui.CGuiIngame;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.font.CustomFont;
 import com.kodehawa.gui.api.testing.AlertHandler;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.Console;
 import com.kodehawa.util.Tickable;
@@ -63,11 +60,6 @@ public class CheatBase
 
     public final static Wrapper getWrapper = new Wrapper();
 
-    /**
-     * Get the main Corebase.
-     */
-
-    public static CheatPack ck6;
 
     /**
      * Field for MC 1.6
@@ -89,9 +81,27 @@ public class CheatBase
 
     private String modName = "Cheating Essentials";
     private String mcversion = "Minecraft 1.6.2";
-    private String modversion = "Version 2.8";
-    private String build = "Build 2 - 09-07-2013";
+    private String modversion = "version 2.9.1.850";
+    private String random = "Kodehawa's";
+    private String modsloaded = "Modules:" +
+    		" X-Ray," +
+    		" Fly," +
+    		" Killaura," +
+    		" Fastplace," +
+    		" Autorespawn," +
+    		" Noknockback," +
+    		" Waterwalk," +
+    		" Fullbirght," +
+    		" NoFall," +
+    		" Chest Finder," +
+    		" Sprint.";
+    private String vcompatibility = "Optifine," +
+    		" ModLoader," +
+    		" OptiLeaves," +
+    		" Forge.";
+    		
 
+    
     /**
      * I don't remember for what it's this. I'm too lazy to remember it.
      */
@@ -124,6 +134,9 @@ public class CheatBase
 
     public void init()
     {
+    	System.out.println("");
+    	System.out.println("");
+    	CELogAgent.logInfo(modName + " " + modversion + " " + "started in" + " " + mcversion + " ");        
         utils = new Utils(minecraft);
         mc = Minecraft.getMinecraft();
         now = System.currentTimeMillis();
@@ -135,15 +148,16 @@ public class CheatBase
         translations = new TranslationWritter();
         femanager = new FrenemyManager();
         console = new Console();
-        LogAgent.logInfo("Initialization Complete");
+        CELogAgent.logInfo(modsloaded);
+        CELogAgent.logInfo("Cheating Essentials its compatible with the following vanilla mods: " + vcompatibility);
+        System.out.println("");
         guiFont = new CustomFont(minecraft, "Bauhaus", 20);
 
         for (Mod m : mmanager.mods)
         {
             keyShit.put(m, m.keyBind);
         }
-
-        LogAgent.logInfo(modName + ": " + modversion + " - " + build + " " + "for" + " " + mcversion);
+        System.out.println("");
     }
 
     /**
@@ -161,7 +175,6 @@ public class CheatBase
         }
         catch (IllegalAccessException illegalaccessexception)
         {
-            ck6.throwException("[Cheating Essentials] [Reflector] Failed to get a private value!", illegalaccessexception);
         }
 
         return null;
@@ -177,7 +190,6 @@ public class CheatBase
         }
         catch (IllegalAccessException illegalaccessexception)
         {
-            ck6.throwException("[Cheating Essentials] [Reflector] Failed to get a private method!", illegalaccessexception);
         }
 
         return null;
@@ -208,22 +220,26 @@ public class CheatBase
     }
 
     /**
-     * Main method for GUI.
+     * Main method for GUI and mods ticks. Some mods are bugged.
      */
 
     public void tick()
     {
-        for (Tickable tick : tickables)
-        {
-            tick.tick();
-        }
-
+        instance.modtick();
 
         updateArray();
         checkForKeyPress();
         updatePinnedFrames();
     }
 
+    public void modtick(){
+    	for (Tickable tick : instance.tickables)
+        {
+    		//Holy crash.
+           tickable.tick();
+        }
+    }
+    
     /**
      * Get the mod utils (com.kodehawa.util)
      * @return utils
@@ -336,7 +352,7 @@ public class CheatBase
      * Log references and printing
      */
 
-    public final static ILogAgent LogAgent = new net.minecraft.src.LogAgent("Cheat Pack 2", " [Cheating Essentials] [CB]", (new File(field_CP2_ol, "CheatingEssentials.log")).getAbsolutePath());
+    public final ILogAgent CELogAgent = new net.minecraft.src.LogAgent("Cheating Essentials", " [Cheating Essentials]", (new File(field_CP2_ol, "CheatingEssentials.log")).getAbsolutePath());
 
     /**
      * References.
@@ -353,11 +369,9 @@ public class CheatBase
     public TranslationWritter translations;
     public FrenemyManager femanager;
     public ModuleGui modgui;
-    public static boolean hasModLoader;
     public AlertHandler amanager;
     public WaypointManager wmanager;
     public Console console;
     public CheatBase cheatbase;
-    public static CheatBase cb;
-    private static ModuleXray xray;
+    private Tickable tickable;
 }

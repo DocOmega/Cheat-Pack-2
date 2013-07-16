@@ -30,7 +30,7 @@ import com.kodehawa.CheatBase;
 
 public class Vars
 {
-    public static boolean tracer, pesp, cesp, xray, doublespeed, rearv, ChestESP = true;
+    public static boolean xray, doublespeed, ChestESP = true, RedstoneFinder;
     public static double speedbonus = 2;
 
     /**
@@ -38,12 +38,13 @@ public class Vars
      * List<Integer>.
      */
     public static Integer[ ] xrayBlocks = new Integer[ ] { 8, 9, 10, 11, 14, 15, 16, 21, 89, 56, 73, 129, 88, 112, 153, 41, 42, 48, 173, 57, 49, 152 };
-
+    public static Integer[ ] RedstoneFinderb = new Integer[ ] { 331, 76, 356, 123, 152, 404, 70, 72, 29, 33, 23, 151, 154, 158, 69, 147, 148 };
+    
     public static ArrayList<String> friends = new ArrayList<String>();
     public static ArrayList<String> enemies = new ArrayList<String>();
 
     /**
      * Who to spy on?
      */
-    public static EntityPlayer spiedOn = CheatBase.instance.minecraft.getMinecraft().thePlayer;
+    public static EntityPlayer spiedOn = CheatBase.instance.getWrapper.getMinecraft().thePlayer;
 }

@@ -43,6 +43,7 @@ public class ModManager
         addWMod(new ModuleXray(c, c.minecraft));
         addWMod(new ModuleAutoRespawn(c, c.minecraft));
         addWMod(new ModuleTestChestFinder(c, c.minecraft));
+        //addWMod(new ModuleNoClip(c, c.minecraft));
         
         // Player mods
         addPMod(new ModuleFly(c, c.minecraft));
@@ -50,6 +51,7 @@ public class ModManager
         addPMod(new ModuleNoFall(c, c.minecraft));
         addPMod(new ModuleSprint(c, c.minecraft));
         addPMod(new ModuleNoKnockback(c, c.minecraft));
+        addPMod(new ModuleItemTooltips(c, c.minecraft));
         // Test
         addMod(new ModuleAutoRespawn(c, c.minecraft));
     

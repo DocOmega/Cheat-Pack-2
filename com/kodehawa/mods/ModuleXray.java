@@ -52,8 +52,8 @@ public class ModuleXray extends Mod implements Tickable
     {
         cheatbase.addToTick(this);
         Vars.xray = true;
-        mc.gameSettings.gammaSetting = 99999999.0F;
         mc.renderGlobal.loadRenderers();
+        mc.gameSettings.gammaSetting = 15.0F;
         cheatbase.getUtils().addChatMessage(getActive());
         cheatbase.getUtils().addChatMessage("Good luck finding Diamonds! Disable Smooth Lighting.");
     }
