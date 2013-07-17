@@ -2,15 +2,15 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleSprint extends Mod implements Tickable
 {
-    private final CheatBase cheatbase;
+    private final CheatingEssentials cheatbase;
     private final Minecraft mc;
 
-    public ModuleSprint(CheatBase cb, Minecraft m)
+    public ModuleSprint(CheatingEssentials cb, Minecraft m)
     {
         super(Mods.Sprint);
         cheatbase = cb;
@@ -49,7 +49,7 @@ public class ModuleSprint extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromTick(this);
+        cheatbase.removeFromCurrentTick(this);
         cheatbase.getUtils().addChatMessage(getActive());
     }
 }

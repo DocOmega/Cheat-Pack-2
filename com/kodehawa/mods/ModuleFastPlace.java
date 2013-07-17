@@ -1,22 +1,20 @@
 package com.kodehawa.mods;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFastPlace extends Mod implements Tickable
 {
-    CheatBase cb;
+	CheatingEssentials cb;
     Minecraft minecraft;
 
-    public ModuleFastPlace(CheatBase cb, Minecraft mc)
+    public ModuleFastPlace(CheatingEssentials ce, Minecraft mc)
     {
         super(Mods.Fastplace);
         // TODO Auto-generated constructor stub
-        this.cb = cb;
+        this.cb = ce;
         this.minecraft = mc;
     }
 
@@ -25,7 +23,7 @@ public class ModuleFastPlace extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	 
-       CheatBase.getWrapper.getMinecraft().rightClickDelayTimer = 0;
+    	minecraft.rightClickDelayTimer = 0;
     }
 
     @Override
@@ -39,7 +37,7 @@ public class ModuleFastPlace extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cb.removeFromTick(this);
+        cb.removeFromCurrentTick(this);
         cb.getUtils().addChatMessage(getActive());
     }
 }

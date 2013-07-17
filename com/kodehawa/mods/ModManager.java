@@ -23,7 +23,7 @@ package com.kodehawa.mods;
 
 import java.util.ArrayList;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class ModManager
 {
@@ -31,7 +31,7 @@ public class ModManager
     public ArrayList<Mod> worldMods;
     public ArrayList<Mod> playerMods;
 
-    public ModManager(CheatBase c)
+    public ModManager(CheatingEssentials c)
     {
         mods = new ArrayList<Mod>();
         worldMods = new ArrayList<Mod>();

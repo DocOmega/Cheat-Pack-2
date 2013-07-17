@@ -16,14 +16,14 @@ import net.minecraft.src.Minecraft;
 
 import org.lwjgl.opengl.GL11;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.CGuiIngame;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Vars;
 
 public class Radar
 {
-    Minecraft mc = CheatBase.instance.minecraft;
+    Minecraft mc = CheatingEssentials.modinstance.minecraft;
 
     public void drawRadar(int x, int y)
     {
@@ -63,8 +63,7 @@ public class Radar
                 {
                     if (entity instanceof EntityPlayer)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xff0000ff );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff0000ff);
                         GL11.glScalef(0.5F, 0.5F, 0.5F);
                         EntityPlayer p = (EntityPlayer) entity;
@@ -85,51 +84,43 @@ public class Radar
                         }
 
                         this.mc.fontRenderer.drawString(u, (int)(finalX) - (this.mc.fontRenderer.getStringWidth(u) / 2), (int) finalY - 10, color);
-                        // TTFRenderer.drawTTFString( Colony.instance.guiFont,
-                        // u, finalX - ( this.mc.fontRenderer.getStringWidth( u
-                        // ) / 2 ), finalY, color );
+                        
                         GL11.glScalef(1F, 1F, 1F);
                     }
 
                     if (entity instanceof EntityAnimal)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xff00ff00 );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff00ff00);
                     }
 
                     if (entity instanceof EntityMob)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xffff0000 );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xffff0000);
                     }
 
                     if (entity instanceof EntitySlime)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xffff88cc );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xffff88cc);
                     }
 
                     if (entity instanceof EntityVillager)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xff8b4513 );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff8b4513);
                     }
 
                     if (entity instanceof EntityBat)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xfff4a460 );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xfff4a460);
                     }
 
                     if (entity instanceof EntitySquid)
                     {
-                        // ModGuiUtils.drawCircle( (int) finalX / 2, (int)
-                        // finalY / 2, 1, 0xff003399 );
+                        
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff003399);
                     }
                 }

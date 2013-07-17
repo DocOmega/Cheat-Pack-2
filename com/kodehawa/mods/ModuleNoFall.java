@@ -2,28 +2,28 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.Packet11PlayerPosition;
-import net.minecraft.src.Packet12PlayerLook;
 import net.minecraft.src.Packet13PlayerLookMove;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleNoFall extends Mod implements Tickable
 {
-    private final CheatBase cheatbase;
+    private final CheatingEssentials cheatbase;
+    private Minecraft mc;
 
-    public ModuleNoFall(CheatBase cb, Minecraft m)
+    public ModuleNoFall(CheatingEssentials cb, Minecraft m)
     {
         super(Mods.Nofall);
         cheatbase = cb;
+        mc = m;
     }
 
     @Override
     public void tick()
     {
         // TODO Auto-generated method stub
-        EntityClientPlayerMP ep = CheatBase.getInstance().getWrapper.getMinecraft().thePlayer;
+        EntityClientPlayerMP ep = mc.thePlayer;
         ep.sendQueue.addToSendQueue(new Packet13PlayerLookMove(ep.motionX, -999.0D, -999.0D, ep.motionZ,
                 ep.rotationYaw, ep.rotationPitch, !ep.onGround));
     }
@@ -39,7 +39,7 @@ public class ModuleNoFall extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromTick(this);
+        cheatbase.removeFromCurrentTick(this);
         cheatbase.getUtils().addChatMessage(getActive());
     }
 }

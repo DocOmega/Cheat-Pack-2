@@ -24,16 +24,15 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
-import com.kodehawa.util.ChatColour;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleXray extends Mod implements Tickable
 {
-    public CheatBase cheatbase;
+    public CheatingEssentials cheatbase;
     private Minecraft mc;
 
-    public ModuleXray(CheatBase cb, Minecraft m)
+    public ModuleXray(CheatingEssentials cb, Minecraft m)
     {
         super(Mods.Xray);
         cheatbase = cb;
@@ -61,7 +60,7 @@ public class ModuleXray extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromTick(this);
+        cheatbase.removeFromCurrentTick(this);
         Vars.xray = false;
         mc.gameSettings.gammaSetting = 0.5F;
         mc.renderGlobal.loadRenderers();

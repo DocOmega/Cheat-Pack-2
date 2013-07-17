@@ -3,7 +3,7 @@ package com.kodehawa.event.events;
 import net.minecraft.src.Block;
 import paulscode.sound.Vector3D;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.EventCancellable;
 
 public class EventBlockRender extends EventCancellable
@@ -22,7 +22,7 @@ public class EventBlockRender extends EventCancellable
         super(source);
         this.type = type;
         blockCoordinates = new Vector3D(x, y, z);
-        this.block = Block.blocksList[ CheatBase.getInstance().getWrapper.getMinecraft().theWorld
+        this.block = Block.blocksList[ CheatingEssentials.getModInstance().getModWrapper.getMinecraft().theWorld
                 .getBlockId(x, y, z) ];
     }
 

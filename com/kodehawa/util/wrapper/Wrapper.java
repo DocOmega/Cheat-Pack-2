@@ -2,7 +2,6 @@ package com.kodehawa.util.wrapper;
 
 import java.lang.reflect.Field;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
 
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.Packet;
@@ -11,11 +10,10 @@ import net.minecraft.src.ScaledResolution;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.ModuleGui;
-import com.kodehawa.gui.api.font.CustomFont;
 import com.kodehawa.mods.ModManager;
 
 public class Wrapper
@@ -28,7 +26,7 @@ public class Wrapper
         {
         	
             // 
-            Field minecraft = CheatBase.class.getDeclaredField("mc");
+            Field minecraft = CheatingEssentials.class.getDeclaredField("mc");
             minecraft.setAccessible(true);
             Minecraft mc = (Minecraft) minecraft.get(null);
             return mc;
@@ -82,7 +80,7 @@ public class Wrapper
     {
         try
         {
-            Field mang = CheatBase.class.getDeclaredField("mmanager");
+            Field mang = CheatingEssentials.class.getDeclaredField("mmanager");
             mang.setAccessible(true);
             ModManager mm = (ModManager) mang.get(null);
             return mm;
@@ -101,7 +99,7 @@ public class Wrapper
     {
         try
         {
-            Field mang = CheatBase.class.getDeclaredField("eventHandler");
+            Field mang = CheatingEssentials.class.getDeclaredField("eventHandler");
             mang.setAccessible(true);
             EventHandler gm = (EventHandler) mang.get(null);
             return gm;
@@ -118,7 +116,7 @@ public class Wrapper
     {
         try
         {
-            Field mang = CheatBase.class.getDeclaredField("cmanager");
+            Field mang = CheatingEssentials.class.getDeclaredField("cmanager");
             mang.setAccessible(true);
             ConsoleHelper cm = (ConsoleHelper) mang.get(null);
             return cm;
@@ -135,7 +133,7 @@ public class Wrapper
     {
         try
         {
-            Field mang = CheatBase.class.getDeclaredField("modgui");
+            Field mang = CheatingEssentials.class.getDeclaredField("modgui");
             mang.setAccessible(true);
             ModuleGui gm = (ModuleGui) mang.get(null);
             return gm;

@@ -3,15 +3,15 @@ package com.kodehawa.mods;
 import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleWaterwalk extends Mod implements Tickable
 {
-    private final CheatBase cb;
+    private final CheatingEssentials cb;
     private final Minecraft mc;
 
-    public ModuleWaterwalk(CheatBase co, Minecraft m)
+    public ModuleWaterwalk(CheatingEssentials co, Minecraft m)
     {
         super(Mods.Waterwalk);
         cb = co;
@@ -41,7 +41,7 @@ public class ModuleWaterwalk extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cb.removeFromTick(this);
+        cb.removeFromCurrentTick(this);
         cb.getUtils().addChatMessage(getActive());
     }
 

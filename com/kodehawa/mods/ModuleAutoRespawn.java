@@ -2,15 +2,15 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleAutoRespawn extends Mod implements Tickable
 {
-    private CheatBase cb;
+    private CheatingEssentials cb;
     private Minecraft mc;
 
-    public ModuleAutoRespawn(CheatBase c, Minecraft m)
+    public ModuleAutoRespawn(CheatingEssentials c, Minecraft m)
     {
         super(Mods.Autorespawn);
         // TODO Auto-generated constructor stub
@@ -22,9 +22,9 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     public void tick()
     {
         // TODO Auto-generated method stub
-        if (CheatBase.getInstance().getWrapper.getMinecraft().thePlayer.isDead)
+        if (mc.thePlayer.isDead)
         {
-            CheatBase.getInstance().getWrapper.getMinecraft().thePlayer.respawnPlayer();
+        	mc.thePlayer.respawnPlayer();
         }
     }
 
@@ -41,7 +41,7 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     public void onDisable()
     {
         // TODO Auto-generated method stub
-        cb.removeFromTick(this);
+        cb.removeFromCurrentTick(this);
         cb.getUtils().addChatMessage(getActive());
     }
 }

@@ -37,7 +37,7 @@ import net.minecraft.src.INetworkManager;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.NetClientHandler;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.util.waypoints.Waypoint;
 
@@ -80,7 +80,7 @@ public class WaypointManager
 
     public void tick()
     {
-        SocketAddress var67 = this.getRemoteSocketAddress(CheatBase.instance.minecraft.thePlayer);
+        SocketAddress var67 = this.getRemoteSocketAddress(CheatingEssentials.modinstance.minecraft.thePlayer);
         String var70;
         var70 = var67.toString().replaceAll("[\r\n]", "");
         Matcher var75 = Pattern.compile("(.*)/(.*):([0-9]+)").matcher(var70);

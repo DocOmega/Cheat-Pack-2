@@ -31,7 +31,6 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.Packet;
 
-import com.kodehawa.CheatBase;
 import com.kodehawa.util.ChatColour;
 
 public class Enchant implements BaseCommand
@@ -122,7 +121,7 @@ public class Enchant implements BaseCommand
         }*/
         try
         {
-            EntityClientPlayerMP thePlayer = CheatBase.getInstance().getWrapper.getMinecraft().thePlayer;
+            EntityClientPlayerMP thePlayer = mc.thePlayer;
             ItemStack stack = thePlayer.inventory.getCurrentItem();
             enchantStack(stack, cmd[ 1 ], Integer.parseInt(cmd[ 2 ]));
             return "Item " + stack.getItemName() + " enchanted with a level " + cmd[ 2 ] + " " + cmd[ 1 ]

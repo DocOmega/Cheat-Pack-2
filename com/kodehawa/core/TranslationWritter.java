@@ -32,18 +32,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class TranslationWritter
 {
     //Only for en_EN locale. For other please check the post.
 
     public File translationFile;
-    public CheatBase cb;
+    public CheatingEssentials cb;
 
     public TranslationWritter()
     {
-        translationFile = new File(CheatBase.instance.minecraft.mcDataDir, "/CP2/gui.lang");
+        translationFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/gui.lang");
 
         if (!translationFile.exists())
         {

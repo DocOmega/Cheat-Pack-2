@@ -26,7 +26,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
@@ -34,10 +34,10 @@ import com.kodehawa.util.Watcher;
 
 public class ModuleKillAura extends Mod implements Tickable
 {
-    private final CheatBase cheatbase;
+    private final CheatingEssentials cheatbase;
     private EntityLiving elb;
 
-    public ModuleKillAura(CheatBase rc, Minecraft mc)
+    public ModuleKillAura(CheatingEssentials rc, Minecraft mc)
     {
         super(Mods.Killaura);
         cheatbase = rc;
@@ -55,7 +55,7 @@ public class ModuleKillAura extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromTick(this);
+        cheatbase.removeFromCurrentTick(this);
         cheatbase.getUtils().addChatMessage(getActive());
     }
 

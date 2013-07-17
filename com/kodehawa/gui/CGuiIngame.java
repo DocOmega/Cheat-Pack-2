@@ -6,14 +6,14 @@ import net.minecraft.src.Minecraft;
 
 import org.lwjgl.input.Keyboard;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.core.CheckKey;
 import com.kodehawa.mods.Mod;
 
 public class CGuiIngame
 {
     public static int tick = 0;
-    public static CheatBase cheatbase;
+    public static CheatingEssentials cheatbase;
     private Minecraft mc;
     private boolean keyStates[] = new boolean[ 256 ];
     private CheckKey ck;

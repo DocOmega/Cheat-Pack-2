@@ -22,14 +22,14 @@
 
 package com.kodehawa.gui.api.components;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public abstract class Item
 {
     /**
      * Reference to the main class
      */
-    public CheatBase c;
+    public CheatingEssentials c;
 
     /**
      * Parent frame

@@ -6,17 +6,17 @@ import net.minecraft.src.Minecraft;
 import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.Packet13PlayerLookMove;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFly extends Mod implements Tickable
 {
-    private final CheatBase cheatbase;
+    private final CheatingEssentials cheatbase;
     private final Minecraft mc;
     public NetClientHandler sendQueue;
     public EntityPlayerMP playerEntity;
 
-    public ModuleFly(CheatBase c, Minecraft m)
+    public ModuleFly(CheatingEssentials c, Minecraft m)
     {
         super(Mods.Fly);
         cheatbase = c;
@@ -28,12 +28,12 @@ public class ModuleFly extends Mod implements Tickable
     public void tick()
     {
         // TODO Auto-generated method stub
-        if (!CheatBase.getInstance().getWrapper.getMinecraft().thePlayer.capabilities.isFlying)
+        if (!mc.thePlayer.capabilities.isFlying)
         {
-            CheatBase.getInstance().getWrapper.getMinecraft().thePlayer.capabilities.isFlying = true;
+        	mc.thePlayer.capabilities.isFlying = true;
         }
 
-        EntityClientPlayerMP ep = CheatBase.getInstance().getWrapper.getMinecraft().thePlayer;
+        EntityClientPlayerMP ep = mc.thePlayer;
         ep.sendQueue.addToSendQueue(new Packet13PlayerLookMove(ep.motionX, -999.0D, -999.0D, ep.motionZ,
                 ep.rotationYaw, ep.rotationPitch, !ep.onGround));
     }
@@ -50,7 +50,7 @@ public class ModuleFly extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromTick(this);
+        cheatbase.removeFromCurrentTick(this);
         mc.thePlayer.capabilities.isFlying = false;
         cheatbase.getUtils().addChatMessage(getActive());
     }

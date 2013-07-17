@@ -4,7 +4,7 @@ import net.minecraft.src.FontRenderer;
 
 import org.darkstorm.minecraft.gui.theme.AbstractTheme;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class SimpleTheme extends AbstractTheme
 {
@@ -12,7 +12,7 @@ public class SimpleTheme extends AbstractTheme
 
     public SimpleTheme()
     {
-        fontRenderer = CheatBase.minecraft.fontRenderer;
+        fontRenderer = CheatingEssentials.minecraft.fontRenderer;
         installUI(new SimpleFrameUI(this));
         installUI(new SimplePanelUI(this));
         installUI(new SimpleLabelUI(this));

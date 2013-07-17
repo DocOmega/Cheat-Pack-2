@@ -24,13 +24,13 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFullbright extends Mod implements Tickable
 {
-    public ModuleFullbright(CheatBase rc, Minecraft mc)
+    public ModuleFullbright(CheatingEssentials rc, Minecraft mc)
     {
         super(Mods.Fullbright);
         cb = rc;
@@ -51,7 +51,7 @@ public class ModuleFullbright extends Mod implements Tickable
     {
         cb.getUtils().addChatMessage(getActive());
         minecraft.gameSettings.gammaSetting = 0.5F;
-        cb.removeFromTick(this);
+        cb.removeFromCurrentTick(this);
     }
 
     @Override
@@ -60,6 +60,6 @@ public class ModuleFullbright extends Mod implements Tickable
         minecraft.gameSettings.gammaSetting++;
     }
 
-    private final CheatBase cb;
+    private final CheatingEssentials cb;
     private final Minecraft minecraft;
 }

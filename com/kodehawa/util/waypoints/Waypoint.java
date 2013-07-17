@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.minecraft.src.RenderManager;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class Waypoint
 {
@@ -32,7 +32,7 @@ public class Waypoint
         this.blue = (new Random().nextInt(255)) / 255F;
         System.out.println(red + " " + green + " " + blue);
         update();
-        CheatBase.instance.wmanager.addWaypoint(this);
+        //CheatingEssentials.modinstance.wmanager.addWaypoint(this);
     }
 
     public void update()

@@ -1,6 +1,7 @@
 package com.kodehawa.gui.api.components;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
+
 
 public class Label extends Item
 {
@@ -22,7 +23,7 @@ public class Label extends Item
     public void draw()
     {
         // TODO Auto-generated method stub
-        CheatBase.instance.minecraft.fontRenderer.drawString(text, x + 3, y + 3, color);
+        CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, x + 3, y + 3, color);
         // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 3, y - 3,
         // color );
     }

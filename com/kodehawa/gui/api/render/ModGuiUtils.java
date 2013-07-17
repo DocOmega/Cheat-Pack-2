@@ -29,7 +29,7 @@ import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class ModGuiUtils
 {
@@ -374,7 +374,7 @@ public class ModGuiUtils
      */
     public static int getWidth()
     {
-        ScaledResolution sr = new ScaledResolution(CheatBase.minecraft.gameSettings, CheatBase.minecraft.displayWidth, CheatBase.minecraft.displayHeight);
+        ScaledResolution sr = new ScaledResolution(CheatingEssentials.minecraft.gameSettings, CheatingEssentials.minecraft.displayWidth, CheatingEssentials.minecraft.displayHeight);
         return sr.getScaledWidth();
     }
 
@@ -385,7 +385,7 @@ public class ModGuiUtils
      */
     public static int getHeight()
     {
-        ScaledResolution sr = new ScaledResolution(CheatBase.minecraft.gameSettings, CheatBase.minecraft.displayWidth, CheatBase.minecraft.displayHeight);
+        ScaledResolution sr = new ScaledResolution(CheatingEssentials.minecraft.gameSettings, CheatingEssentials.minecraft.displayWidth, CheatingEssentials.minecraft.displayHeight);
         return sr.getScaledHeight();
     }
 

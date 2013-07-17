@@ -36,9 +36,8 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 
 import com.google.common.collect.Lists;
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.core.CheckKey;
-import com.kodehawa.mods.Vars;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -134,7 +133,7 @@ public class Minecraft implements IPlayerUsage
      * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
      * the usage snooping.
      */
-    private static int debugFPS;
+    public static int debugFPS;
 
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
@@ -199,7 +198,7 @@ public class Minecraft implements IPlayerUsage
     /** Holds the current CE instance */
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
-    protected CheatBase cheatbase;
+    //protected CheatingEssentials cheatingEssentials;
     private KeyBinding key;
     private CheckKey ckey;
 
@@ -228,7 +227,7 @@ public class Minecraft implements IPlayerUsage
         StatList.nopInit();
         compat = new HashMap<String, Integer>();
         checkCompatibility("ModLoader");
-        cheatbase = new CheatBase( this.theMinecraft );
+        //cheatingEssentials = new CheatingEssentials( this.theMinecraft, null );
     }
 
     private void startTimerHackThread()
@@ -1849,7 +1848,7 @@ public class Minecraft implements IPlayerUsage
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
         //Tickable CE Init.
-        cheatbase.tick();
+        //cheatingEssentials.tick();
 
     }
     

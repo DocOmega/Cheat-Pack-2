@@ -11,10 +11,10 @@ public class Reloader implements BaseCommand
         // TODO Auto-generated method stub
         try
         {
-            CGuiIngame.cheatbase.instance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reloading. Please hold still.");
+            CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reloading. Please hold still.");
             CGuiIngame.cheatbase.reload();
-            CGuiIngame.cheatbase.instance.minecraft.renderGlobal.loadRenderers();
-            CGuiIngame.cheatbase.instance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reload complete!");
+            CGuiIngame.cheatbase.modinstance.minecraft.renderGlobal.loadRenderers();
+            CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reload complete!");
         }
         catch (Exception e)
         {

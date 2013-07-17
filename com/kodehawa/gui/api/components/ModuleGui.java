@@ -31,7 +31,7 @@ import net.minecraft.src.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
 
@@ -157,9 +157,9 @@ public class ModuleGui extends GuiScreen
 
     public void makeWorldFrame()
     {
-        Frame wFrame = new Frame(CheatBase.instance, 10, 10, 120, 20, 0xff550055, 0xaa000000, "World");
+        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, 0xff550055, 0xaa000000, "World");
 
-        for (Mod m : CheatBase.instance.mmanager.worldMods)
+        for (Mod m : CheatingEssentials.modinstance.mainModLoader.worldMods)
         {
             Button b = new Button(m.name, 0xff000077, 0xffffff, m);
             b.setWidth(wFrame.width - 6);
@@ -173,9 +173,9 @@ public class ModuleGui extends GuiScreen
 
     public void makePlayerFrame()
     {
-        Frame pFrame = new Frame(CheatBase.instance, 130, 10, 120, 20, 0xff550055, 0xaa000000, "Player");
+        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0xff550055, 0xaa000000, "Player");
 
-        for (Mod m : CheatBase.instance.mmanager.playerMods)
+        for (Mod m : CheatingEssentials.modinstance.mainModLoader.playerMods)
         {
             Button b = new Button(m.name, 0xff000077, 0xffffff, m);
             b.setWidth(pFrame.width - 6);
@@ -188,7 +188,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeKeybindsFrame()
     {
-        Frame kFrame = new Frame(CheatBase.instance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Keybinds")
+        Frame kFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Keybinds")
         {
             @Override
             public void update()
@@ -196,7 +196,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (Mod m : CheatBase.instance.mmanager.mods)
+                for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
                 {
                     Label l = new Label(m.name + " - " + Keyboard.getKeyName(m.keyBind), 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
@@ -239,7 +239,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatBase.instance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
                 if (minimized)
                 {
@@ -277,7 +277,7 @@ public class ModuleGui extends GuiScreen
     public void makeRadarFrame()
     {
         final Radar r = new Radar();
-        Frame rFrame = new Frame(CheatBase.instance, 250, 30, 120, 20, 0xff550055, 0xaa000000, "Radar")
+        Frame rFrame = new Frame(CheatingEssentials.modinstance, 250, 30, 120, 20, 0xff550055, 0xaa000000, "Radar")
         {
             @Override
             public void update()
@@ -301,7 +301,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeActivesFrame()
     {
-        Frame aFrame = new Frame(CheatBase.instance, 130, 30, 120, 20, 0xff550055, 0xaa000000, "Active Cheats")
+        Frame aFrame = new Frame(CheatingEssentials.modinstance, 130, 30, 120, 20, 0xff550055, 0xaa000000, "Active Cheats")
         {
             @Override
             public void update()
@@ -309,7 +309,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (String s : CheatBase.instance.enabledMods)
+                for (String s : CheatingEssentials.modinstance.enabledMods)
                 {
                     Label l = new Label(s, 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
@@ -352,7 +352,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatBase.instance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
                 // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
                 // y, 0x87b5ff );
 
@@ -386,7 +386,7 @@ public class ModuleGui extends GuiScreen
     public void makeInfoFrame()
     {
     	//10, 10, 120, 20
-        final Frame iFrame = new Frame(CheatBase.instance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Player Info")
+        final Frame iFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Player Info")
         {
             @Override
             public void update()
@@ -417,11 +417,10 @@ public class ModuleGui extends GuiScreen
                 try
                 {
                     children.clear();
-                    //addChild( new Label( "User: " + CheatBase.instance.minecraft.thePlayer.username, 0xffffff ) );
-                    //addChild(new Label("FPS: " + mc.debugFPS, 0xffffff));
-                    addChild(new Label("X: " + (int) CheatBase.instance.minecraft.thePlayer.posX, 0xffffff));
-                    addChild(new Label("Y: " + (int) CheatBase.instance.minecraft.thePlayer.posY, 0xffffff));
-                    addChild(new Label("Z: " + (int) CheatBase.instance.minecraft.thePlayer.posZ, 0xffffff));
+                    addChild(new Label("FPS: " + mc.debugFPS, 0xffffff));
+                    addChild(new Label("X: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posX, 0xffffff));
+                    addChild(new Label("Y: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posY, 0xffffff));
+                    addChild(new Label("Z: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posZ, 0xffffff));
                     addChild(new Label("Dimension: " + dim, 0xffffff));
                     //addChild( new Label( "Facing " + dir, 0xffffff ) );
                     addChild(new Label("", 0xffffff));
@@ -467,7 +466,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatBase.instance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
                 // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
                 // y, 0x87b5ff );
 
@@ -506,7 +505,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeTestFrame()
     {
-        Frame tFrame = new Frame(CheatBase.instance, 130, 30, 120, 20, 0xff550000, 0xaa000055, "Console")
+        Frame tFrame = new Frame(CheatingEssentials.modinstance, 240, 15, 120, 20, 0xff550000, 0xaa000055, "Console")
         {
             @Override
             public void update()
@@ -554,7 +553,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatBase.instance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
                 // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
                 // y,
@@ -568,7 +567,7 @@ public class ModuleGui extends GuiScreen
                 {
                     GL11.glPushMatrix();
                     GL11.glScaled(0.5, 0.5, 0.5);
-                    CheatBase.instance.minecraft.fontRenderer.drawString("Type \'clear\' to clear history. ", (this.x * 2) + 6, ((this.y + this.oldHeight) * 2) - 4, 0xffffff);
+                    CheatingEssentials.modinstance.minecraft.fontRenderer.drawString("Type \'clear\' to clear history. ", (this.x * 2) + 6, ((this.y + this.oldHeight) * 2) - 4, 0xffffff);
                     GL11.glScaled(1, 1, 1);
                     GL11.glPopMatrix();
                     int diff = 0;
@@ -609,6 +608,8 @@ public class ModuleGui extends GuiScreen
         makeWorldFrame();
         makePlayerFrame();
         makeRadarFrame();
+        makeInfoFrame();
         makeActivesFrame( );
+        makeTestFrame( );
     }
 }

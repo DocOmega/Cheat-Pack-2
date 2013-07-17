@@ -2,7 +2,7 @@ package com.kodehawa.console;
 
 import org.lwjgl.input.Keyboard;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Mod;
 
 public class List implements BaseCommand
@@ -33,7 +33,7 @@ public class List implements BaseCommand
         // TODO Auto-generated method stub
         String s = "";
 
-        for (Mod m : CheatBase.instance.mmanager.mods)
+        for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
         {
             s += m.name + " - " + Keyboard.getKeyName(m.keyBind) + ", ";
         }

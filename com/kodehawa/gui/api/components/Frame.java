@@ -24,7 +24,7 @@ package com.kodehawa.gui.api.components;
 
 import java.util.ArrayList;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 
 public class Frame extends Item
@@ -46,17 +46,17 @@ public class Frame extends Item
     public boolean shouldClear = false;
     int oldHeight = 0;
 
-    public Frame(CheatBase cb, int x, int y, int w, int h, String s)
+    public Frame(CheatingEssentials cb, int x, int y, int w, int h, String s)
     {
         this(cb, x, y, w, h, 0xff666666, s);
     }
 
-    public Frame(CheatBase cb, int x, int y, int w, int h, int color, String s)
+    public Frame(CheatingEssentials cb, int x, int y, int w, int h, int color, String s)
     {
         this(cb, x, y, w, h, color, -1, s);
     }
 
-    public Frame(CheatBase cb, int x, int y, int w, int h, int color, int color2, String s)
+    public Frame(CheatingEssentials cb, int x, int y, int w, int h, int color, int color2, String s)
     {
         this.c = cb;
         this.x = x;
@@ -112,7 +112,7 @@ public class Frame extends Item
         }
 
         ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-        CheatBase.instance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+        CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
         // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2, y,
         // 0x87b5ff );

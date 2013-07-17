@@ -1,15 +1,14 @@
 package com.kodehawa.mods;
 
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.RenderGlobal;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleTestChestFinder extends Mod implements Tickable
 {
     protected Minecraft minecraft;
-    protected CheatBase cb;
+    protected CheatingEssentials cb;
 
     /**
      * I need OpenGL for this. Dammit!
@@ -18,7 +17,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
      * @param m
      */
 
-    public ModuleTestChestFinder(CheatBase c, Minecraft m)
+    public ModuleTestChestFinder(CheatingEssentials c, Minecraft m)
     {
         super(Mods.ChestESP);
         cb = c;

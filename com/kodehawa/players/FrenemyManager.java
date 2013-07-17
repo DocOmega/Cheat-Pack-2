@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
@@ -45,8 +45,8 @@ public class FrenemyManager
 
     public FrenemyManager()
     {
-        friendsFile = new File(CheatBase.instance.minecraft.mcDataDir, "/CP2/friendlist.cheatpack");
-        enemyFile = new File(CheatBase.instance.minecraft.mcDataDir, "/CP2/enemielist.cheatpack");
+        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/friendlist.cheatpack");
+        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/enemielist.cheatpack");
 
         if (!friendsFile.exists())
         {
@@ -195,7 +195,7 @@ public class FrenemyManager
             // Close the output stream
             out.close();
 
-            if (CheatBase.instance.minecraft.theWorld != null)
+            if (CheatingEssentials.modinstance.minecraft.theWorld != null)
             {
                 ConsoleHelper.addMessage(ChatColour.BLUE + "Friends written!");
             }
@@ -223,7 +223,7 @@ public class FrenemyManager
             // Close the output stream
             out.close();
 
-            if (CheatBase.instance.minecraft.theWorld != null)
+            if (CheatingEssentials.modinstance.minecraft.theWorld != null)
             {
             }
         }

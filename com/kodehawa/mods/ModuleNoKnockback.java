@@ -3,15 +3,15 @@ package com.kodehawa.mods;
 import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.Tickable;
 
 public class ModuleNoKnockback extends Mod implements Tickable
 {
-    private CheatBase cb;
+    private CheatingEssentials cb;
     private Minecraft mc;
 
-    public ModuleNoKnockback(CheatBase c, Minecraft m)
+    public ModuleNoKnockback(CheatingEssentials c, Minecraft m)
     {
         super(Mods.NoKnockback);
         cb = c;
@@ -23,7 +23,7 @@ public class ModuleNoKnockback extends Mod implements Tickable
     public void tick()
     {
         // TODO Auto-generated method stub
-        EntityClientPlayerMP player = CheatBase.getInstance().getWrapper.getMinecraft().thePlayer;
+        EntityClientPlayerMP player = mc.thePlayer;
 
         if (player.hurtTime > 0 && player.hurtResistantTime > 0)
         {
@@ -45,7 +45,7 @@ public class ModuleNoKnockback extends Mod implements Tickable
     public void onDisable()
     {
         // TODO Auto-generated method stub
-        cb.removeFromTick(this);
+        cb.removeFromCurrentTick(this);
         cb.getUtils().addChatMessage(getActive());
     }
 }

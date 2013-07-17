@@ -5,11 +5,11 @@ import net.minecraft.src.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 
 public class TTFRenderer
 {
-    static Minecraft mc = CheatBase.instance.minecraft;
+    static Minecraft mc = CheatingEssentials.modinstance.minecraft;
 
     public static void drawTTFString(CustomFont f, String text, double x, double y, int color)
     {

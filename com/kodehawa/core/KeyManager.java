@@ -35,7 +35,7 @@ import java.nio.charset.Charset;
 
 import org.lwjgl.input.Keyboard;
 
-import com.kodehawa.CheatBase;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.util.ChatColour;
@@ -46,7 +46,7 @@ public class KeyManager
 
     public KeyManager()
     {
-        keybindsFile = new File(CheatBase.instance.minecraft.mcDataDir, "/CP2/keybinds.cheatpack");
+        keybindsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/keybinds.cheatpack");
 
         if (!keybindsFile.exists())
         {
@@ -124,7 +124,7 @@ public class KeyManager
                 name = name.replace("=", "");
 
                 //System.out.println( "binding==" + binding );
-                for (Mod m : CheatBase.instance.mmanager.mods)
+                for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
                 {
                     //System.out.println( "Attempting to print keybinding: " + m.name );
                     //System.out.println( "m.name==" + m.name + "|||" + "name==" + name );
@@ -163,7 +163,7 @@ public class KeyManager
             BufferedWriter out = new BufferedWriter(fstream);
 
             // OOPish
-            for (Mod m : CheatBase.instance.mmanager.mods)
+            for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
             {
                 out.write(m.name + "=" + m.keyBind + "\r\n");
             }
@@ -171,7 +171,7 @@ public class KeyManager
             // Close the output stream
             out.close();
 
-            if (CheatBase.instance.minecraft.theWorld != null)
+            if (CheatingEssentials.modinstance.minecraft.theWorld != null)
             {
                 ConsoleHelper.addMessage(ChatColour.RED + "[Cheat Pack 2]" + " " + ChatColour.DARK_GRAY + "Keybinds written!");
             }
