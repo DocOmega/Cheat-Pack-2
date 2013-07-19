@@ -105,7 +105,7 @@ public class TranslationWritter
             }
             catch (Exception e)       // Catch exception if any
             {
-                cb.CELogAgent.logInfo("Error writing the Translation File!: " + e.getMessage());
+                System.out.println("Error writing the Translation File!");
             }
 
             Reader();

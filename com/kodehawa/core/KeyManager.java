@@ -46,7 +46,7 @@ public class KeyManager
 
     public KeyManager()
     {
-        keybindsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/keybinds.cheatpack");
+        keybindsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/keybinds.cfg");
 
         if (!keybindsFile.exists())
         {

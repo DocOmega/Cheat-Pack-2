@@ -23,7 +23,7 @@ public class ModuleWaterwalk extends Mod implements Tickable
     public void tick()
     {
         // TODO Auto-generated method stub
-        if (getPlayer().isWet())
+        if (getPlayer().isInWater())
         {
             getPlayer().setSprinting(false);
             getPlayer().jump();
