@@ -37,8 +37,6 @@ public class ModuleNoKnockback extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
         cb.addToTick(this);
-        cb.getUtils().addChatMessage(getActive());
-        cb.getUtils().addChatMessage("Knockback? What it's this?");
     }
 
     @Override
@@ -46,6 +44,5 @@ public class ModuleNoKnockback extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
         cb.removeFromCurrentTick(this);
-        cb.getUtils().addChatMessage(getActive());
-    }
+}
 }

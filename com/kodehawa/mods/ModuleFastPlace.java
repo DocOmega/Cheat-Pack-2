@@ -30,14 +30,12 @@ public class ModuleFastPlace extends Mod implements Tickable
     public void onEnable()
     {
         cb.addToTick(this);
-        cb.getUtils().addChatMessage(getActive());
-        cb.getUtils().addChatMessage("Place blocks, everywhere!");
+        
     }
 
     @Override
     public void onDisable()
     {
         cb.removeFromCurrentTick(this);
-        cb.getUtils().addChatMessage(getActive());
     }
 }

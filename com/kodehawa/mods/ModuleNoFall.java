@@ -32,14 +32,11 @@ public class ModuleNoFall extends Mod implements Tickable
     public void onEnable()
     {
         cheatbase.addToTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
-        cheatbase.getUtils().addChatMessage("Fall damage? What fall damage?");
     }
 
     @Override
     public void onDisable()
     {
         cheatbase.removeFromCurrentTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 }

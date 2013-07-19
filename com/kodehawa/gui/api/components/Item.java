@@ -30,6 +30,7 @@ public abstract class Item
      * Reference to the main class
      */
     public CheatingEssentials c;
+    
 
     /**
      * Parent frame
@@ -49,12 +50,12 @@ public abstract class Item
     /**
      * X position
      */
-    int x = 0;
+    public int x = 0;
 
     /**
      * Y position
      */
-    int y = 0;
+    public int y = 0;
 
     /**
      * Width

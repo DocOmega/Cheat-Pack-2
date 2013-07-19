@@ -39,8 +39,6 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     public void onEnable()
     {
     	Vars.ChestESP = false;
-        cb.getUtils().addChatMessage(getActive());
-        cb.getUtils().addChatMessage("We need dungeons.. DUNGEONS EVERYWHERE");
         // TODO Auto-generated method stub
     }
 
@@ -51,6 +49,5 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	Vars.ChestESP = true;
-        cb.getUtils().addChatMessage(getActive());
     }
 }

@@ -26,14 +26,11 @@ public class ModuleItemTooltips extends Mod implements Tickable {
 	@Override
 	public void onEnable() {
 		mc.gameSettings.heldItemTooltips = false;
-		cb.getUtils().addChatMessage(getActive());
-		cb.getUtils().addChatMessage("Tooltips disabled");
 	}
 
 	@Override
 	public void onDisable() {
 		mc.gameSettings.heldItemTooltips = true;
-		cb.getUtils().addChatMessage(getActive());
 	}
 
 }

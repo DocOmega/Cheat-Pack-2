@@ -67,7 +67,7 @@ public class Radar
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff0000ff);
                         GL11.glScalef(0.5F, 0.5F, 0.5F);
                         EntityPlayer p = (EntityPlayer) entity;
-                        String u = mc.thePlayer.username;
+                        String u = null;
                         int color = 0xffffff;
 
                         if (Vars.friends.contains(u))

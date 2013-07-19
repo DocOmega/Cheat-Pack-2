@@ -40,7 +40,6 @@ public class ModuleGui extends GuiScreen
     /**
      * @author godshawk
      */
-    //With a little revisions for match with CP2.
 
     public ArrayList<Frame> frames;
 
@@ -295,7 +294,7 @@ public class ModuleGui extends GuiScreen
                 }
             }
         };
-        rFrame.setPinnable(false);
+        rFrame.setPinnable(true);
         addFrame(rFrame);
     }
 
@@ -499,13 +498,13 @@ public class ModuleGui extends GuiScreen
                 }
             }
         };
-        iFrame.setPinnable(false);
+        iFrame.setPinnable(true);
         addFrame(iFrame);
     }
 
     public void makeTestFrame()
     {
-        Frame tFrame = new Frame(CheatingEssentials.modinstance, 240, 15, 120, 20, 0xff550000, 0xaa000055, "Console")
+        Frame tFrame = new Frame(CheatingEssentials.modinstance, 10, 30, 120, 20, 0xff550000, 0xaa000055, "Console")
         {
             @Override
             public void update()

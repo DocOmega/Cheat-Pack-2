@@ -52,6 +52,7 @@ public class ConsoleHelper
         return this.commands;
     }
 
+    @Deprecated
     public static void addMessage(String msg)
     {
         Minecraft.getMinecraft().thePlayer.addChatMessage(msg);

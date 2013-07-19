@@ -19,7 +19,7 @@ public class CGuiIngame
     private CheckKey ck;
     public HashMap<Mod, Integer> keyShit;
 
-    public CGuiIngame(Minecraft par1Minecraft)
+    public CGuiIngame(Minecraft par1Minecraft) 
     {
         
         

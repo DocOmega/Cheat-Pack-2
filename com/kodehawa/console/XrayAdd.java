@@ -1,5 +1,6 @@
 package com.kodehawa.console;
 
+import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
 
 public class XrayAdd implements BaseCommand
@@ -10,6 +11,7 @@ public class XrayAdd implements BaseCommand
         // TODO Auto-generated method stub
         try
         {
+        	
             if (cmd.length <= 1)
             {
                 throw new NullPointerException();
@@ -32,7 +34,7 @@ public class XrayAdd implements BaseCommand
     public String getName()
     {
         // TODO Auto-generated method stub
-        return "xray";
+        return "xrayAddBlock";
     }
 
     @Override

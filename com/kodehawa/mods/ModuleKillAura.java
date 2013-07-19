@@ -48,15 +48,12 @@ public class ModuleKillAura extends Mod implements Tickable
     public void onEnable()
     {
         cheatbase.addToTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
-        cheatbase.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Kill all... Kill :)");
     }
 
     @Override
     public void onDisable()
     {
         cheatbase.removeFromCurrentTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 
     @Override

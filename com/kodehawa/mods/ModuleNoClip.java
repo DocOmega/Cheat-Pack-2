@@ -38,7 +38,6 @@ public class ModuleNoClip extends Mod implements Tickable{
 		cb.addToTick(this);
 		mc.gameSettings.noclip = true;
 		mc.gameSettings.noclipRate = 3.0F;
-		cb.getUtils().addChatMessage(getActive());
 	}
 
 	@Override
@@ -47,7 +46,6 @@ public class ModuleNoClip extends Mod implements Tickable{
 		cb.removeFromCurrentTick(this);
 		mc.gameSettings.noclip = false;
 		mc.thePlayer.capabilities.isFlying = false;
-		cb.getUtils().addChatMessage(getActive());
 
 	}
 

@@ -35,14 +35,12 @@ public class ModuleWaterwalk extends Mod implements Tickable
     public void onEnable()
     {
         cb.addToTick(this);
-        cb.getUtils().addChatMessage(getActive());
     }
 
     @Override
     public void onDisable()
     {
         cb.removeFromCurrentTick(this);
-        cb.getUtils().addChatMessage(getActive());
     }
 
     public EntityClientPlayerMP getPlayer()

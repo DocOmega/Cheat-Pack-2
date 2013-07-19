@@ -17,7 +17,7 @@ public class ChestFinderContainer
     public static void chestFinder(double x, double y, double z)
     {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor3f(243, 771, 53);
+        GL11.glColor3f(843, 721, 90);
         GL11.glLineWidth(2F);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_DEPTH_TEST);

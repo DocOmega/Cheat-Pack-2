@@ -53,8 +53,6 @@ public class ModuleXray extends Mod implements Tickable
         Vars.xray = true;
         mc.renderGlobal.loadRenderers();
         mc.gameSettings.gammaSetting = 15.0F;
-        cheatbase.getUtils().addChatMessage(getActive());
-        cheatbase.getUtils().addChatMessage("Good luck finding Diamonds! Disable Smooth Lighting.");
     }
 
     @Override
@@ -64,6 +62,5 @@ public class ModuleXray extends Mod implements Tickable
         Vars.xray = false;
         mc.gameSettings.gammaSetting = 0.5F;
         mc.renderGlobal.loadRenderers();
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 }

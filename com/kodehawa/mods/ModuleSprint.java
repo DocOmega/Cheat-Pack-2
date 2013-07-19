@@ -43,13 +43,11 @@ public class ModuleSprint extends Mod implements Tickable
     public void onEnable()
     {
         cheatbase.addToTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 
     @Override
     public void onDisable()
     {
         cheatbase.removeFromCurrentTick(this);
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 }

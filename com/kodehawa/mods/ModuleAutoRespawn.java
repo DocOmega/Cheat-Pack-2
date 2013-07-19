@@ -33,8 +33,8 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
         cb.addToTick(this);
-        cb.getUtils().addChatMessage(getActive());
-        cb.getUtils().addChatMessage("I don't like the holy death screen.");
+        //cb.getUtils().addChatMessage(getActive());
+        //cb.getUtils().addChatMessage("I don't like the holy death screen.");
     }
 
     @Override
@@ -42,6 +42,6 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
         cb.removeFromCurrentTick(this);
-        cb.getUtils().addChatMessage(getActive());
+        //cb.getUtils().addChatMessage(getActive());
     }
 }

@@ -198,12 +198,27 @@ public class Minecraft implements IPlayerUsage
     /** Holds the current CE instance */
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
-    //protected CheatingEssentials cheatingEssentials;
+    //private CheatingEssentials cheatingEssentials;
     private KeyBinding key;
     private CheckKey ckey;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
+    	//Attempt to stop minecraft loading if the current instance it's using Lex's Minecraft Forge | Only for non-forge version.
+    	
+    	 if (ClientBrandRetriever.getClientModName().contains("fml")) {
+			 printForgeFMLVersionCheck("Trying to start the main Minecraft Instance, but we can't!");
+			 printForgeFMLVersionCheck("You have Forge installed and you're using the Vanilla version!");
+			 printForgeFMLVersionCheck("We have a special Forge version for you! Look in MCF!");
+			 printForgeFMLVersionCheck("Minecraft will be closed now :(");
+		     System.exit(1);
+    	 }
+		 else {
+			 printForgeFMLVersionCheck("Vanilla version - Forge undetected :)");
+			 printForgeFMLVersionCheck("Minecraft Instance - Started without major troubles.");
+		 }
+    	 
+        
         theMinecraft = this;
         this.field_94139_O = new LogAgent("Minecraft-Client", " [CLIENT]", (new File(par6File, "output-client.log")).getAbsolutePath());
         this.mcDataDir = par6File;
@@ -226,8 +241,7 @@ public class Minecraft implements IPlayerUsage
         ImageIO.setUseCache(false);
         StatList.nopInit();
         compat = new HashMap<String, Integer>();
-        checkCompatibility("ModLoader");
-        //cheatingEssentials = new CheatingEssentials( this.theMinecraft, null );
+        this.checkCompatibility("ModLoader");
     }
 
     private void startTimerHackThread()
@@ -2501,6 +2515,15 @@ public class Minecraft implements IPlayerUsage
         
 }
     
-
+    private static void printForgeFMLVersionCheck(String args){
+    	
+    	System.out.println("[Cheating Essentials]" + " " + "[Forge Guard] " + args);
+    	
+    }
+    
+    public ServerData getServerData()
+    {
+        return this.currentServerData;
+    }
     
 }

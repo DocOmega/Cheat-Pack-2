@@ -2,14 +2,23 @@ package net.minecraft.src;
 
 import java.awt.Color;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.core.CheckKey;
+import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.util.ModProp;
 
 public class GuiIngame extends Gui
 {
@@ -40,12 +49,21 @@ public class GuiIngame extends Gui
     /** The ItemStack that is currently being highlighted */
     private ItemStack highlightingItemStack;
     private CheatingEssentials cheatingEssentials;
+    private static ModManager mod;
+    private static ModuleXray xray;
+    private static ModuleFly fly;
+    private CheckKey ck;
+	public HashMap<Mod, Integer> keys;
+
 
     public GuiIngame(Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
         cheatingEssentials = new CheatingEssentials(par1Minecraft, null);
+		ck = new CheckKey(mc);
+		
+
     }
 
     /**
@@ -54,6 +72,7 @@ public class GuiIngame extends Gui
     public void renderGameOverlay(float par1, boolean par2, int par3, int par4)
     {
     	cheatingEssentials.tick();
+    	
         ScaledResolution var5 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int var6 = var5.getScaledWidth();
         int var7 = var5.getScaledHeight();
@@ -998,4 +1017,8 @@ public class GuiIngame extends Gui
     {
         return this.updateCounter;
     }
-}
+    
+    
+		}
+	
+

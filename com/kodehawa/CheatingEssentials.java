@@ -1,6 +1,11 @@
 package com.kodehawa;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,51 +27,67 @@ import com.kodehawa.core.TranslationWritter;
 import com.kodehawa.event.Event;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.Frame;
+import com.kodehawa.gui.api.components.Item;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.font.CustomFont;
 import com.kodehawa.gui.api.testing.AlertHandler;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
+import com.kodehawa.util.GuiHelper;
+import com.kodehawa.util.ModProp;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
 
-public final class CheatingEssentials implements CModTicks {
+public final class CheatingEssentials implements CModTicks, GuiHelper {
 	
-    
+	/**
+	 * Hi! I'm a random comment.
+	 */
+	
+	/**
+	 * Hola!, soy un comentario aleatorio en Español... Por que no?
+	 */
+	
     public static CheatingEssentials modinstance;
 	public static Minecraft minecraft;
 	private static Minecraft mc;
-	public static Wrapper getModWrapper;
+	public static Wrapper getModWrapper = new Wrapper();
 	public CheckKey KeyBinding;
-	private static Event theInternalEvents;
-	public static EventHandler theEventHandler;
+	private Event theInternalEvents;
+	public EventHandler theEventHandler;
 	public ModuleGui MainGui;
-	private static Reflector mainModReflector;
+	private Reflector mainModReflector;
 	private Utils modUtils;
 	public KeyManager modKeyManager;
 	public static ModManager mainModLoader;
 	private TranslationWritter mainTranslationWritter;
+	private Item item;
+	public File guiStatesFile;
 	private Tickable modInternalTicks;
 	public HashMap<Mod, Integer> keys;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
     public ArrayList<Mod> mods = new ArrayList<Mod>();
     public static ArrayList<String> enabledMods = new ArrayList<String>();
 	private ConsoleHelper theConsoleHelper;
-	public AlertHandler amanager;
+	public AlertHandler alertManager;
 	public FrenemyManager theFriendManager;
 	private File FileWritter;
 	public static CustomFont guiFont;
+	private ModuleXray xray;
+	private ModuleFly fly;
 	private long now;
 	private long then;
 	
 	
 	private String modName = "Cheating Essentials";
-	private String modVersion = "2.9.3.195";
+	private String modVersion = "2.9.3.895";
 	private String minecraftVersion = "Minecraft 1.6.2";
-	private String modsLoaded = "Modules:" +
+	private String modules = "Modules Loaded:" +
     		" X-Ray," +
     		" Fly," +
     		" Killaura," +
@@ -83,6 +104,11 @@ public final class CheatingEssentials implements CModTicks {
     		" OptiLeaves," +
     		" Forge.";
 	
+    /**
+     * Constructor
+     * @param mc
+     * @param reflection
+     */
 	
 	public CheatingEssentials(Minecraft mc, Reflector reflection) {
 		minecraft = mc;
@@ -91,14 +117,37 @@ public final class CheatingEssentials implements CModTicks {
 		modInit();
 	}
 	
+	/**
+	 * Get mod instance.
+	 * @return
+	 */
+	
 	public static CheatingEssentials getModInstance(){
 		return modinstance;
 	}
 	
+	/**
+	 * Get Wrapper instance.
+	 * @return
+	 */
+	
+	public static Wrapper getModWrapper(){
+		return getModWrapper;
+	}
+	
+	/**
+	 * Init the mod
+	 */
+	
 	private void modInit() {
 		
-		CELogAgent.logInfo(modName + " " + modVersion + " " + "started in" + " " + minecraftVersion);
-
+		guiStatesFile = new File(minecraft.mcDataDir, "/Cheating Essentials/gui.coords");
+        CELogAgent.logInfo(modName + " " + modVersion + " " + "started in" + " " + minecraftVersion);
+		Thread thread = new Thread("Cheating Essentials Main Thread");
+        thread.setName("Cheating Essentials Main Thread");
+        thread.setPriority(3);
+        System.out.println("Cheating Essentials Main Thread - Starting in " + minecraftVersion + "...");
+		thread.start();
 		mainModLoader = new ModManager(this);
 		modUtils = new Utils(minecraft);
 		MainGui = new ModuleGui();
@@ -116,12 +165,16 @@ public final class CheatingEssentials implements CModTicks {
         {
             keys.put(m, m.keyBind);
         }
-		
+		CELogAgent.logInfo(modules);
         CELogAgent.logInfo(modName + " " + "is compatible with the following vanilla mods: " + vanillaCompatibility);
         CELogAgent.logInfo(modName + " " + modVersion + " started succefully in " + minecraftVersion);
-	
+	    
 		
 	}
+	
+	/**
+	 * Tick the modules
+	 */
 
 	@Override
 	public void modTicks() {
@@ -131,6 +184,10 @@ public final class CheatingEssentials implements CModTicks {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * Get mod utilies
+	 */
 
 	@Override
 	public Utils getUtils() {
@@ -138,13 +195,23 @@ public final class CheatingEssentials implements CModTicks {
 		return modUtils;
 	}
 
+	/**
+	 * Handle GUI key press.
+	 */
+	
+	@ModProp
 	@Override
 	public void handleKeyPress() {
 		// TODO Auto-generated method stub
-		
+	
 		if(KeyBinding.checkKey(Keyboard.KEY_G)){
 			 minecraft.displayGuiScreen(MainGui);
-		
+			 
+			 if(KeyBinding.checkKey(Keyboard.KEY_X)){
+				
+			
+			if(KeyBinding.checkKey(Keyboard.KEY_F)){
+				
 		
 		 for (Map.Entry<Mod, Integer> e : keys.entrySet())
          {
@@ -154,9 +221,13 @@ public final class CheatingEssentials implements CModTicks {
              }
          }
 		}
+			 }
+		}
 	}
 
-	
+	/**
+	 * Update "Active Cheats" frame.
+	 */
 	
 	@Override
 	public void updateArray() {
@@ -174,6 +245,9 @@ public final class CheatingEssentials implements CModTicks {
         }
 	}
 	
+	/**
+	 * Tick a mod
+	 */
 
 	@Override
 	public void addToTick(Tickable tickable) {
@@ -185,6 +259,10 @@ public final class CheatingEssentials implements CModTicks {
 		
 	}
 
+	/**
+	 * Remove a mod from a current tick.
+	 */
+	
 	@Override
 	public void removeFromCurrentTick(Tickable tickable) {
 		// TODO Auto-generated method stub
@@ -194,15 +272,25 @@ public final class CheatingEssentials implements CModTicks {
 	        }
 	}
 
+	/**
+	 * Tick the entire mod.
+	 */
+	
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
+		// After 141414 years, I've fixed that annoying crash :)
 		modTicks();
 
         updateArray();
         handleKeyPress();
 	}
 	
+	/**
+	 * Update pinnable frames.
+	 */
+	// Deprecated only for now
+	@Deprecated
 	public void updatePinnedFrames()
     {
         if ((minecraft.currentScreen == null) || (minecraft.currentScreen == (Gui) minecraft.ingameGUI))
@@ -216,6 +304,10 @@ public final class CheatingEssentials implements CModTicks {
             }
         }
     }
+	
+	/**
+	 * Reload the mods.. *Buggy?
+	 */
 	
 	public void reload()
     {
@@ -259,7 +351,69 @@ public final class CheatingEssentials implements CModTicks {
         return null;
     }
 	
+	
+	@Override
+	public void saveGUIToText() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveGUIPositions() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void GuiHelperS() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	/**
+	 * This will be the worst thing that I've ever coded? *And crasheable
+	 */
+	@ModProp
+	@Override
+	public void startSaveThread(Item i, int in) {
+		// TODO Auto-generated method stub
+        
+		if((minecraft.currentScreen == MainGui) || (minecraft.currentScreen == (Gui) minecraft.ingameGUI)){
+		Thread thread1 = new Thread("Cheating Essentials GUI save thread");
+		CELogAgent.logInfo("Saving GUI States....");
+		thread1.start();
+		try {
+		i.x = in;
+		i.y = in;
+		guiStatesFile.getParentFile().mkdirs();
+		guiStatesFile.createNewFile();
+        FileWriter fstream;
+			fstream = new FileWriter(guiStatesFile);
+			@SuppressWarnings("resource")
+			BufferedWriter out = new BufferedWriter(fstream);
+            out.write(i.x);
+    		out.write(i.y);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			CELogAgent.logSevere("For some reason, we can't save your GUI states.");
+		}
+		Reader();
+		
+		thread1.getPriority();
+	}
+	}
+
+	public void Reader()
+    {
+        int int1;
+        String str = "";
+        String name;
+        InputStream fis = null;
+        BufferedReader br;
+        String line;
+    }
+        
 	public final ILogAgent CELogAgent = new net.minecraft.src.LogAgent("Cheating Essentials", " [Cheating Essentials]", (new File(FileWritter, "CheatingEssentials.log")).getAbsolutePath());
 
-	
 }

@@ -43,8 +43,6 @@ public class ModuleFly extends Mod implements Tickable
     {
         cheatbase.addToTick(this);
         mc.thePlayer.capabilities.isFlying = true;
-        cheatbase.getUtils().addChatMessage(getActive());
-        cheatbase.getUtils().addChatMessage("I believe I can fly :)!");
     }
 
     @Override
@@ -52,6 +50,5 @@ public class ModuleFly extends Mod implements Tickable
     {
         cheatbase.removeFromCurrentTick(this);
         mc.thePlayer.capabilities.isFlying = false;
-        cheatbase.getUtils().addChatMessage(getActive());
     }
 }

@@ -40,16 +40,13 @@ public class ModuleFullbright extends Mod implements Tickable
     @Override
     public void onEnable()
     {
-        cb.getUtils().addChatMessage(getActive());
         cb.addToTick(this);
-        cb.getUtils().addChatMessage(ChatColour.DARK_GRAY + "Now you can see any block in the darkness!");
-        
     }
 
     @Override
     public void onDisable()
     {
-        cb.getUtils().addChatMessage(getActive());
+        
         minecraft.gameSettings.gammaSetting = 0.5F;
         cb.removeFromCurrentTick(this);
     }
