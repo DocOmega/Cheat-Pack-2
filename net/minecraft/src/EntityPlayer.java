@@ -2177,4 +2177,8 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     {
         return this.getDataWatcher().func_111145_d(17);
     }
+    
+    public static void CheatingEssentialsM(){
+    	
+    }
 }

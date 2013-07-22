@@ -198,14 +198,17 @@ public class Minecraft implements IPlayerUsage
     /** Holds the current CE instance */
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
-    //private CheatingEssentials cheatingEssentials;
     private KeyBinding key;
     private CheckKey ckey;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
+    	//Comprobate it's the CE main class it's in the class patch. If not, close the Minecraft instance.
+    	checkMainClass("CheatingEssentials");
+    	
     	//Attempt to stop minecraft loading if the current instance it's using Lex's Minecraft Forge | Only for non-forge version.
     	
+    
     	 if (ClientBrandRetriever.getClientModName().contains("fml")) {
 			 printForgeFMLVersionCheck("Trying to start the main Minecraft Instance, but we can't!");
 			 printForgeFMLVersionCheck("You have Forge installed and you're using the Vanilla version!");
@@ -2480,6 +2483,25 @@ public class Minecraft implements IPlayerUsage
       compat.put(mod, 1);
     }
     
+    private static void checkMainClass(String s){
+    	try{
+            Class.forName(s);
+        }catch(ClassNotFoundException e){
+            try{
+                Class.forName("com.kodehawa." +s);
+            }
+            catch(ClassNotFoundException ex){
+            	System.out.println("[Cheating Essentials] [Class Patch] Can't found the main class. This it's very bad. Closing MC")
+;            	System.exit(1);
+            }
+             
+            System.out.println("[Cheating Essentials] [Class Patch] Mod class comprobation finised succefully.");
+            
+            return;
+        }
+      }
+
+    
     public static void registerKey(KeyBinding key){
         GameSettings s = getMinecraft().gameSettings;
         KeyBinding[] newb = new KeyBinding[s.keyBindings.length + 1];
@@ -2526,4 +2548,7 @@ public class Minecraft implements IPlayerUsage
         return this.currentServerData;
     }
     
+    public static void CheatingEssentialsM(){
+    	
+    }
 }

@@ -34,7 +34,7 @@ public class Radar
             CGuiIngame.tick = 0;
         }
 
-        GL11.glLineWidth(2.0F);
+        GL11.glLineWidth(1.0F);
         ModGuiUtils.drawFilledCircle(x, y, 50, 0x77007700);
         ModGuiUtils.drawCircle(x, y, 50, 0xff000000);
         ModGuiUtils.drawCircle(x, y, 38, 0xff000000);
@@ -67,7 +67,9 @@ public class Radar
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff0000ff);
                         GL11.glScalef(0.5F, 0.5F, 0.5F);
                         EntityPlayer p = (EntityPlayer) entity;
-                        String u = null;
+                        //Temporary "fix" | Placeholder, waiting for a vanilla fix for the bad multiplayer usernames.
+                        String u = "A player"
+;
                         int color = 0xffffff;
 
                         if (Vars.friends.contains(u))

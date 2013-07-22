@@ -14,13 +14,10 @@ public class ConsoleHelper
         addCommand(new Help());
         addCommand(new Enchant());
         addCommand(new Speed());
-        //It's buggy D:
-        //addCommand( new Bind( ) );
-        addCommand(new List());
         addCommand(new AddFriend());
         addCommand(new AddEnemy());
-        //Reload the whole mod.
         addCommand(new Reloader());
+        //addCommand(new FlySpeed());
     }
 
     public void addCommand(BaseCommand cmd)

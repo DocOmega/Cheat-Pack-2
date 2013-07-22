@@ -41,8 +41,8 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
     public void renderTileEntityChestAt(TileEntityChest par1TileEntityChest, double par2, double par4, double par6, float par8)
     {
     
-    	if(!Vars.ChestESP){
-    		ChestFinderContainer.chestFinder(par2, par4, par6);
+    	if(Vars.ChestESP){
+    		ChestFinderContainer.drawChestESP(par2, par4, par6, par6, par6, par8);
     	}
     
         int var9;

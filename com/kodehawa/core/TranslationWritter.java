@@ -34,6 +34,7 @@ import java.nio.charset.Charset;
 
 import com.kodehawa.CheatingEssentials;
 
+@Deprecated
 public class TranslationWritter
 {
     //Only for en_EN locale. For other please check the post.

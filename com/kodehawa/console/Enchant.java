@@ -108,29 +108,17 @@ public class Enchant implements BaseCommand
 
     String output(String[ ] cmd)
     {
-        /*try {
+        try {
         	EntityClientPlayerMP thePlayer = Minecraft.getMinecraft( ).thePlayer;
         	{
         		ItemStack stack = thePlayer.inventory.getCurrentItem( );
         		enchantStack( stack, cmd [ 1 ], Integer.parseInt( cmd [ 2 ] ) );
-        		return "Item enchanted successfully!";
+        		return "Item enchanted successfully! Will not work due to the Integrated Server.";
         	}
         }
           catch ( Exception e ) {
         	return showHelp( );
-        }*/
-        try
-        {
-            EntityClientPlayerMP thePlayer = mc.thePlayer;
-            ItemStack stack = thePlayer.inventory.getCurrentItem();
-            enchantStack(stack, cmd[ 1 ], Integer.parseInt(cmd[ 2 ]));
-            return "Item " + stack.getItemName() + " enchanted with a level " + cmd[ 2 ] + " " + cmd[ 1 ]
-                    + " enchantment!";
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return "Oh teh noes! The enchantment failed! See the console for more info...";
-        }
+       
     }
 }

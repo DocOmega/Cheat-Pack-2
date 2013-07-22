@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class Vars
 {
-    public static boolean xray, doublespeed, ChestESP = true, RedstoneFinder;
+    public static boolean xray, doublespeed, ChestESP, RedstoneFinder;
     public static double speedbonus = 2;
 
     /**
