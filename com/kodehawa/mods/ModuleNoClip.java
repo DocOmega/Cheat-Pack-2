@@ -22,12 +22,12 @@ public class ModuleNoClip extends Mod implements Tickable{
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		 if (!CheatingEssentials.getModInstance().getModWrapper.getMinecraft().thePlayer.capabilities.isFlying)
+		 if (!CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().thePlayer.capabilities.isFlying)
 	        {
-			 CheatingEssentials.getModInstance().getModWrapper.getMinecraft().thePlayer.capabilities.isFlying = true;
+			 CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().thePlayer.capabilities.isFlying = true;
 	        }
 
-	        EntityClientPlayerMP ep = CheatingEssentials.getModInstance().getModWrapper.getMinecraft().thePlayer;
+	        EntityClientPlayerMP ep = CheatingEssentials.getCheatingEssentials().getModWrapper.getMinecraft().thePlayer;
 	        ep.sendQueue.addToSendQueue(new Packet13PlayerLookMove(ep.motionX, -999.0D, -999.0D, ep.motionZ,
 	                ep.rotationYaw, ep.rotationPitch, !ep.onGround));
 	}

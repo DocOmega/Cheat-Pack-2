@@ -18,28 +18,11 @@ import com.kodehawa.mods.ModManager;
 
 public class Wrapper
 {
-	
+	private Minecraft mc;
 	
     public Minecraft getMinecraft()
     {
-        try
-        {
-        	
-            // 
-            Field minecraft = CheatingEssentials.class.getDeclaredField("mc");
-            minecraft.setAccessible(true);
-            Minecraft mc = (Minecraft) minecraft.get(null);
-            return mc;
-        }
-        
-        catch (Exception e)
-        {
-            System.err.println("********COULD NOT GET MINECRAFT********");
-            e.printStackTrace();
-            System.err.println("********SHUTTING DOWN********");
-            System.exit(1);
-            return null;
-        }
+       return mc;
     }
 
     public static Minecraft getrightClickDelayTimer(){

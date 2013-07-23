@@ -1,11 +1,11 @@
+/**
+ * This have too many code? It is because YOLO :)
+ * At least it's lightweight and pretty stable :D
+ */
+
 package com.kodehawa;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,96 +17,63 @@ import net.minecraft.src.Gui;
 import net.minecraft.src.ILogAgent;
 import net.minecraft.src.Minecraft;
 
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.api.reflection.Reflector;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CheckKey;
 import com.kodehawa.core.HTMLParser;
 import com.kodehawa.core.KeyManager;
+import com.kodehawa.core.Strings;
 import com.kodehawa.event.Event;
-import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.Frame;
-import com.kodehawa.gui.api.components.Item;
 import com.kodehawa.gui.api.components.ModuleGui;
-import com.kodehawa.gui.api.font.CustomFont;
 import com.kodehawa.gui.api.testing.AlertHandler;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleFly;
-import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
 import com.kodehawa.util.ChatColour;
-import com.kodehawa.util.GuiHelper;
 import com.kodehawa.util.ModProp;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
 
-public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable {
+public final class CheatingEssentials implements CModTicks, Runnable {
 	
+
 	/**
-	 * Hi! I'm a random comment.
-	 */
-	
-	/**
-	 * Hola!, soy un comentario aleatorio en Español... Por que no?
+	 * I know that the code it's a bit ugly. I don't recommend use it for learning propouses.
 	 */
 	
     public static CheatingEssentials modinstance;
-	public static Minecraft minecraft;
-	private static Minecraft mc;
+	public Minecraft minecraft;
 	public static Wrapper getModWrapper = new Wrapper();
 	public CheckKey KeyBinding;
 	private Event theInternalEvents;
-	public EventHandler theEventHandler;
 	public ModuleGui MainGui;
 	private Reflector mainModReflector;
 	private Utils modUtils;
 	public KeyManager modKeyManager;
 	public static ModManager mainModLoader;
-	private Item item;
-	public File guiStatesFile;
+	private File guiStatesFile;
+    private File FileWritter;
+	private File xrayBlocks;
 	private Tickable modInternalTicks;
 	public HashMap<Mod, Integer> keys;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
     public ArrayList<Mod> mods = new ArrayList<Mod>();
     public static ArrayList<String> enabledMods = new ArrayList<String>();
+    public FrenemyManager theFriendManager;
 	private ConsoleHelper theConsoleHelper;
-	public AlertHandler alertManager;
+	private AlertHandler alertManager;
 	private int tick = 0;
-	public static boolean outdatedAlert = false;
-	public boolean debugMode = false;
-	public FrenemyManager theFriendManager;
-	private File FileWritter;
-	public static CustomFont guiFont;
-	private ModuleXray xray;
-	private ModuleFly fly;
+	private static boolean outdatedAlert = false;
+	private boolean debugMode = false;
 	private long now;
 	private long then;
 	
-    public static String versionFound = "";
-    private String modName = "Cheating Essentials";
-	public static String version = "2.9.41";
-	private String minecraftVersion = "Minecraft version 1.6.2";
-	private String modules = "Modules Loaded:" +
-    		" X-Ray," +
-    		" Fly," +
-    		" Killaura," +
-    		" Fastplace," +
-    		" Autorespawn," +
-    		" Noknockback," +
-    		" Waterwalk," +
-    		" Fullbirght," +
-    		" NoFall," +
-    		" Chest Finder," +
-    		" Sprint.";
-    private String vanillaCompatibility = "Optifine," +
-    		" ModLoader," +
-    		" OptiLeaves," +
-    		" Forge.";
 	
     /**
      * Constructor
@@ -115,20 +82,68 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
      */
 	
 	public CheatingEssentials(Minecraft mc, Reflector reflection) {
+		//TODO: Constructor
 		minecraft = mc;
 		mainModReflector = reflection;
 		KeyBinding = new CheckKey(mc);
 		modInit();
 	}
 	
+	
+	
+	
 	/**
-	 * Get mod instance.
+	 * Init the mod
+	 */
+	
+	private void modInit() {
+		
+		//TODO: Mod initialization.
+		modinstance = this;
+		update();
+		guiStatesFile = new File(minecraft.mcDataDir, "/Cheating Essentials/gui.coords");
+		xrayBlocks = new File(minecraft.mcDataDir, "/Cheating Essentials/BlockList.txt");
+        CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
+        if(debugMode){
+        	System.out.println("You only can view this messages if you're viewing the code, using it, or anything else - Debugging and misc. system info.");
+        	CELogAgent.logInfo(Strings.MOD_AVALIABLE_MODULES);
+        	CELogAgent.logInfo("Instance Started in (Miliseconds): " + System.currentTimeMillis() /1000);
+        	//WHY IT IS NOT IMPLEMENTED TO VANILLA MC :/
+        	CELogAgent.logInfo("Open GL version: " + GL11.glGetString(GL11.GL_VERSION));
+        	CELogAgent.logInfo("Open GL vendor: " + GL11.glGetString(GL11.GL_VENDOR));
+        	System.out.println("I hate the Integrated Server! :(");
+        }
+		run();
+		mainModLoader = new ModManager(this);
+		modUtils = new Utils(minecraft);
+		MainGui = new ModuleGui();
+		minecraft = Minecraft.getMinecraft();
+        now = System.currentTimeMillis();
+        then = now + 250;
+		modKeyManager = new KeyManager();
+		theConsoleHelper = new ConsoleHelper();
+        keys = new HashMap<Mod, Integer>();
+        theFriendManager = new FrenemyManager();
+        getModWrapper = new Wrapper();
+        CELogAgent.logInfo("Basic init finished with no errors.");
+        for (Mod m : mainModLoader.mods)
+        {
+            keys.put(m, m.keyBind);
+        }
+        CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
+	    
+		
+	}
+	
+	/**
+	 * It crash. But it is unused.
 	 * @return
 	 */
 	
-	public static CheatingEssentials getModInstance(){
+	public static CheatingEssentials getCheatingEssentials(){
 		return modinstance;
 	}
+	
 	
 	/**
 	 * Get Wrapper instance.
@@ -140,43 +155,12 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	}
 	
 	/**
-	 * Init the mod
+	 * Gets the mod version as a string
 	 */
 	
-	private void modInit() {
-		
-		update();
-		guiStatesFile = new File(minecraft.mcDataDir, "/Cheating Essentials/gui.coords");
-        CELogAgent.logInfo(modName + " " + version + " " + "starting in" + " " + minecraftVersion + "...");
-        if(debugMode){
-        	CELogAgent.logInfo(modules);
-        	CELogAgent.logInfo("Instance Started in (Miliseconds): " + System.currentTimeMillis());
-        	CELogAgent.logInfo("LWJGL version: " + Sys.getVersion());
-        	System.out.println("I hate the Integrated Server! :(");
-        }
-		run();
-		mainModLoader = new ModManager(this);
-		modUtils = new Utils(minecraft);
-		MainGui = new ModuleGui();
-		modinstance = this;
-		//mainTranslationWritter = new TranslationWritter();
-		minecraft = Minecraft.getMinecraft();
-        now = System.currentTimeMillis();
-        then = now + 250;
-		modKeyManager = new KeyManager();
-		theEventHandler = new EventHandler();
-		theConsoleHelper = new ConsoleHelper();
-        keys = new HashMap<Mod, Integer>();
-        theFriendManager = new FrenemyManager();
-        CELogAgent.logInfo("Basic init finished with no errors.");
-        for (Mod m : mainModLoader.mods)
-        {
-            keys.put(m, m.keyBind);
-        }
-        CELogAgent.logInfo(modName + " " + version + " started succefully in " + minecraftVersion);
-	    
-		
-	}
+	public static String getModVersion(){
+		return "2.9.45";	
+		}
 	
 	/**
 	 * Tick the modules
@@ -187,7 +171,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 		for(Tickable tickable : modInternalTicksArray){
 			tickable.tick();
 		}
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -197,7 +180,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 
 	@Override
 	public Utils getUtils() {
-		// TODO Auto-generated method stub
 		return modUtils;
 	}
 
@@ -208,7 +190,7 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	@ModProp
 	@Override
 	public void handleKeyPress() {
-		// TODO Auto-generated method stub
+		// TODO Keys
 	
 		if(KeyBinding.checkKey(Keyboard.KEY_G)){
 			 minecraft.displayGuiScreen(MainGui);
@@ -237,7 +219,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	
 	@Override
 	public void updateArray() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < mainModLoader.mods.size(); i++)
         {
             if (mainModLoader.mods.get(i).isActive() && !enabledMods.contains(mainModLoader.mods.get(i).name))
@@ -257,7 +238,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 
 	@Override
 	public void addToTick(Tickable tickable) {
-		// TODO Auto-generated method stub
 		 if (!modInternalTicksArray.contains(tickable))
 	        {
 			 modInternalTicksArray.add(tickable);
@@ -271,7 +251,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	
 	@Override
 	public void removeFromCurrentTick(Tickable tickable) {
-		// TODO Auto-generated method stub
 		 if (modInternalTicksArray.contains(tickable))
 	        {
 			 modInternalTicksArray.remove(tickable);
@@ -284,10 +263,7 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-		// After 141414 years, I've fixed that annoying crash :)
 		modTicks();
-
         updateArray();
         handleKeyPress();
 	}
@@ -295,7 +271,6 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 	/**
 	 * Update pinnable frames.
 	 */
-	// Deprecated only for now
 	@Deprecated
 	public void updatePinnedFrames()
     {
@@ -357,68 +332,7 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
         return null;
     }
 	
-	
-	@Override
-	public void saveGUIToText() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void saveGUIPositions() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void GuiHelperS() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	/**
-	 * This will be the worst thing that I've ever coded? *And crasheable
-	 */
-	@SuppressWarnings("resource")
-	@ModProp
-	@Override
-	public void startSaveThread(Item i, int in) {
-		// TODO Auto-generated method stub
-        
-		if((minecraft.currentScreen == MainGui) || (minecraft.currentScreen == (Gui) minecraft.ingameGUI)){
-		Thread thread1 = new Thread("Cheating Essentials GUI save thread");
-		CELogAgent.logInfo("Saving GUI States....");
-		thread1.start();
-		try {
-		i.x = in;
-		i.y = in;
-		guiStatesFile.getParentFile().mkdirs();
-		guiStatesFile.createNewFile();
-        FileWriter fstream;
-			fstream = new FileWriter(guiStatesFile);
-			BufferedWriter out = new BufferedWriter(fstream);
-            out.write(i.x);
-    		out.write(i.y);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			CELogAgent.logSevere("For some reason, we can't save your GUI states.");
-		}
-		Reader();
-		
-		thread1.getPriority();
-	}
-	}
-
-	public void Reader()
-    {
-        int int1;
-        String str = "";
-        String name;
-        InputStream fis = null;
-        BufferedReader br;
-        String line;
-    }
         
 	/**
 	 * Throws a chat message in world start... I think.
@@ -437,22 +351,18 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
 		Thread thread = new Thread("Cheating Essentials Main Thread");
         thread.setName("Cheating Essentials Main Thread");
         thread.setPriority(3);
         thread.start();
-        CELogAgent.logInfo("Main Thread - Starting in " + minecraftVersion + "...");
+        CELogAgent.logInfo(Strings.THREAD_NAME + " - Starting in " + Strings.MINECRAFT_VERSION + "...");
         if(debugMode){
-        //This it's for debug the actual thread state.
 		CELogAgent.logInfo("Thread priority: " + thread.getPriority() );
 		CELogAgent.logInfo("Thread State (true / false): " + thread.isAlive());
 		CELogAgent.logInfo("Thread ID: " + thread.getId());
         CELogAgent.logInfo("Thread Hashcode: " + thread.hashCode());
-        //Finished thread debugging.
         }
-        CELogAgent.logInfo("Main Thread Started - " + thread.toString());
+        CELogAgent.logInfo(Strings.THREAD_NAME + " Started "  + thread.toString());
 		
 	}
 	
@@ -473,28 +383,28 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
     public boolean update( ) {
         this.outdatedAlert = false;
         try {
-            log( "Checking for updates..." );
+        	CELogAgent.logInfo( "Checking for a Cheating Essentials update..." );
             String ver;
-            this.versionFound = ver = HTMLParser.getStringFromRemoteServer( "http://kodehawa.260mb.net/updates.txt" );
-            if( ver.equals( this.version ) ) {
+            Strings.VERSION_FOUND = ver = HTMLParser.getStringFromRemoteServer( "http://kodehawa.260mb.net/updates.txt" );
+            if( ver.equals( Strings.MOD_VERSION ) ) {
                 // Shouldn't hafta do anything, because we're up to date.
                 // Returns false, because no need to update.
-                log( "No new updates has been found!" );
+               CELogAgent.logInfo( "No new updates has been found!" );
                 return false;
-            } else if( !ver.equals( this.version ) ) {
-                if( Integer.parseInt( ver.replaceAll( "\\D+", "" ) ) > Integer.parseInt( this.version.replaceAll(
+            } else if( !ver.equals( Strings.MOD_VERSION ) ) {
+                if( Integer.parseInt( ver.replaceAll( "\\D+", "" ) ) > Integer.parseInt( Strings.MOD_VERSION.replaceAll(
                         "\\D+", "" ) ) ) {
                     // Obviously, we gotta update!
-                    log( "Update found: " + ver );
-                    log( "Current version: " + this.version );
+                	CELogAgent.logInfo( "Update found: " + ver );
+                	CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
                     return true;
                 } else {
-                    if( !ver.replaceAll( "[^A-Za-z]", "" ).equals( this.version.replaceAll( "[^A-Za-z]", "" ) ) ) {
-                        log( "Update found: " + ver );
-                        log( "Current version: " + this.version );
+                    if( !ver.replaceAll( "[^A-Za-z]", "" ).equals( Strings.MOD_VERSION.replaceAll( "[^A-Za-z]", "" ) ) ) {
+                    	CELogAgent.logInfo( "Update found: " + ver );
+                    	CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
                         return true;
                     } else {
-                        log( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
+                    	CELogAgent.logInfo( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
                         this.outdatedAlert = true;
                         return false;
                     }
@@ -503,7 +413,7 @@ public final class CheatingEssentials implements CModTicks, GuiHelper, Runnable 
                 throw new NullPointerException( "No update info found!" );
             }
         } catch( NullPointerException e ) {
-            log( "Issue getting update information" );
+        	CELogAgent.logSevere( "Issue getting update information" );
             e.printStackTrace( );
             return false;
         }

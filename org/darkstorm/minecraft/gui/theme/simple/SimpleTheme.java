@@ -12,7 +12,8 @@ public class SimpleTheme extends AbstractTheme
 
     public SimpleTheme()
     {
-        fontRenderer = CheatingEssentials.minecraft.fontRenderer;
+        fontRenderer = CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().
+                                                                                                 fontRenderer;
         installUI(new SimpleFrameUI(this));
         installUI(new SimplePanelUI(this));
         installUI(new SimpleLabelUI(this));

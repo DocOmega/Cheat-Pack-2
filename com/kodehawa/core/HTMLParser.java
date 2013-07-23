@@ -194,7 +194,7 @@ public class HTMLParser {
         	System.out.printf( "CUpdater", "Please report this error:" );
             e.printStackTrace( );
             System.out.printf( "CUpdater-DEV", "Returning current version" );
-            return CheatingEssentials.version;
+            return Strings.MOD_VERSION;
         }
     }
 }

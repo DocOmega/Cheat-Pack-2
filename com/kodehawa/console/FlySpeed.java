@@ -11,7 +11,7 @@ public class FlySpeed implements BaseCommand {
 	@Override
 	public void onRun(String[] cmd) {
 		// TODO Auto-generated method stub
-		apetecan = getOutput(apetecan);
+		endres = output(cmd);
 	}
 
 	@Override
@@ -29,12 +29,18 @@ public class FlySpeed implements BaseCommand {
 	@Override
 	public String output() {
 		// TODO Auto-generated method stub
-		return "Fly speed changed to " + apetecan;
+		return endres;
 	}
 	
-	private float getOutput(float fl){
-		mc.thePlayer.capabilities.setFlySpeed(fl);
-		return fl;
+	String output(String[ ] cmd){
+		try{
+		float result = (float) Double.parseDouble(cmd [ 1 ]);
+		mc.thePlayer.capabilities.setFlySpeed(result);
+		return "Fly speed changed to " + result + "!";}
+		catch (Exception e)
+        {
+            return showHelp();
+        }
 	}
 	
 	private void setFlySpeed(){

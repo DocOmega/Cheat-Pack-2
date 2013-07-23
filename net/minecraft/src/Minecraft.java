@@ -2473,13 +2473,13 @@ public class Minecraft implements IPlayerUsage
               compat.put(mod, 0);
               return;
           }
-          System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatibility....");
-          System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
+          System.out.println("[Cheating Essentials] Detected "+mod+", trying to enable compatibility...");
+          System.out.println("[Cheating Essentials] Enabled "+mod+" compatibility");
           compat.put(mod, 2);
           return;
       }
-      System.out.println("Cheating Essentials: Detected "+mod+", trying to enable compatiblity..... ");
-      System.out.println("Cheating Essentials: Enabled "+mod+" compatibility");
+      System.out.println("[Cheating Essentials] Detected "+mod+", trying to enable compatiblity...");
+      System.out.println("[Cheating Essentials] Enabled "+mod+" compatibility");
       compat.put(mod, 1);
     }
     
@@ -2511,7 +2511,7 @@ public class Minecraft implements IPlayerUsage
         newb[s.keyBindings.length] = key;
         s.keyBindings = newb;
         try{
-                File optionsFile = new File(theMinecraft.mcDataDir, "options.txt");
+                File optionsFile = new File(Minecraft.getMinecraft().mcDataDir, "options.txt");
                 if (!optionsFile.exists()){
                         return;
                 }
@@ -2546,9 +2546,5 @@ public class Minecraft implements IPlayerUsage
     public ServerData getServerData()
     {
         return this.currentServerData;
-    }
-    
-    public static void CheatingEssentialsM(){
-    	
     }
 }

@@ -17,7 +17,7 @@ public class ConsoleHelper
         addCommand(new AddFriend());
         addCommand(new AddEnemy());
         addCommand(new Reloader());
-        //addCommand(new FlySpeed());
+        addCommand(new FlySpeed());
     }
 
     public void addCommand(BaseCommand cmd)
