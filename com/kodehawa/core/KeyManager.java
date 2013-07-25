@@ -58,22 +58,19 @@ public class KeyManager
                 FileWriter fstream = new FileWriter(keybindsFile);
                 BufferedWriter out = new BufferedWriter(fstream);
                 //Bugs, what bugs? :(
-                out.write("FULLBRIGHT=" + Keyboard.KEY_F + "\r\n");
-                out.write("AUTOFISH=" + Keyboard.KEY_M + "\r\n");
-                out.write("KILLAURA=" + Keyboard.KEY_P + "\r\n");
-                out.write("SPRINT=" + Keyboard.KEY_K + "\r\n");
-                out.write("FASTPLACE=" + Keyboard.KEY_N + "\r\n");
-                out.write("WATERWALK=" + Keyboard.KEY_L + "\r\n");
-                out.write("XRAY=" + Keyboard.KEY_X + "\r\n");
-                out.write("FLY=" + Keyboard.KEY_R + "\r\n");
-                out.write("INVULNERABLE" + Keyboard.KEY_W + "\r\n");
-                out.write("AUTOHEALTH" + Keyboard.KEY_H + "\r\n");
+                out.write("ModuleFullbright=" + Keyboard.KEY_F + "\r\n");
+                out.write("ModuleKillaura=" + Keyboard.KEY_P + "\r\n");
+                out.write("ModuleSprint=" + Keyboard.KEY_K + "\r\n");
+                out.write("ModuleFastPlace=" + Keyboard.KEY_N + "\r\n");
+                out.write("ModuleWaterwalk=" + Keyboard.KEY_L + "\r\n");
+                out.write("ModuleXray=" + Keyboard.KEY_X + "\r\n");
+                out.write("ModuleFly=" + Keyboard.KEY_R + "\r\n");
                 // Close the output stream
                 out.close();
             }
             catch (Exception e)       // Catch exception if any
             {
-                System.err.println("[Cheat Pack 2.3] Error writing keybinds!: " + e.getMessage());
+                //System.err.println("[Cheat Pack 2.3] Error writing keybinds!: " + e.getMessage());
             }
 
             readKeysAndBind();
@@ -133,18 +130,22 @@ public class KeyManager
                         if (binding != 0)
                         {
                             m.keyBind = binding;
-                            //System.out.println( "Mod " + m.name + " was sucefully bound to key ID " + binding + "!" );
+                            if(CheatingEssentials.debugMode){
+                            CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Mod " + m.name + " was sucefully bound to key ID " + binding + "!" );
+                            }
                             break;
                         }
                         else
                         {
-                            //System.err.println( "[Cheat Pack 2.3] WARNING: NULL BINDING FOUND! D:" );
-                        }
-                    }
+                        	 if(CheatingEssentials.debugMode){
+                        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Null binding info found.");                        }
+                    }}
+                        
                     else
                     {
-                        //System.err.println( "[Cheat Pack 2.3] Failed to create " + m.name + " as " + name );
-                    }
+                    	 if(CheatingEssentials.debugMode){
+                    		 System.out.println("I'm bored and because of it I put this :)");
+                    }}
                 }
             }
         }

@@ -25,21 +25,7 @@ public class Wrapper
        return mc;
     }
 
-    public static Minecraft getrightClickDelayTimer(){
-    	
-    	try{
-    	Field field = Minecraft.class.getDeclaredField("rightClickDelayTimer");
-        field.setAccessible(true);
-        Minecraft mine = (Minecraft) field.get(null);
-    	}
-    	catch (Exception e)
-        {
-            System.err.println("Test");
-            e.printStackTrace();
-        }
-		return null;
-    }
-    
+   
     public ScaledResolution getScaledResolution()
     {
         Minecraft mc = getMinecraft();

@@ -45,9 +45,13 @@ public class FrenemyManager
 
     public FrenemyManager()
     {
-        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/friendlist.cheatpack");
-        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/CP2/enemielist.cheatpack");
+        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/CEFriendsList.txt");
+        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/CEEnemiesList.txt");
 
+        /**
+         * WARNING: Hardcoded!
+         */
+        
         if (!friendsFile.exists())
         {
             try
@@ -68,7 +72,7 @@ public class FrenemyManager
             }
             catch (Exception e)       // Catch exception if any
             {
-                System.err.println("[Cheat Pack 2.3] Error writing friends!: " + e.getMessage());
+                System.err.println("[Cheating Essentials] Error writing friends!: " + e.getMessage());
             }
 
             readAndBind();

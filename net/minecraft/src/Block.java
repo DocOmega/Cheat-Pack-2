@@ -1,9 +1,9 @@
 package net.minecraft.src;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.mods.Vars;
 
 public class Block
@@ -472,7 +472,7 @@ public class Block
 		if ( !Vars.xray ) {
 			return ( par5 == 0 ) && ( this.minY > 0.0D ) ? true : ( ( par5 == 1 ) && ( this.maxY < 1.0D ) ? true : ( ( par5 == 2 ) && ( this.minZ > 0.0D ) ? true : ( ( par5 == 3 ) && ( this.maxZ < 1.0D ) ? true : ( ( par5 == 4 ) && ( this.minX > 0.0D ) ? true : ( ( par5 == 5 ) && ( this.maxX < 1.0D ) ? true : !par1IBlockAccess.isBlockOpaqueCube( par2, par3, par4 ) ) ) ) ) );
 		} else {
-			return Arrays.asList( Vars.xrayBlocks ).contains( blockID );
+			return ModuleXray.xrayBlocks.contains( blockID );
 		}
     	
     }
@@ -1391,8 +1391,6 @@ public class Block
         StatList.initBreakableStats();
     }
     
-    public static void CheatingEssentialsM(){
-    	
-    }
+
     
 }

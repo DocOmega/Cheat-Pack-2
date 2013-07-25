@@ -23,7 +23,7 @@ import com.kodehawa.mods.Vars;
 
 public class Radar
 {
-    Minecraft mc = Minecraft.getMinecraft();
+    Minecraft mc = CheatingEssentials.getMinecraftInstance();
 
     public void drawRadar(int x, int y)
     {

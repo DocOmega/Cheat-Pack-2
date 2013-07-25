@@ -52,8 +52,7 @@ public class ModManager
         addPMod(new ModuleSprint(c, c.minecraft));
         addPMod(new ModuleNoKnockback(c, c.minecraft));
         addPMod(new ModuleItemTooltips(c, c.minecraft));
-        // Test
-        addMod(new ModuleAutoRespawn(c, c.minecraft));
+        //addPMod(new ModuleSpider(c, c.minecraft));
     
         // Main mod list
         for (Mod m : worldMods)

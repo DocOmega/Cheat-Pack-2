@@ -5,10 +5,13 @@
 
 package com.kodehawa;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,15 +30,27 @@ import com.kodehawa.core.HTMLParser;
 import com.kodehawa.core.KeyManager;
 import com.kodehawa.core.Strings;
 import com.kodehawa.event.Event;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.testing.AlertHandler;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.module.AntiKnockback;
+import com.kodehawa.module.ChestESP;
+import com.kodehawa.module.FastPlace;
+import com.kodehawa.module.Fly;
+import com.kodehawa.module.FullBright;
+import com.kodehawa.module.KillAura;
+import com.kodehawa.module.Module;
+import com.kodehawa.module.ModuleManager;
+import com.kodehawa.module.Sprint;
+import com.kodehawa.module.Xray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
 import com.kodehawa.util.ChatColour;
-import com.kodehawa.util.ModProp;
+import com.kodehawa.util.Console;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
@@ -50,6 +65,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
     public static CheatingEssentials modinstance;
 	public Minecraft minecraft;
 	public static Wrapper getModWrapper = new Wrapper();
+	public File mainDir;
 	public CheckKey KeyBinding;
 	private Event theInternalEvents;
 	public ModuleGui MainGui;
@@ -57,6 +73,9 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	private Utils modUtils;
 	public KeyManager modKeyManager;
 	public static ModManager mainModLoader;
+	public static ModuleManager mainModules;
+	public static Module module;
+	private static EventHandler eventHandler;
 	private File guiStatesFile;
     private File FileWritter;
 	private File xrayBlocks;
@@ -70,7 +89,6 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	private AlertHandler alertManager;
 	private int tick = 0;
 	private static boolean outdatedAlert = false;
-	private boolean debugMode = false;
 	private long now;
 	private long then;
 	
@@ -89,7 +107,12 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		modInit();
 	}
 	
-	
+	/**
+	 * Used for make to the console print debug messages.
+	 * Set to true for view a lot of log messages :)
+	 */
+	public static boolean debugMode = false;
+
 	
 	
 	/**
@@ -99,25 +122,25 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	private void modInit() {
 		
 		//TODO: Mod initialization.
+		mainDir = new File(getMinecraftInstance().mcDataDir, "/Cheating Essentials/CEXrayBlockList.txt");
 		modinstance = this;
 		update();
-		guiStatesFile = new File(minecraft.mcDataDir, "/Cheating Essentials/gui.coords");
-		xrayBlocks = new File(minecraft.mcDataDir, "/Cheating Essentials/BlockList.txt");
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
         if(debugMode){
         	System.out.println("You only can view this messages if you're viewing the code, using it, or anything else - Debugging and misc. system info.");
         	CELogAgent.logInfo(Strings.MOD_AVALIABLE_MODULES);
         	CELogAgent.logInfo("Instance Started in (Miliseconds): " + System.currentTimeMillis() /1000);
         	//WHY IT IS NOT IMPLEMENTED TO VANILLA MC :/
-        	CELogAgent.logInfo("Open GL version: " + GL11.glGetString(GL11.GL_VERSION));
-        	CELogAgent.logInfo("Open GL vendor: " + GL11.glGetString(GL11.GL_VENDOR));
+        	CELogAgent.logInfo("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
+        	CELogAgent.logInfo("OpenGL vendor: " + GL11.glGetString(GL11.GL_VENDOR));
         	System.out.println("I hate the Integrated Server! :(");
         }
 		run();
 		mainModLoader = new ModManager(this);
+		mainModules = new ModuleManager();
 		modUtils = new Utils(minecraft);
 		MainGui = new ModuleGui();
-		minecraft = Minecraft.getMinecraft();
+		minecraft = getMinecraftInstance();
         now = System.currentTimeMillis();
         then = now + 250;
 		modKeyManager = new KeyManager();
@@ -126,6 +149,8 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         theFriendManager = new FrenemyManager();
         getModWrapper = new Wrapper();
         CELogAgent.logInfo("Basic init finished with no errors.");
+        saveXrayList();
+        loadXrayList();
         for (Mod m : mainModLoader.mods)
         {
             keys.put(m, m.keyBind);
@@ -135,13 +160,20 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		
 	}
 	
+	 public void initModules( ) {
+	       ModuleManager.addModules( new Console( ), new Fly( ), new FastPlace( ), new Gui( ),
+	         new ChestESP( ), new Xray( ), new FullBright( ), new KillAura( ), new Sprint( ), new AntiKnockback( ) );
+	        int q = ModuleManager.i;
+	        CELogAgent.logInfo( "Modules loaded: " + q + "!" );
+	    }
+	
 	/**
-	 * It crash. But it is unused.
+	 * Get the main mod instance
 	 * @return
 	 */
 	
 	public static CheatingEssentials getCheatingEssentials(){
-		return modinstance;
+		return CheatingEssentials.modinstance;
 	}
 	
 	
@@ -159,7 +191,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	 */
 	
 	public static String getModVersion(){
-		return "2.9.45";	
+		return "2.9.5";	
 		}
 	
 	/**
@@ -182,12 +214,20 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	public Utils getUtils() {
 		return modUtils;
 	}
+	
+	/**
+	 * Get the Minecraft instance
+	 */
+	
+	public static Minecraft getMinecraftInstance(){
+		return Minecraft.getMinecraft();
+	}
 
 	/**
 	 * Handle GUI key press.
 	 */
 	
-	@ModProp
+
 	@Override
 	public void handleKeyPress() {
 		// TODO Keys
@@ -212,6 +252,51 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 			 }
 		}
 	}
+	
+	/**
+	 * Now with a configurable Xray :D
+	 */
+	
+    public void saveXrayList( ) {
+        try {
+        	if(!mainDir.exists()){
+        		CELogAgent.logInfo("Writting X-Ray block list configuration file...");
+            File file = new File( mainDir, "" );
+            BufferedWriter out = new BufferedWriter( new FileWriter( file ) );
+            for( int i : ModuleXray.xrayBlocks ) {
+                out.write( i + "\r\n" );
+            }
+            out.close( );
+        	}
+        } catch( Exception e ) {
+        }
+    }
+    
+    /**
+     * Load the integers of the Xray list.
+     */
+    
+    public void loadXrayList( ) {
+        try {
+        	CELogAgent.logInfo("Reading X-Ray block configuration file...");
+            File file = new File( mainDir, "" );
+            FileInputStream fstream = new FileInputStream( file.getAbsolutePath( ) );
+            DataInputStream in = new DataInputStream( fstream );
+            BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
+            String line;
+            CELogAgent.logInfo("Parsing integers, adding blocks.");
+            while( ( line = br.readLine( ) ) != null ) {
+                String curLine = line.toLowerCase( ).trim( );
+                int id = Integer.parseInt( curLine );
+                ModuleXray.xrayBlocks.add( id );
+            }
+            br.close( );
+            CELogAgent.logInfo("X-Ray block list readed and binded");
+        } catch( Exception e ) {
+            e.printStackTrace( );
+            saveXrayList( );
+        }
+    }
 
 	/**
 	 * Update "Active Cheats" frame.
@@ -232,6 +317,8 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         }
 	}
 	
+
+
 	/**
 	 * Tick a mod
 	 */
@@ -299,39 +386,6 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 
         modInit();
     }
-	
-    public static Object getPrivateValue(Class class1, Object obj, String s) throws IllegalArgumentException, SecurityException, NoSuchFieldException
-    {
-        try
-        {
-            Field field = class1.getDeclaredField(s);
-            field.setAccessible(true);
-            return field.get(obj);
-        }
-        catch (IllegalAccessException illegalaccessexception)
-        {
-        	modinstance.CELogAgent.logInfo("Can't assign a public field!");
-        }
-
-        return null;
-    }
-
-    public static Object getPrivateMethod(Class class1, Object obj, String s) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException
-    {
-        try
-        {
-            Method method = class1.getDeclaredMethod(s);
-            method.setAccessible(true);
-            return method.invoke(obj);
-        }
-        catch (IllegalAccessException illegalaccessexception)
-        {
-        	modinstance.CELogAgent.logInfo("Can't assign a private value to a method");
-        }
-
-        return null;
-    }
-	
 
         
 	/**
@@ -355,7 +409,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         thread.setName("Cheating Essentials Main Thread");
         thread.setPriority(3);
         thread.start();
-        CELogAgent.logInfo(Strings.THREAD_NAME + " - Starting in " + Strings.MINECRAFT_VERSION + "...");
+        
         if(debugMode){
 		CELogAgent.logInfo("Thread priority: " + thread.getPriority() );
 		CELogAgent.logInfo("Thread State (true / false): " + thread.isAlive());
@@ -363,23 +417,10 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         CELogAgent.logInfo("Thread Hashcode: " + thread.hashCode());
         }
         CELogAgent.logInfo(Strings.THREAD_NAME + " Started "  + thread.toString());
-		
+	
 	}
 	
-    private void log( String s ) {
-        log( "Cheating Essentials", s );
-    }
-    
-    /**
-     * Logs a message with the given prefix
-     * 
-     * @param prefix
-     * @param s
-     */
-    public void log( String prefix, String s ) {
-        System.out.println( "[" + prefix + "] " + s );
-    }
-    
+
     public boolean update( ) {
         this.outdatedAlert = false;
         try {
@@ -404,6 +445,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
                     	CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
                         return true;
                     } else {
+                    	//We don't want to fave older versions on main servers. Right?
                     	CELogAgent.logInfo( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
                         this.outdatedAlert = true;
                         return false;
@@ -419,7 +461,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         }
     }
 	
-	public final ILogAgent CELogAgent = new net.minecraft.src.LogAgent("Cheating Essentials", " [Cheating Essentials]", (new File(FileWritter, "CheatingEssentials.log")).getAbsolutePath());
+	public ILogAgent CELogAgent = new net.minecraft.src.LogAgent("Cheating Essentials", " [Cheating Essentials]", (new File(FileWritter, "CheatingEssentials.log")).getAbsolutePath());
 
 
 }

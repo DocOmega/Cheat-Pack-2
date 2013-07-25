@@ -22,6 +22,8 @@
 
 package com.kodehawa.mods;
 
+import java.util.ArrayList;
+
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
@@ -29,6 +31,7 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleXray extends Mod implements Tickable
 {
+	public static ArrayList< Integer > xrayBlocks = new ArrayList< Integer >( );
     public CheatingEssentials cheatbase;
     private Minecraft mc;
 
@@ -37,6 +40,35 @@ public class ModuleXray extends Mod implements Tickable
         super(Mods.Xray);
         cheatbase = cb;
         mc = m;
+        
+        /**
+         * Holy shit...
+         */
+      
+        xrayBlocks.add( 8 );
+        xrayBlocks.add( 9 );
+        xrayBlocks.add( 10 );
+        xrayBlocks.add( 11 );
+        xrayBlocks.add( 14 );
+        xrayBlocks.add( 15 );
+        xrayBlocks.add( 16 );
+        xrayBlocks.add( 89 );
+        xrayBlocks.add( 57 );
+        xrayBlocks.add( 73 );
+        xrayBlocks.add( 74 );
+        xrayBlocks.add( 152 );
+        xrayBlocks.add( 153 );
+        xrayBlocks.add( 56 );
+        xrayBlocks.add( 41 );
+        xrayBlocks.add( 42 );
+        xrayBlocks.add( 133 );
+        xrayBlocks.add( 129 );
+        xrayBlocks.add( 137 );
+        xrayBlocks.add( 120 );
+        xrayBlocks.add( 97 );
+        xrayBlocks.add( 88 );
+        xrayBlocks.add( 89 );
+        xrayBlocks.add( 112 );
         // TODO Auto-generated constructor stub
     }
 
