@@ -18,6 +18,8 @@ public class ConsoleHelper
         addCommand(new AddEnemy());
         addCommand(new Reloader());
         addCommand(new FlySpeed());
+        addCommand(new XrayAdd());
+        addCommand(new XrayRemove());
     }
 
     public void addCommand(BaseCommand cmd)

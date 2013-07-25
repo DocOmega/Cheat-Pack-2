@@ -124,7 +124,8 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		//TODO: Mod initialization.
 		mainDir = new File(getMinecraftInstance().mcDataDir, "/Cheating Essentials/CEXrayBlockList.txt");
 		modinstance = this;
-		update();
+		//260mb.net it's down for some reason, return a malicious page, probably a brute force attack, disabled UC
+		//update();
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
         if(debugMode){
         	System.out.println("You only can view this messages if you're viewing the code, using it, or anything else - Debugging and misc. system info.");
@@ -149,7 +150,10 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         theFriendManager = new FrenemyManager();
         getModWrapper = new Wrapper();
         CELogAgent.logInfo("Basic init finished with no errors.");
+        //Create the file and write the integers only if file exist. But, if in-game block selector it's throwed it will be called and the block list will be saved to a file, again.        
+        if(!mainDir.exists()){
         saveXrayList();
+        }
         loadXrayList();
         for (Mod m : mainModLoader.mods)
         {
@@ -255,11 +259,11 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	
 	/**
 	 * Now with a configurable Xray :D
+	 * Write the entire file again when a block it's changed in-game
 	 */
 	
     public void saveXrayList( ) {
         try {
-        	if(!mainDir.exists()){
         		CELogAgent.logInfo("Writting X-Ray block list configuration file...");
             File file = new File( mainDir, "" );
             BufferedWriter out = new BufferedWriter( new FileWriter( file ) );
@@ -267,13 +271,14 @@ public final class CheatingEssentials implements CModTicks, Runnable {
                 out.write( i + "\r\n" );
             }
             out.close( );
-        	}
+        	
         } catch( Exception e ) {
         }
     }
     
     /**
-     * Load the integers of the Xray list.
+     * Load the integers of the Xray list. Only readed once
+     * 
      */
     
     public void loadXrayList( ) {
@@ -284,14 +289,13 @@ public final class CheatingEssentials implements CModTicks, Runnable {
             DataInputStream in = new DataInputStream( fstream );
             BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
             String line;
-            CELogAgent.logInfo("Parsing integers, adding blocks.");
             while( ( line = br.readLine( ) ) != null ) {
                 String curLine = line.toLowerCase( ).trim( );
                 int id = Integer.parseInt( curLine );
                 ModuleXray.xrayBlocks.add( id );
             }
             br.close( );
-            CELogAgent.logInfo("X-Ray block list readed and binded");
+            CELogAgent.logInfo("X-Ray block list Readed.");
         } catch( Exception e ) {
             e.printStackTrace( );
             saveXrayList( );

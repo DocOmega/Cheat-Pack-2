@@ -1,33 +1,31 @@
 package com.kodehawa.console;
 
+import java.util.ArrayList;
+
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
 
-public class XrayAdd implements BaseCommand
-{
+public class XrayAdd implements BaseCommand{
+
+    public int id;
+    public String endres = "";
+
     @Override
     public void onRun(String[ ] cmd)
     {
         // TODO Auto-generated method stub
         try
         {
-        	
-            if (cmd.length <= 1)
-            {
-                throw new NullPointerException();
-            }
-            else if (cmd.length == 2)
-            {
-            }
-            else
-            {
-                throw new NullPointerException();
-            }
+        	int olakase = Integer.parseInt( cmd[ 1 ] );
+        	ModuleXray.xrayBlocks.add( olakase );
         }
         catch (Exception e)
         {
             showHelp();
         }
+        endres = output(cmd);
     }
 
     @Override
@@ -48,6 +46,23 @@ public class XrayAdd implements BaseCommand
     public String output()
     {
         // TODO Auto-generated method stub
-        return null;
+       return endres;
     }
-}
+		
+        String output(String[ ] cmd){
+        
+        	try
+            {
+            	int olakase = Integer.parseInt( cmd[ 1 ] );
+            	ModuleXray.xrayBlocks.add( olakase );
+            	CheatingEssentials.getCheatingEssentials().saveXrayList();
+            	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've added a block to the X-Ray list: " + olakase);
+                return "Block ID added to Int: " + olakase;
+            }
+            catch (Exception e)
+            {
+               return showHelp();
+            }
+        }
+   }
+
