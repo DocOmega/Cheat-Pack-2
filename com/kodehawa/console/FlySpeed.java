@@ -1,17 +1,19 @@
 package com.kodehawa.console;
 
+import com.kodehawa.CheatingEssentials;
+
 import net.minecraft.src.Minecraft;
 
 public class FlySpeed implements BaseCommand {
 
 	String endres = "";
-	float apetecan = 1.0F;
 	Minecraft mc;
 	
 	@Override
 	public void onRun(String[] cmd) {
 		// TODO Auto-generated method stub
 		endres = output(cmd);
+		mc = CheatingEssentials.getCheatingEssentials().getMinecraftInstance();
 	}
 
 	@Override
@@ -34,17 +36,15 @@ public class FlySpeed implements BaseCommand {
 	
 	String output(String[ ] cmd){
 		try{
-		float result = (float) Double.parseDouble(cmd [ 1 ]);
-		mc.thePlayer.capabilities.setFlySpeed(result);
+		Float result = Float.parseFloat(cmd [ 1 ]);
+		CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.capabilities.setFlySpeed(result);
 		return "Fly speed changed to " + result + "!";}
 		catch (Exception e)
         {
+          e.printStackTrace();
             return showHelp();
         }
 	}
 	
-	private void setFlySpeed(){
-		
-	}
 
 }

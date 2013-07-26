@@ -16,15 +16,7 @@ public class XrayAdd implements BaseCommand{
     public void onRun(String[ ] cmd)
     {
         // TODO Auto-generated method stub
-        try
-        {
-        	int olakase = Integer.parseInt( cmd[ 1 ] );
-        	ModuleXray.xrayBlocks.add( olakase );
-        }
-        catch (Exception e)
-        {
-            showHelp();
-        }
+        
         endres = output(cmd);
     }
 
@@ -53,11 +45,12 @@ public class XrayAdd implements BaseCommand{
         
         	try
             {
-            	int olakase = Integer.parseInt( cmd[ 1 ] );
-            	ModuleXray.xrayBlocks.add( olakase );
+        		Integer blockID = Integer.parseInt( cmd[ 1 ] );
+            	ModuleXray.xrayBlocks.add( blockID );
+            	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
             	CheatingEssentials.getCheatingEssentials().saveXrayList();
-            	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've added a block to the X-Ray list: " + olakase);
-                return "Block ID added to Int: " + olakase;
+            	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've added a block to the X-Ray list: " + blockID);
+                return "Block ID added to Int: " + blockID;
             }
             catch (Exception e)
             {

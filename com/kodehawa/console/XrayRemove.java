@@ -34,11 +34,12 @@ public class XrayRemove implements BaseCommand{
 	String output(String[ ] cmd){
 		try
         {
-        	int olakase = Integer.parseInt( cmd[ 1 ] );
-        	ModuleXray.xrayBlocks.remove( olakase );
-        	CheatingEssentials.getCheatingEssentials().saveXrayList();
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've removed a block from the X-Ray list: " + olakase);
-            return "Block ID removed from Int: " + olakase;
+        	Integer blockID = Integer.parseInt( cmd[ 1 ] );
+        	ModuleXray.xrayBlocks.remove( blockID );
+        	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
+            CheatingEssentials.getCheatingEssentials().saveXrayList();
+        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've removed a block from the X-Ray list: " + blockID);
+            return "Block ID removed from Int: " + blockID;
         }
         catch (Exception e)
         {

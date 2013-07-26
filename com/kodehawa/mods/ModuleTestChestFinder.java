@@ -31,6 +31,12 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     }
     
     public void render(){
+    }
+
+    @Override
+    public void tick()
+    {
+        // TODO Auto-generated method stub
     	for( Object o : Minecraft.getMinecraft( ).theWorld.loadedTileEntityList ) {
             TileEntity e = ( TileEntity ) o;
             if( e instanceof TileEntityChest ) {
@@ -38,19 +44,14 @@ public class ModuleTestChestFinder extends Mod implements Tickable
             }
         }
     }
-
-    @Override
-    public void tick()
-    {
-        // TODO Auto-generated method stub
     
-    }
 
     
     @Override
     public void onEnable()
     {
     	Vars.ChestESP = true;
+    	//CheatingEssentials.getCheatingEssentials().addToTick(this);
         // TODO Auto-generated method stub
     }
 
@@ -59,9 +60,9 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     @Override
     public void onDisable()
     {
-    	Vars.ChestESP = false;
+       Vars.ChestESP = false;
         // TODO Auto-generated method stub
-    	
+    	//CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
     /**
      * It just know how get bugged.
