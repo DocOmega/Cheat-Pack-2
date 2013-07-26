@@ -1,5 +1,6 @@
 package com.kodehawa.console;
 
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
 
@@ -37,15 +38,19 @@ public class Speed implements BaseCommand
 
     String output(String[ ] cmd)
     {
-        try
-        {
-            double result = Double.parseDouble(cmd [ 1 ]);
-            Vars.speedbonus = result;
-            return "Speed set to " + Vars.speedbonus + "!";
-        }
-        catch (Exception e)
-        {
-            return showHelp();
-        }
+    	try{
+    		Float result = Float.parseFloat(cmd [ 1 ]);
+    		
+    		CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.capabilities.setPlayerWalkSpeed(result);
+    		return "Player speed changed to " + result + "!";
+    		}
+    		
+    		catch (Exception e)
+            {
+              e.printStackTrace();
+                return showHelp();
+            }
+    		
+    		}
     }
-}
+

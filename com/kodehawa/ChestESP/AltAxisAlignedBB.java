@@ -32,7 +32,7 @@ public class AltAxisAlignedBB
         return (AABBPool)theAABBLocalPool.get();
     }
 
-    protected AltAxisAlignedBB(double par1, double par3, double par5, double par7, double par9, double par11)
+    public AltAxisAlignedBB(double par1, double par3, double par5, double par7, double par9, double par11)
     {
         this.minX = par1;
         this.minY = par3;

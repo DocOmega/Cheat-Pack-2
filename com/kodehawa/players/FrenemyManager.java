@@ -45,8 +45,8 @@ public class FrenemyManager
 
     public FrenemyManager()
     {
-        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/CEFriendsList.txt");
-        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/CEEnemiesList.txt");
+        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/CEFriendsList.txt");
+        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/CEEnemiesList.txt");
 
         /**
          * WARNING: Hardcoded!

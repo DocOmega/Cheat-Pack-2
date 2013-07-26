@@ -65,7 +65,6 @@ public class ChestFinderContainer
         		255F,
         		0.4F); 
         drawBoundingBox( new AltAxisAlignedBB( x + 1, y + 1, z + 1, x, y, z ) );
-        GL11.glTranslated(x, y, z);
         GL11.glRotated( x, y, z, f );
         GL11.glDepthMask( true );
         GL11.glEnable( GL11.GL_TEXTURE_2D);
@@ -107,7 +106,7 @@ public class ChestFinderContainer
      * @param altAxisAlignedBB
      */
 
-    private static void drawOutlinedBoundingBox(AltAxisAlignedBB altAxisAlignedBB)
+    public static void drawOutlinedBoundingBox(AltAxisAlignedBB altAxisAlignedBB)
     {
         Tessellator var2 = Tessellator.instance;
         var2.startDrawing(3);

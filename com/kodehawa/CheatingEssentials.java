@@ -122,7 +122,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	private void modInit() {
 		
 		//TODO: Mod initialization.
-		mainDir = new File(getMinecraftInstance().mcDataDir, "/Cheating Essentials/CEXrayBlockList.txt");
+		mainDir = new File(getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
 		modinstance = this;
 		//260mb.net it's down for some reason, return a malicious page, probably a brute force attack, disabled UC
 		//update();
@@ -195,7 +195,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	 */
 	
 	public static String getModVersion(){
-		return "2.9.5";	
+		return "2.9.64";	
 		}
 	
 	/**
@@ -238,12 +238,6 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	
 		if(KeyBinding.checkKey(Keyboard.KEY_G)){
 			 minecraft.displayGuiScreen(MainGui);
-			 
-			 if(KeyBinding.checkKey(Keyboard.KEY_X)){
-				
-			
-			if(KeyBinding.checkKey(Keyboard.KEY_F)){
-				
 		
 		 for (Map.Entry<Mod, Integer> e : keys.entrySet())
          {
@@ -251,8 +245,6 @@ public final class CheatingEssentials implements CModTicks, Runnable {
              {
                  e.getKey().toggle();
              }
-         }
-		}
 			 }
 		}
 	}
@@ -266,11 +258,11 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         try {
         		CELogAgent.logInfo("Writting X-Ray block list configuration file...");
             File file = new File( mainDir, "" );
-            BufferedWriter out = new BufferedWriter( new FileWriter( file ) );
+            BufferedWriter bufferedwritter = new BufferedWriter( new FileWriter( file ) );
             for( int i : ModuleXray.xrayBlocks ) {
-                out.write( i + "\r\n" );
+            	bufferedwritter.write( i + "\r\n" );
             }
-            out.close( );
+            bufferedwritter.close( );
         	
         } catch( Exception e ) {
         }
@@ -283,8 +275,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
     
     public void loadXrayList( ) {
         try {
-        	CELogAgent.logInfo("Reading X-Ray block configuration file...");
-            File file = new File( mainDir, "" );
+        	File file = new File( mainDir, "" );
             FileInputStream fstream = new FileInputStream( file.getAbsolutePath( ) );
             DataInputStream in = new DataInputStream( fstream );
             BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
@@ -295,11 +286,13 @@ public final class CheatingEssentials implements CModTicks, Runnable {
                 ModuleXray.xrayBlocks.add( id );
             }
             br.close( );
-            CELogAgent.logInfo("X-Ray block list Readed.");
+            CELogAgent.logInfo("X-Ray configuration for blocks readed.");
         } catch( Exception e ) {
             e.printStackTrace( );
             saveXrayList( );
         }
+         CELogAgent.logInfo("File Location: " + mainDir.getAbsolutePath());
+
     }
 
 	/**

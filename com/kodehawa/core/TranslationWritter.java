@@ -44,7 +44,7 @@ public class TranslationWritter
 
     public TranslationWritter()
     {
-        translationFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/Cheating Essentials/gui.lang");
+        translationFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/gui.lang");
 
         if (!translationFile.exists())
         {

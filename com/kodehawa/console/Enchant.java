@@ -31,6 +31,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.Packet;
 
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.ChatColour;
 
 public class Enchant implements BaseCommand
@@ -72,7 +73,7 @@ public class Enchant implements BaseCommand
 
             if (en != null)
             {
-                String ename = mc.func_135016_M().func_135041_c().func_135034_a();
+                String ename = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().func_135016_M().func_135041_c().func_135034_a();
 
                 if (ename.replaceAll(" ", "").equalsIgnoreCase(ench))
                 {
@@ -95,7 +96,7 @@ public class Enchant implements BaseCommand
         }
         catch (Exception e)
         {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(e.toString());
+        	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.addChatMessage(e.toString());
         }
     }
 
@@ -109,14 +110,16 @@ public class Enchant implements BaseCommand
     String output(String[ ] cmd)
     {
         try {
-        	EntityClientPlayerMP thePlayer = Minecraft.getMinecraft( ).thePlayer;
+        	EntityClientPlayerMP thePlayer = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer;
         	{
         		ItemStack stack = thePlayer.inventory.getCurrentItem( );
         		enchantStack( stack, cmd [ 1 ], Integer.parseInt( cmd [ 2 ] ) );
+        		//writeStack(stack);
         		return "Item enchanted successfully! Will not work due to the Integrated Server.";
         	}
         }
           catch ( Exception e ) {
+        	  e.printStackTrace();
         	return showHelp( );
         }
        
