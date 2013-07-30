@@ -32,14 +32,11 @@ import com.kodehawa.util.Tickable;
 public class ModuleXray extends Mod implements Tickable
 {
 	public static ArrayList< Integer > xrayBlocks = new ArrayList< Integer >( );
-    public CheatingEssentials cheatbase;
-    private Minecraft mc;
+    
 
-    public ModuleXray(CheatingEssentials cb, Minecraft m)
+    public ModuleXray( )
     {
         super(Mods.Xray);
-        cheatbase = cb;
-        mc = m;
         
         /**
          * Holy shit...
@@ -81,18 +78,18 @@ public class ModuleXray extends Mod implements Tickable
     @Override
     public void onEnable()
     {
-        cheatbase.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
         Vars.xray = true;
-        mc.renderGlobal.loadRenderers();
-        mc.gameSettings.gammaSetting = 15.0F;
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Fullbright;
     }
 
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         Vars.xray = false;
-        mc.gameSettings.gammaSetting = 0.5F;
-        mc.renderGlobal.loadRenderers();
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Normalbright;
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
 }

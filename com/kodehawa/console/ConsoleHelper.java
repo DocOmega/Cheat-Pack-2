@@ -2,6 +2,9 @@ package com.kodehawa.console;
 
 import java.util.ArrayList;
 
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.mods.Mod;
+
 import net.minecraft.src.Minecraft;
 
 public class ConsoleHelper
@@ -20,6 +23,13 @@ public class ConsoleHelper
         addCommand(new FlySpeed());
         addCommand(new XrayAdd());
         addCommand(new XrayRemove());
+        
+        for (BaseCommand b : ConsoleHelper.commands)
+        {
+        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Mod command loaded: " + b);
+        }
+        
+
     }
 
     public void addCommand(BaseCommand cmd)

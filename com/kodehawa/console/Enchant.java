@@ -114,7 +114,6 @@ public class Enchant implements BaseCommand
         	{
         		ItemStack stack = thePlayer.inventory.getCurrentItem( );
         		enchantStack( stack, cmd [ 1 ], Integer.parseInt( cmd [ 2 ] ) );
-        		//writeStack(stack);
         		return "Item enchanted successfully! Will not work due to the Integrated Server.";
         	}
         }

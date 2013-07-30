@@ -8,14 +8,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleWaterwalk extends Mod implements Tickable
 {
-    private final CheatingEssentials cb;
-    private final Minecraft mc;
+   
 
-    public ModuleWaterwalk(CheatingEssentials co, Minecraft m)
+    public ModuleWaterwalk()
     {
         super(Mods.Waterwalk);
-        cb = co;
-        mc = m;
         // TODO Auto-generated constructor stub
     }
 
@@ -34,18 +31,18 @@ public class ModuleWaterwalk extends Mod implements Tickable
     @Override
     public void onEnable()
     {
-        cb.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
     }
 
     @Override
     public void onDisable()
     {
-        cb.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
 
     public EntityClientPlayerMP getPlayer()
     {
-        return this.mc.thePlayer;
+        return CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer;
     }
 
     public boolean isMoving()

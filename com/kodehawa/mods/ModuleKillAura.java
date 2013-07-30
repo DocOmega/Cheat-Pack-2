@@ -24,44 +24,38 @@ package com.kodehawa.mods;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Watcher;
 
 public class ModuleKillAura extends Mod implements Tickable
 {
-    private final CheatingEssentials cheatbase;
-    private EntityLiving elb;
 
-    public ModuleKillAura(CheatingEssentials rc, Minecraft mc)
+    public ModuleKillAura( )
     {
         super(Mods.Killaura);
-        cheatbase = rc;
-        minecraft = mc;
     }
 
     @Override
     public void onEnable()
     {
-        cheatbase.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
     }
 
     @Override
     public void onDisable()
     {
-        cheatbase.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
 
     @Override
     public void tick()
     {
-        for (int i = 0; i < minecraft.theWorld.loadedEntityList.size(); i++)
+        for (int i = 0; i < CheatingEssentials.getCheatingEssentials().getMinecraftInstance().theWorld.loadedEntityList.size(); i++)
         {
-            Entity ent = (Entity) minecraft.theWorld.loadedEntityList.get(i);
+            Entity ent = (Entity) CheatingEssentials.getCheatingEssentials().getMinecraftInstance().theWorld.loadedEntityList.get(i);
             int id = ent.entityId;
             long now = System.currentTimeMillis();
             Watcher tracked = EntityUtils.getLastAffected(id);
@@ -76,19 +70,18 @@ public class ModuleKillAura extends Mod implements Tickable
 
             EntityUtils.setLastAffected(id, ent);
 
-            if ((ent == minecraft.thePlayer) || !(ent instanceof EntityLiving) || ent.isDead)
+            if ((ent == CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer) || !(ent instanceof EntityLiving) || ent.isDead)
             {
                 continue;
             }
 
-            if ((minecraft.thePlayer.getDistanceSqToEntity(ent) <= 36D) && !ent.isDead && minecraft.thePlayer.canEntityBeSeen(ent))
+            if ((CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.getDistanceSqToEntity(ent) <= 90D) && !ent.isDead && CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.canEntityBeSeen(ent))
             {
-                //elb.faceEntity( ent, 100F, 100F );
-                minecraft.playerController.attackEntity(minecraft.thePlayer, ent);
-                minecraft.thePlayer.swingItem();
+                
+            	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().playerController.attackEntity(CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer, ent);
+            	
             }
         }
     }
 
-    private final Minecraft minecraft;
 }

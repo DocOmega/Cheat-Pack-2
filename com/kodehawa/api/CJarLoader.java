@@ -10,17 +10,11 @@ import java.util.zip.ZipInputStream;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.BaseCommand;
+import com.kodehawa.mods.Mod;
 import com.kodehawa.module.Module;
-import com.kodehawa.module.ModuleManager;
 
-/**
- * Dynamically loads custom Modules/Commands into the client. Allows for
- * customization beyond what the client itself contains.
- * 
- * @author godshawk
- * 
- */
-public class CJarLoader {
+
+public class CJarLoader implements Runnable {
     
     /**
      * The directory from which we load modules. Jar files in this directory
@@ -31,16 +25,16 @@ public class CJarLoader {
      * that this only works if the constructor for the class takes no
      * parameters.
      */
-    File jarDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance( ).mcDataDir + File.separator + "colony"
-            + File.separator + "modules" );
+    File jarDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance( ).mcDataDir + File.separator + "Cheating Essentials"
+            + File.separator + "Modules" );
     
     public CJarLoader( ) {
         // TODO Auto-generated constructor stub
-        if( !jarDir.exists( ) ) {
+    	if( !jarDir.exists( ) ) {
             jarDir.mkdirs( );
             jarDir.mkdir( );
         }
-        loadJars( );
+    	run( );
     }
     
     /**
@@ -54,6 +48,7 @@ public class CJarLoader {
      * @UPDATE: 5/23/2013: Zip File support added
      */
     public void loadJars( ) {
+     
         try {
             File[ ] flist = jarDir.listFiles( );
             
@@ -92,9 +87,9 @@ public class CJarLoader {
                                         CheatingEssentials.getCheatingEssentials( ).getModWrapper( ).getConsoleManager( ).addCommand( q );
                                     } else if( clazz.isAnnotationPresent( ModuleAnnotation.class ) ) {
                                         Constructor ctr = clazz.getConstructor( );
-                                        Module q = ( Module ) ctr.newInstance( );
+                                        Mod q = ( Mod ) ctr.newInstance( );
                                         log( "Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                        ModuleManager.addModule( q );
+                                        CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils.add( q );
                                     }
                                 }
                             }
@@ -109,6 +104,7 @@ public class CJarLoader {
             e.printStackTrace( );
         }
     }
+         
     
     /**
      * Logs a message.
@@ -116,6 +112,28 @@ public class CJarLoader {
      * @param s
      */
     public void log( String s ) {
-        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "CJarLoader" + s );
+        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "CJarLoader: " + s );
     }
+
+	private volatile boolean stopRequested = false;
+	
+	public void requestStop() {
+		  stopRequested = true;
+		}
+    
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Thread thread = new Thread("Cheating Essentials Loader Thread");
+        thread.setName("Cheating Essentials Loader Thread");
+        thread.setPriority(1);
+        thread.start();
+        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("External Module Loader Thread: Initialization");
+
+		while(!stopRequested){
+		loadJars();
+		
+		requestStop();
+		}
+	}
 }

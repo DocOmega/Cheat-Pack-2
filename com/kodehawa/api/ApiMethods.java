@@ -3,6 +3,7 @@ package com.kodehawa.api;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.Item;
+import com.kodehawa.mods.Mods;
 import com.kodehawa.render.GLHelper;
 import com.kodehawa.util.wrapper.Wrapper;
 
@@ -33,6 +34,8 @@ public class ApiMethods {
         return new GLHelper( );
     }
     
+    
+    
     /**
      * Adds a Frame to the GUI. Not much to say here...
      * 
@@ -40,6 +43,10 @@ public class ApiMethods {
      */
     public static void addFrame( Frame e ) {
         
+    }
+    
+    public static void addEnumMod( Mods ms ){
+    	ms.equals(getCE());
     }
     
     /**

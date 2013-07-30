@@ -30,45 +30,23 @@ public class ModManager
     public ArrayList<Mod> mods;
     public ArrayList<Mod> worldMods;
     public ArrayList<Mod> playerMods;
+    public ArrayList<Mod> f3utils;
 
     public ModManager(CheatingEssentials c)
     {
         mods = new ArrayList<Mod>();
         worldMods = new ArrayList<Mod>();
         playerMods = new ArrayList<Mod>();
-        // World mods
-        addWMod(new ModuleFastPlace(c, c.minecraft));
-        addWMod(new ModuleFullbright(c, c.minecraft));
-        addWMod(new ModuleWaterwalk(c, c.minecraft));
-        addWMod(new ModuleXray(c, c.minecraft));
-        addWMod(new ModuleAutoRespawn(c, c.minecraft));
-        addWMod(new ModuleTestChestFinder(c, c.minecraft));
-        //addWMod(new ModuleNoClip(c, c.minecraft));
-        
-        // Player mods
-        addPMod(new ModuleFly(c, c.minecraft));
-        addPMod(new ModuleKillAura(c, c.minecraft));
-        addPMod(new ModuleNoFall(c, c.minecraft));
-        addPMod(new ModuleSprint(c, c.minecraft));
-        addPMod(new ModuleNoKnockback(c, c.minecraft));
-        addPMod(new ModuleItemTooltips(c, c.minecraft));
-        //addPMod(new ModuleSpider(c, c.minecraft));
-    
-        // Main mod list
-        for (Mod m : worldMods)
-        {
-            mods.add(m);
-        }
-
-        for (Mod m : playerMods)
-        {
-            mods.add(m);
-        }
+        f3utils = new ArrayList<Mod>();
     }
 
     public void addMod(Mod m)
     {
         mods.add(m);
+    }
+    
+    public void addUtils(Mod m){
+    	f3utils.add(m);
     }
 
     public void addWMod(Mod m)

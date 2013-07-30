@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.src.Gui;
 import net.minecraft.src.ILogAgent;
@@ -23,7 +24,9 @@ import net.minecraft.src.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import com.kodehawa.api.CJarLoader;
 import com.kodehawa.api.reflection.Reflector;
+import com.kodehawa.console.BaseCommand;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CheckKey;
 import com.kodehawa.core.HTMLParser;
@@ -34,28 +37,34 @@ import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.testing.AlertHandler;
+import com.kodehawa.mods.F3UtilAdvancedTooltips;
+import com.kodehawa.mods.F3UtilMobHitbox;
+import com.kodehawa.mods.F3UtilRerenderLoadedChunks;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleAutoRespawn;
+import com.kodehawa.mods.ModuleFastBreak;
+import com.kodehawa.mods.ModuleFastPlace;
+import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleFullbright;
+import com.kodehawa.mods.ModuleItemTooltips;
+import com.kodehawa.mods.ModuleKillAura;
+import com.kodehawa.mods.ModuleNoFall;
+import com.kodehawa.mods.ModuleNoKnockback;
+import com.kodehawa.mods.ModuleSprint;
+import com.kodehawa.mods.ModuleTestChestFinder;
+import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.module.AntiKnockback;
-import com.kodehawa.module.ChestESP;
-import com.kodehawa.module.FastPlace;
-import com.kodehawa.module.Fly;
-import com.kodehawa.module.FullBright;
-import com.kodehawa.module.KillAura;
 import com.kodehawa.module.Module;
 import com.kodehawa.module.ModuleManager;
-import com.kodehawa.module.Sprint;
-import com.kodehawa.module.Xray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
 import com.kodehawa.util.ChatColour;
-import com.kodehawa.util.Console;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
 
-public final class CheatingEssentials implements CModTicks, Runnable {
+public final class CheatingEssentials extends Thread implements CModTicks {
 	
 
 	/**
@@ -66,6 +75,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	public Minecraft minecraft;
 	public static Wrapper getModWrapper = new Wrapper();
 	public File mainDir;
+	public File DebugConfig;
 	public CheckKey KeyBinding;
 	private Event theInternalEvents;
 	public ModuleGui MainGui;
@@ -78,17 +88,18 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	private static EventHandler eventHandler;
 	private File guiStatesFile;
     private File FileWritter;
-	private File xrayBlocks;
 	private Tickable modInternalTicks;
 	public HashMap<Mod, Integer> keys;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
     public ArrayList<Mod> mods = new ArrayList<Mod>();
     public static ArrayList<String> enabledMods = new ArrayList<String>();
     public FrenemyManager theFriendManager;
-	private ConsoleHelper theConsoleHelper;
+	public ConsoleHelper theConsoleHelper;
+	public CJarLoader externalLoader;
 	private AlertHandler alertManager;
 	private int tick = 0;
 	private static boolean outdatedAlert = false;
+	private BaseCommand consoleBase;
 	private long now;
 	private long then;
 	
@@ -104,7 +115,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		minecraft = mc;
 		mainModReflector = reflection;
 		KeyBinding = new CheckKey(mc);
-		modInit();
+		run();
 	}
 	
 	/**
@@ -123,21 +134,19 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		
 		//TODO: Mod initialization.
 		mainDir = new File(getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
+		DebugConfig = new File(getMinecraftInstance().mcDataDir, "/config/CheatingEssentials/CEDebug.txt");
 		modinstance = this;
-		//260mb.net it's down for some reason, return a malicious page, probably a brute force attack, disabled UC
-		//update();
+		CELogAgent.logInfo("OpenGL: " + GL11.glGetString(GL11.GL_VERSION));
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
         if(debugMode){
         	System.out.println("You only can view this messages if you're viewing the code, using it, or anything else - Debugging and misc. system info.");
         	CELogAgent.logInfo(Strings.MOD_AVALIABLE_MODULES);
         	CELogAgent.logInfo("Instance Started in (Miliseconds): " + System.currentTimeMillis() /1000);
-        	//WHY IT IS NOT IMPLEMENTED TO VANILLA MC :/
-        	CELogAgent.logInfo("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
-        	CELogAgent.logInfo("OpenGL vendor: " + GL11.glGetString(GL11.GL_VENDOR));
         	System.out.println("I hate the Integrated Server! :(");
         }
-		run();
+        externalLoader = new CJarLoader();
 		mainModLoader = new ModManager(this);
+		this.addModulestoArray();
 		mainModules = new ModuleManager();
 		modUtils = new Utils(minecraft);
 		MainGui = new ModuleGui();
@@ -149,8 +158,6 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         keys = new HashMap<Mod, Integer>();
         theFriendManager = new FrenemyManager();
         getModWrapper = new Wrapper();
-        CELogAgent.logInfo("Basic init finished with no errors.");
-        //Create the file and write the integers only if file exist. But, if in-game block selector it's throwed it will be called and the block list will be saved to a file, again.        
         if(!mainDir.exists()){
         saveXrayList();
         }
@@ -159,17 +166,78 @@ public final class CheatingEssentials implements CModTicks, Runnable {
         {
             keys.put(m, m.keyBind);
         }
+        Random rand = new Random();
+        //Easy, lol.
+        CELogAgent.logInfo("Init ID: " + rand.nextInt() );
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
 	    
 		
 	}
 	
-	 public void initModules( ) {
-	       ModuleManager.addModules( new Console( ), new Fly( ), new FastPlace( ), new Gui( ),
-	         new ChestESP( ), new Xray( ), new FullBright( ), new KillAura( ), new Sprint( ), new AntiKnockback( ) );
-	        int q = ModuleManager.i;
-	        CELogAgent.logInfo( "Modules loaded: " + q + "!" );
-	    }
+	/**
+	 * Register modules. 
+	 * - I'm the only that think that this it's like Item / Block vanilla registering? :)
+	 */
+	
+	public void addModulestoArray(){
+		try{
+		CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFastPlace( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFullbright( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleWaterwalk( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleXray( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAutoRespawn( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleTestChestFinder( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFastBreak( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleFly( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleKillAura( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleNoFall( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleSprint( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleNoKnockback( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleItemTooltips( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilRerenderLoadedChunks( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilMobHitbox( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilAdvancedTooltips( ));
+
+        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.worldMods)
+        {
+            mods.add(m);
+            CELogAgent.logInfo("Module Loaded: " + m);
+        }
+
+        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.playerMods)
+        {
+            mods.add(m);
+            CELogAgent.logInfo("Module Loaded: " + m);
+        }
+        
+        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
+        {
+            mods.add(m);
+            CELogAgent.logInfo("Module Loaded: " + m);
+        }
+        
+		}
+		catch(Exception ex){
+			CELogAgent.logSevere("Can't load basic modules at all or some modules can't be loaded. This will be bad, but the mod it still working.");
+			CELogAgent.logSevere("Report it in MCF thread. Good luck.");
+			for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.worldMods)
+	        {
+	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
+	        }
+
+	        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.playerMods)
+	        {
+	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
+	        }
+	        
+	        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
+	        {
+	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
+	        }
+			ex.printStackTrace();
+		}
+	}
+
 	
 	/**
 	 * Get the main mod instance
@@ -265,6 +333,7 @@ public final class CheatingEssentials implements CModTicks, Runnable {
             bufferedwritter.close( );
         	
         } catch( Exception e ) {
+        	CELogAgent.logSevere("Can't write X-Ray configuration file! Custom blocks for X-Ray will be disabled!");
         }
     }
     
@@ -286,15 +355,17 @@ public final class CheatingEssentials implements CModTicks, Runnable {
                 ModuleXray.xrayBlocks.add( id );
             }
             br.close( );
-            CELogAgent.logInfo("X-Ray configuration for blocks readed.");
+            if(debugMode){
+            CELogAgent.logInfo("Debug -" + " X-Ray block list array size: " + ModuleXray.xrayBlocks.size() + " lines.");
+            }
         } catch( Exception e ) {
-            e.printStackTrace( );
+            CELogAgent.logSevere("Can't load X-Ray list. Unreliable results!");
             saveXrayList( );
         }
-         CELogAgent.logInfo("File Location: " + mainDir.getAbsolutePath());
 
     }
-
+    
+    
 	/**
 	 * Update "Active Cheats" frame.
 	 */
@@ -399,12 +470,13 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 	           }
 	}
 	
-
+	private volatile boolean stopRequested = false;
+	
 	@Override
 	public void run() {
 		Thread thread = new Thread("Cheating Essentials Main Thread");
         thread.setName("Cheating Essentials Main Thread");
-        thread.setPriority(3);
+        thread.setPriority(1);
         thread.start();
         
         if(debugMode){
@@ -413,10 +485,29 @@ public final class CheatingEssentials implements CModTicks, Runnable {
 		CELogAgent.logInfo("Thread ID: " + thread.getId());
         CELogAgent.logInfo("Thread Hashcode: " + thread.hashCode());
         }
-        CELogAgent.logInfo(Strings.THREAD_NAME + " Started "  + thread.toString());
-	
+	    while(!stopRequested){
+	    	try {
+	    		CELogAgent.logInfo(Strings.THREAD_NAME + " starting in " + Strings.MOD_NAME + " " + Strings.MOD_VERSION + " for " + Strings.MINECRAFT_VERSION);
+                CELogAgent.logInfo(Strings.THREAD_NAME + " Started: "  + thread.toString());
+                modInit();
+                //update();
+	    		requestStop();
+	    		CELogAgent.logInfo("Initialization Thread was sucefully runned and finished.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				CELogAgent.logSevere(Strings.THREAD_NAME + " Thread was interrupted for some reason! Unreleable results!");
+			    CELogAgent.logSevere("With this, I'm not sure if the mod can be inited, and Minecraft instance will be affected.");
+			    CELogAgent.logSevere("Shutting down Minecraft...");
+			    System.exit(1799);
+			}
+	    	
+	    }
 	}
 	
+	public void requestStop() {
+		  stopRequested = true;
+		}
 
     public boolean update( ) {
         this.outdatedAlert = false;

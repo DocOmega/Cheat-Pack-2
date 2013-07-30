@@ -8,14 +8,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleNoKnockback extends Mod implements Tickable
 {
-    private CheatingEssentials cb;
-    private Minecraft mc;
+ 
 
-    public ModuleNoKnockback(CheatingEssentials c, Minecraft m)
+    public ModuleNoKnockback()
     {
         super(Mods.NoKnockback);
-        cb = c;
-        mc = m;
         // TODO Auto-generated constructor stub
     }
 
@@ -23,7 +20,7 @@ public class ModuleNoKnockback extends Mod implements Tickable
     public void tick()
     {
         // TODO Auto-generated method stub
-        EntityClientPlayerMP player = mc.thePlayer;
+        EntityClientPlayerMP player = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer;
 
         if (player.hurtTime > 0 && player.hurtResistantTime > 0)
         {
@@ -36,13 +33,13 @@ public class ModuleNoKnockback extends Mod implements Tickable
     public void onEnable()
     {
         // TODO Auto-generated method stub
-        cb.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
     }
 
     @Override
     public void onDisable()
     {
         // TODO Auto-generated method stub
-        cb.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 }
 }

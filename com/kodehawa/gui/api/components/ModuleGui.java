@@ -169,6 +169,23 @@ public class ModuleGui extends GuiScreen
         wFrame.setPinnable(false);
         addFrame(wFrame);
     }
+    
+    
+    public void makeF3UtilsFrame(){
+    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0xff550055, 0xaa000000, "Utils");
+    	
+    	for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
+        {
+            Button b = new Button(m.name, 0xff000077, 0xffffff, m);
+            b.setWidth(f3Frame.width - 6);
+            b.setHeight(f3Frame.oldHeight - 8);
+            f3Frame.addChild(b);
+        }
+
+        f3Frame.setPinnable(false);
+        addFrame(f3Frame);
+    	
+    }
 
     public void makePlayerFrame()
     {
@@ -610,5 +627,6 @@ public class ModuleGui extends GuiScreen
         makeInfoFrame();
         makeActivesFrame( );
         makeTestFrame( );
+        makeF3UtilsFrame();
     }
 }

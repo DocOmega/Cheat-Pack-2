@@ -36,7 +36,8 @@ public class XrayRemove implements BaseCommand{
         {
         	Integer blockID = Integer.parseInt( cmd[ 1 ] );
         	ModuleXray.xrayBlocks.remove( blockID );
-        	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
+            System.out.println(ModuleXray.xrayBlocks.size());
+            CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
             CheatingEssentials.getCheatingEssentials().saveXrayList();
         	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've removed a block from the X-Ray list: " + blockID);
             return "Block ID removed from X-Ray list: " + blockID + " NOTE: Default id's can't be removed, one the ones that you've added";

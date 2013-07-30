@@ -27,15 +27,8 @@ import java.util.ArrayList;
 public class Vars
 {
 	
-    public static boolean xray, doublespeed, ChestESP, RedstoneFinder, Climb;
-    public static double speedbonus = 2;
+    public static boolean xray, ChestESP, SpeedM ;
 
-    /**
-     * Blocks for xray to show. You can't have List<int>, so you instead do
-     * List<Integer>.
-     */
-    public static Integer[ ] xrayBlocks = new Integer[ ] { 8, 9, 10, 11, 14, 15, 16, 21, 89, 56, 73, 129, 88, 112, 153, 41, 42, 48, 173, 57, 49, 152 };
-    
    
     public static ArrayList<String> friends = new ArrayList<String>();
     public static ArrayList<String> enemies = new ArrayList<String>();

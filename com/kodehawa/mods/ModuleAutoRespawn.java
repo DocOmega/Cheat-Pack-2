@@ -7,24 +7,22 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleAutoRespawn extends Mod implements Tickable
 {
-    private CheatingEssentials cb;
-    private Minecraft mc;
+   
 
-    public ModuleAutoRespawn(CheatingEssentials c, Minecraft m)
+    public ModuleAutoRespawn()
     {
         super(Mods.Autorespawn);
         // TODO Auto-generated constructor stub
-        cb = c;
-        mc = m;
+        
     }
 
     @Override
     public void tick()
     {
         // TODO Auto-generated method stub
-        if (mc.thePlayer.isDead)
+        if (CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.isDead)
         {
-        	mc.thePlayer.respawnPlayer();
+        	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.respawnPlayer();
         }
     }
 
@@ -32,7 +30,7 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     public void onEnable()
     {
         // TODO Auto-generated method stub
-        cb.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
         //cb.getUtils().addChatMessage(getActive());
         //cb.getUtils().addChatMessage("I don't like the holy death screen.");
     }
@@ -41,7 +39,7 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     public void onDisable()
     {
         // TODO Auto-generated method stub
-        cb.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         //cb.getUtils().addChatMessage(getActive());
     }
 }

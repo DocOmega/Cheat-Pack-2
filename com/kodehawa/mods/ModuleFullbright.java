@@ -22,41 +22,47 @@
 
 package com.kodehawa.mods;
 
+import java.util.ArrayList;
+
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFullbright extends Mod implements Tickable
 {
-    public ModuleFullbright(CheatingEssentials rc, Minecraft mc)
+	
+	public static float Fullbright = 15.0F;
+	public static float Normalbright = 0.5F;
+	
+    public ModuleFullbright( )
     {
         super(Mods.Fullbright);
-        cb = rc;
-        minecraft = mc;
+        
     }
 
+    
+
+    
     @Override
     public void onEnable()
     {
-        cb.addToTick(this);
+    	CheatingEssentials.getCheatingEssentials().addToTick(this);
     }
 
     @Override
     public void onDisable()
     {
         
-        minecraft.gameSettings.gammaSetting = 0.5F;
-        cb.removeFromCurrentTick(this);
+    	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = Normalbright;
+    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
 
     @Override
     public void tick()
     {
-        minecraft.gameSettings.gammaSetting++;
+    	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = Fullbright;
     }
 
-    private final CheatingEssentials cb;
-    private final Minecraft minecraft;
+ 
 }

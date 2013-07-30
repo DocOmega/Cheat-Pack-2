@@ -4,6 +4,7 @@
 
 package com.kodehawa.mods;
 
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.ChatColour;
 
 public abstract class Mod
@@ -28,6 +29,7 @@ public abstract class Mod
     public void toggle()
     {
         active = !active;
+        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Module " + name + " toggled.");
 
         if (active)
         {
@@ -62,6 +64,6 @@ public abstract class Mod
 
     public String name;
     //Make booleans! Ready go! *Ehmm... you forgot the static okay no xD
-    private boolean active = false;
+    private boolean active;
     public int keyBind;
 }
