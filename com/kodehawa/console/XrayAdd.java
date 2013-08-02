@@ -46,9 +46,14 @@ public class XrayAdd implements BaseCommand{
         	try
             {
         		Integer blockID = Integer.parseInt( cmd[ 1 ] );
+
+        		if(ModuleXray.xrayBlocks.contains(blockID)){
+        			return "The following ID it's in the list: " + blockID + " and we can't add it due to this.";
+        		}
+        		
             	ModuleXray.xrayBlocks.add( blockID );
             	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
-                System.out.println(ModuleXray.xrayBlocks.size());
+            	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("" + ModuleXray.xrayBlocks.size());
                 CheatingEssentials.getCheatingEssentials().saveXrayList();
             	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("You've added a block to the X-Ray list: " + blockID);
                 return "Block ID added to Int: " + blockID;

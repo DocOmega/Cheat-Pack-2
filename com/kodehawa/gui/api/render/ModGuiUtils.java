@@ -374,7 +374,9 @@ public class ModGuiUtils
      */
     public static int getWidth()
     {
-        ScaledResolution sr = new ScaledResolution(CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().gameSettings, CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().displayWidth, CheatingEssentials.getCheatingEssentials().getModWrapper().getMinecraft().displayHeight);
+    	ScaledResolution sr = new ScaledResolution(CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings,
+    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayWidth,
+    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayHeight);
         return sr.getScaledWidth();
     }
 

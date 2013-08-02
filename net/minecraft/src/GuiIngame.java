@@ -1,11 +1,11 @@
 package net.minecraft.src;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
@@ -13,12 +13,23 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.InGameRadar.Radar;
 import com.kodehawa.core.CheckKey;
+import com.kodehawa.gui.api.components.Frame;
+import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleFastBreak;
+import com.kodehawa.mods.ModuleFastPlace;
 import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleFullbright;
+import com.kodehawa.mods.ModuleKillAura;
+import com.kodehawa.mods.ModuleNoFall;
+import com.kodehawa.mods.ModuleNoKnockback;
+import com.kodehawa.mods.ModuleTestChestFinder;
+import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.util.ModProp;
+import com.kodehawa.util.ChatColour;
 
 public class GuiIngame extends Gui
 {
@@ -52,27 +63,64 @@ public class GuiIngame extends Gui
     private static ModManager mod;
     private static ModuleXray xray;
     private static ModuleFly fly;
+    private static ModuleTestChestFinder cesp;
+    private static ModuleFullbright fullbright;
+    private static ModuleKillAura killa;
+    private static ModuleNoFall nofall;
+    private static ModuleFastPlace fp;
+    private static ModuleWaterwalk waterw;
+    private static ModuleFastBreak fb;
+    private static ModuleNoKnockback nk;
     private CheckKey ck;
+    public ArrayList<Frame> frames;
 	public HashMap<Mod, Integer> keys;
-
+	private ModGuiUtils utils;
+    private boolean radarActive;
+    private boolean activese;
+    private Radar radar;
 
     public GuiIngame(Minecraft par1Minecraft)
     {
+        frames = new ArrayList<Frame>();
         this.mc = par1Minecraft;
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
         cheatingEssentials = new CheatingEssentials(par1Minecraft, null);
 		ck = new CheckKey(mc);
-		
-
-    }
+		xray = new ModuleXray();
+        fly = new ModuleFly();
+		cesp = new ModuleTestChestFinder();
+		fullbright = new ModuleFullbright();
+	    frames = new ArrayList<Frame>();
+		killa = new ModuleKillAura();
+		fp = new ModuleFastPlace();
+		fb = new ModuleFastBreak();
+		waterw = new ModuleWaterwalk();
+		nk = new ModuleNoKnockback();
+        utils = new ModGuiUtils();
+		radar = new Radar();
+		}
 
     /**
      * Render the ingame overlay with quick icon bar, ...
      */
     public void renderGameOverlay(float par1, boolean par2, int par3, int par4)
     {
+		
+		
     	cheatingEssentials.tick();
+
+        if ((mc.currentScreen == null) || (mc.currentScreen == (Gui) mc.ingameGUI))
+        {
+    	for(Frame e : CheatingEssentials.getCheatingEssentials().MainGui.frames) {
+    		if(e.pinned) {
+    		e.update();
+    		e.draw();
+    		}
+    		}
+        }
     	
+       
+        
         ScaledResolution var5 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int var6 = var5.getScaledWidth();
         int var7 = var5.getScaledHeight();
@@ -80,6 +128,30 @@ public class GuiIngame extends Gui
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(GL11.GL_BLEND);
 
+       
+        
+    	if(ck.checkKey(Keyboard.KEY_I)){
+    		radarActive = !radarActive;
+    		
+    	}
+    	
+    	if(ck.checkKey(Keyboard.KEY_Z)){
+    		activese = !activese;
+    	}
+    	
+    	if(this.radarActive){
+    		radar.run();
+    	}
+    	
+    	
+    	if(this.activese){
+   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
+   			this.drawString( var8, ChatColour.DARK_GRAY + "Enabled Modules", var6 - 98, 151, 0xffffff );
+   			for ( int i = 0; i < CheatingEssentials.getCheatingEssentials().enabledMods.size( ); i++ ) {
+   				this.drawString( var8, CheatingEssentials.getCheatingEssentials().enabledMods.get( i ), var6 - 98, 150 + CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
+   			}
+   	}
+		
         if (Minecraft.isFancyGraphicsEnabled())
         {
             this.renderVignette(this.mc.thePlayer.getBrightness(par1), var6, var7);
@@ -150,7 +222,9 @@ public class GuiIngame extends Gui
         }
 
         int var32;
-
+    
+    
+    	
         if (this.mc.thePlayer.getSleepTimer() > 0)
         {
             this.mc.mcProfiler.startSection("sleep");
@@ -475,6 +549,8 @@ public class GuiIngame extends Gui
                 }
             }
         }
+        
+      	
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_LIGHTING);

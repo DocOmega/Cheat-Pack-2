@@ -144,7 +144,7 @@ public class KeyManager
                     else
                     {
                     	 if(CheatingEssentials.debugMode){
-                    		 System.out.println("I'm bored and because of it I put this :)");
+                    		 //System.out.println("I'm bored and because of it I put this :)");
                     }}
                 }
             }

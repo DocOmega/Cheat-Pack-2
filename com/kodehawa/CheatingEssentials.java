@@ -75,7 +75,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public Minecraft minecraft;
 	public static Wrapper getModWrapper = new Wrapper();
 	public File mainDir;
-	public File DebugConfig;
 	public CheckKey KeyBinding;
 	private Event theInternalEvents;
 	public ModuleGui MainGui;
@@ -102,6 +101,16 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	private BaseCommand consoleBase;
 	private long now;
 	private long then;
+    private static ModuleXray xray;
+    private static ModuleFly fly;
+    private static ModuleTestChestFinder cesp;
+    private static ModuleFullbright fullbright;
+    private static ModuleKillAura killa;
+    private static ModuleNoFall nofall;
+    private static ModuleFastPlace fp;
+    private static ModuleWaterwalk waterw;
+    private static ModuleFastBreak fb;
+    private static ModuleNoKnockback nk;
 	
 	
     /**
@@ -134,13 +143,11 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 		
 		//TODO: Mod initialization.
 		mainDir = new File(getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
-		DebugConfig = new File(getMinecraftInstance().mcDataDir, "/config/CheatingEssentials/CEDebug.txt");
 		modinstance = this;
 		CELogAgent.logInfo("OpenGL: " + GL11.glGetString(GL11.GL_VERSION));
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
         if(debugMode){
         	System.out.println("You only can view this messages if you're viewing the code, using it, or anything else - Debugging and misc. system info.");
-        	CELogAgent.logInfo(Strings.MOD_AVALIABLE_MODULES);
         	CELogAgent.logInfo("Instance Started in (Miliseconds): " + System.currentTimeMillis() /1000);
         	System.out.println("I hate the Integrated Server! :(");
         }
@@ -158,6 +165,18 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         keys = new HashMap<Mod, Integer>();
         theFriendManager = new FrenemyManager();
         getModWrapper = new Wrapper();
+        modKeyManager = new KeyManager();
+		xray = new ModuleXray();
+        fly = new ModuleFly();
+		cesp = new ModuleTestChestFinder();
+		fullbright = new ModuleFullbright();
+		killa = new ModuleKillAura();
+		fp = new ModuleFastPlace();
+		fb = new ModuleFastBreak();
+		waterw = new ModuleWaterwalk();
+		nk = new ModuleNoKnockback();
+		nofall = new ModuleNoFall();
+
         if(!mainDir.exists()){
         saveXrayList();
         }
@@ -168,7 +187,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         }
         Random rand = new Random();
         //Easy, lol.
-        CELogAgent.logInfo("Init ID: " + rand.nextInt() );
+        CELogAgent.logInfo("CE Startup ID: " + rand.nextInt(90000) );
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
 	    
 		
@@ -263,7 +282,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	 */
 	
 	public static String getModVersion(){
-		return "2.9.64";	
+		return "3.0.0 A1";	
 		}
 	
 	/**
@@ -315,6 +334,60 @@ public final class CheatingEssentials extends Thread implements CModTicks {
              }
 			 }
 		}
+	}
+	
+   
+	
+	private void handleModuleKeybinding(){
+		
+		/**
+		 * Hardcoded. Only thinked for be used once.
+		 */
+		try{
+            if (KeyBinding.checkKey(Keyboard.KEY_X))
+            {
+                xray.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_R))
+            {
+                fly.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_N))
+            {
+                cesp.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_F))
+            {
+                fullbright.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_Y))
+            {
+                killa.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_V))
+            {
+                nofall.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_M))
+            {
+                fp.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_B))
+            {
+                fb.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_J))
+            {
+                waterw.toggle();
+            }
+            if (KeyBinding.checkKey(Keyboard.KEY_L))
+            {
+                nk.toggle();
+            }
+		}
+			catch(Exception var23){
+				var23.printStackTrace();
+			}
 	}
 	
 	/**
@@ -420,13 +493,14 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public void tick() {
 		modTicks();
         updateArray();
+        updatePinnedFrames();
         handleKeyPress();
+        handleModuleKeybinding();
 	}
 	
 	/**
 	 * Update pinnable frames.
 	 */
-	@Deprecated
 	public void updatePinnedFrames()
     {
         if ((minecraft.currentScreen == null) || (minecraft.currentScreen == (Gui) minecraft.ingameGUI))

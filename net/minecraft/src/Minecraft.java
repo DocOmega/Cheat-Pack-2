@@ -38,6 +38,16 @@ import org.lwjgl.util.glu.GLU;
 import com.google.common.collect.Lists;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.core.CheckKey;
+import com.kodehawa.mods.ModuleFastBreak;
+import com.kodehawa.mods.ModuleFastPlace;
+import com.kodehawa.mods.ModuleFly;
+import com.kodehawa.mods.ModuleFullbright;
+import com.kodehawa.mods.ModuleKillAura;
+import com.kodehawa.mods.ModuleNoFall;
+import com.kodehawa.mods.ModuleNoKnockback;
+import com.kodehawa.mods.ModuleTestChestFinder;
+import com.kodehawa.mods.ModuleWaterwalk;
+import com.kodehawa.mods.ModuleXray;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -200,6 +210,16 @@ public class Minecraft implements IPlayerUsage
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
     private KeyBinding key;
     private CheckKey ckey;
+    private static ModuleXray xray;
+    private static ModuleFly fly;
+    private static ModuleTestChestFinder cesp;
+    private static ModuleFullbright fullbright;
+    private static ModuleKillAura killa;
+    private static ModuleNoFall nofall;
+    private static ModuleFastPlace fp;
+    private static ModuleWaterwalk waterw;
+    private static ModuleFastBreak fb;
+    private static ModuleNoKnockback nk;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
@@ -207,7 +227,8 @@ public class Minecraft implements IPlayerUsage
     	checkMainClass("CheatingEssentials");
     	
     	//Attempt to stop minecraft loading if the current instance it's using Lex's Minecraft Forge | Only for non-forge version.
-    	
+    
+
     
     	 if (ClientBrandRetriever.getClientModName().contains("fml")) {
 			 printForgeFMLVersionCheck("Trying to start the main Minecraft Instance, but we can't!");
@@ -245,7 +266,17 @@ public class Minecraft implements IPlayerUsage
         StatList.nopInit();
         compat = new HashMap<String, Integer>();
         this.checkCompatibility("ModLoader");
+        xray = new ModuleXray();
+        fly = new ModuleFly();
+		cesp = new ModuleTestChestFinder();
+		fullbright = new ModuleFullbright();
+		killa = new ModuleKillAura();
+		fp = new ModuleFastPlace();
+		fb = new ModuleFastBreak();
+		waterw = new ModuleWaterwalk();
+		nk = new ModuleNoKnockback();
     }
+    
 
     private void startTimerHackThread()
     {
@@ -865,7 +896,6 @@ public class Minecraft implements IPlayerUsage
             }
 
             this.mcProfiler.profilingEnabled = true;
-            this.displayDebugInfo(var7);
         }
         else
         {
@@ -1400,8 +1430,9 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
-    	
-    	
+		
+    	   
+
     	if (this.rightClickDelayTimer > 0)
         {
             --this.rightClickDelayTimer;

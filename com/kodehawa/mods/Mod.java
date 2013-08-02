@@ -29,15 +29,17 @@ public abstract class Mod
     public void toggle()
     {
         active = !active;
-        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Module " + name + " toggled.");
 
         if (active)
         {
             onEnable();
+            CheatingEssentials.getCheatingEssentials().enabledMods.add(name);
         }
         else
         {
             onDisable();
+            CheatingEssentials.getCheatingEssentials().enabledMods.remove(name);
+
         }
     }
 
