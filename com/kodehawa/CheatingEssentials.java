@@ -33,7 +33,6 @@ import com.kodehawa.core.HTMLParser;
 import com.kodehawa.core.KeyManager;
 import com.kodehawa.core.Strings;
 import com.kodehawa.event.Event;
-import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.testing.AlertHandler;
@@ -55,8 +54,6 @@ import com.kodehawa.mods.ModuleSprint;
 import com.kodehawa.mods.ModuleTestChestFinder;
 import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.module.Module;
-import com.kodehawa.module.ModuleManager;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
 import com.kodehawa.util.ChatColour;
@@ -73,7 +70,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
     public static CheatingEssentials modinstance;
 	public Minecraft minecraft;
-	public static Wrapper getModWrapper = new Wrapper();
+	public Wrapper getModWrapper;
 	public File mainDir;
 	public CheckKey KeyBinding;
 	private Event theInternalEvents;
@@ -82,10 +79,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	private Utils modUtils;
 	public KeyManager modKeyManager;
 	public static ModManager mainModLoader;
-	public static ModuleManager mainModules;
-	public static Module module;
-	private static EventHandler eventHandler;
-	private File guiStatesFile;
     private File FileWritter;
 	private Tickable modInternalTicks;
 	public HashMap<Mod, Integer> keys;
@@ -111,7 +104,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
     private static ModuleWaterwalk waterw;
     private static ModuleFastBreak fb;
     private static ModuleNoKnockback nk;
-	
 	
     /**
      * Constructor
@@ -154,7 +146,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         externalLoader = new CJarLoader();
 		mainModLoader = new ModManager(this);
 		this.addModulestoArray();
-		mainModules = new ModuleManager();
 		modUtils = new Utils(minecraft);
 		MainGui = new ModuleGui();
 		minecraft = getMinecraftInstance();
@@ -187,7 +178,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         }
         Random rand = new Random();
         //Easy, lol.
-        CELogAgent.logInfo("CE Startup ID: " + rand.nextInt(90000) );
+        CELogAgent.logInfo("CE Startup ID: " + rand.nextInt(9000) );
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
 	    
 		
@@ -199,6 +190,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	 */
 	
 	public void addModulestoArray(){
+		
 		try{
 		CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFastPlace( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFullbright( ));
@@ -282,8 +274,12 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	 */
 	
 	public static String getModVersion(){
-		return "3.0.0 A1";	
+		return "3.0.0 A3";	
 		}
+	
+    public static String getMCVersionForMod(){
+    	return "Minecraft version 1.6.2";
+        }
 	
 	/**
 	 * Tick the modules
@@ -317,7 +313,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	/**
 	 * Handle GUI key press.
 	 */
-	
 
 	@Override
 	public void handleKeyPress() {
@@ -336,13 +331,12 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 		}
 	}
 	
-   
-	
 	private void handleModuleKeybinding(){
 		
 		/**
 		 * Hardcoded. Only thinked for be used once.
 		 */
+		
 		try{
             if (KeyBinding.checkKey(Keyboard.KEY_X))
             {
@@ -491,11 +485,17 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	@Override
 	public void tick() {
+		try{
 		modTicks();
         updateArray();
         updatePinnedFrames();
         handleKeyPress();
         handleModuleKeybinding();
+      }
+		catch(Exception e){
+			this.CELogAgent.logSevere("Can't load somethings. IDK what happened, but the error it's down");
+            e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -550,7 +550,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public void run() {
 		Thread thread = new Thread("Cheating Essentials Main Thread");
         thread.setName("Cheating Essentials Main Thread");
-        thread.setPriority(1);
+        thread.setPriority(2);
         thread.start();
         
         if(debugMode){
@@ -570,7 +570,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				CELogAgent.logSevere(Strings.THREAD_NAME + " Thread was interrupted for some reason! Unreleable results!");
+				CELogAgent.logSevere(Strings.THREAD_NAME + " was interrupted for some reason! Unreleable results!");
 			    CELogAgent.logSevere("With this, I'm not sure if the mod can be inited, and Minecraft instance will be affected.");
 			    CELogAgent.logSevere("Shutting down Minecraft...");
 			    System.exit(1799);

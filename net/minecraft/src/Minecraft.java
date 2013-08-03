@@ -275,6 +275,7 @@ public class Minecraft implements IPlayerUsage
 		fb = new ModuleFastBreak();
 		waterw = new ModuleWaterwalk();
 		nk = new ModuleNoKnockback();
+		key = new KeyBinding("Test", 35);
     }
     
 
@@ -2558,6 +2559,9 @@ public class Minecraft implements IPlayerUsage
                         }
                 }
                 bufferedreader.close();
+                
+                registerKey(key = new KeyBinding("Cheating Essentials GUI", 34));
+                
         }
         catch (Exception exception){
                 System.out.println("Failed to load options");

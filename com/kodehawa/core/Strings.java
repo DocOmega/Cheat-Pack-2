@@ -23,7 +23,7 @@ public class Strings {
     		" NoFall," +
     		" Chest Finder," +
     		" Sprint.";
-	public static String MINECRAFT_VERSION = "Minecraft version 1.6.2";
+	public static String MINECRAFT_VERSION = CheatingEssentials.getMCVersionForMod();
 	public static String VERSION_FOUND = "";
 	public static String THREAD_NAME = "Main Thread";
 	

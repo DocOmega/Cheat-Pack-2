@@ -139,18 +139,7 @@ public class GuiIngame extends Gui
     		activese = !activese;
     	}
     	
-    	if(this.radarActive){
-    		radar.run();
-    	}
     	
-    	
-    	if(this.activese){
-   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
-   			this.drawString( var8, ChatColour.DARK_GRAY + "Enabled Modules", var6 - 98, 151, 0xffffff );
-   			for ( int i = 0; i < CheatingEssentials.getCheatingEssentials().enabledMods.size( ); i++ ) {
-   				this.drawString( var8, CheatingEssentials.getCheatingEssentials().enabledMods.get( i ), var6 - 98, 150 + CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
-   			}
-   	}
 		
         if (Minecraft.isFancyGraphicsEnabled())
         {
@@ -555,6 +544,24 @@ public class GuiIngame extends Gui
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
+        
+        /**
+         * Start the radar thread and draw the Radar.
+         */
+    	if(this.radarActive){
+    		radar.run();
+    	}
+    	
+        /**
+         * This it's self-explanatory :)
+         */
+    	if(this.activese){
+   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
+   			this.drawString( var8, ChatColour.DARK_GRAY + "Enabled Modules", var6 - 98, 151, 0xffffff );
+   			for ( int i = 0; i < CheatingEssentials.getCheatingEssentials().enabledMods.size( ); i++ ) {
+   				this.drawString( var8, CheatingEssentials.getCheatingEssentials().enabledMods.get( i ), var6 - 98, 150 + CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
+   			}
+   	}
     }
 
     private void func_96136_a(ScoreObjective par1ScoreObjective, int par2, int par3, FontRenderer par4FontRenderer)
