@@ -480,11 +480,9 @@ public class Block
                 return ModuleXray.xrayBlocks.contains( blockID );
             }
     	}
-    	else if(ModuleXray.RENDER_NORMAL){
     		if(Vars.xray){
     	return ModuleXray.xrayBlocks.contains( blockID );
     		}
-    	}
         return ( par5 == 0 ) && ( this.minY > 0.0D ) ? true : ( ( par5 == 1 ) && ( this.maxY < 1.0D ) ? true
                 : ( ( par5 == 2 ) && ( this.minZ > 0.0D ) ? true : ( ( par5 == 3 ) && ( this.maxZ < 1.0D ) ? true
                         : ( ( par5 == 4 ) && ( this.minX > 0.0D ) ? true

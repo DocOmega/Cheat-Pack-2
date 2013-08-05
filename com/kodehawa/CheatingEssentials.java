@@ -33,7 +33,6 @@ import net.minecraft.src.Minecraft;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL43;
 
 import com.kodehawa.api.CJarLoader;
 import com.kodehawa.api.reflection.Reflector;
@@ -55,6 +54,7 @@ import com.kodehawa.mods.F3UtilMobHitbox;
 import com.kodehawa.mods.F3UtilRerenderLoadedChunks;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.mods.ModuleAltXray;
 import com.kodehawa.mods.ModuleAutoRespawn;
 import com.kodehawa.mods.ModuleAutoSwitch;
 import com.kodehawa.mods.ModuleFastBreak;
@@ -70,7 +70,6 @@ import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
-import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.FileManager;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
@@ -215,6 +214,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFullbright( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleWaterwalk( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleXray( ));
+        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAltXray( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAutoRespawn( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleTestChestFinder( ));
         CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFastBreak( ));
