@@ -33,6 +33,7 @@ import net.minecraft.src.Minecraft;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL43;
 
 import com.kodehawa.api.CJarLoader;
 import com.kodehawa.api.reflection.Reflector;
@@ -121,6 +122,8 @@ public final class CheatingEssentials extends Thread implements CModTicks {
     private static ModuleFastBreak fb;
     private static ModuleNoKnockback nk;
 	private FileManager filemanager;
+	private volatile boolean stopRequested = false;
+
     
     /**
      * Constructor
@@ -143,16 +146,15 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public static boolean debugMode = false;
 
 	
-	
 	/**
-	 * Init the mod
+	 * Init the mod, the events, etc, etc.
 	 */
 	
 	private void modInit() {
 		
 		//TODO: Mod initialization.
 		mainDir = new File(getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
-
+        crashDir = new File(getMinecraftInstance().mcDataDir, "/Cheating Essentials/crash/" + File.separator + ".log");
 		modinstance = this;
 		CELogAgent.logInfo("OpenGL: " + GL11.glGetString(GL11.GL_VERSION));
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
@@ -196,7 +198,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
             keys.put(m, m.keyBind);
         }
         Random rand = new Random();
-        //Easy, lol.
         CELogAgent.logInfo("CE Startup ID: " + rand.nextInt(9000) );
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
 	    
@@ -360,88 +361,37 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 			 }
 		}
 	}
-	
-	private void handleModuleKeybinding(){
-		
-		/**
-		 * Hardcoded. Only thinked for be used once.
-		 */
-		
-		try{
-            if (KeyBinding.checkKey(Keyboard.KEY_X))
-            {
-                xray.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_R))
-            {
-                fly.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_N))
-            {
-                cesp.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_F))
-            {
-                fullbright.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_Y))
-            {
-                killa.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_V))
-            {
-                nofall.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_B))
-            {
-                fb.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_J))
-            {
-                waterw.toggle();
-            }
-            if (KeyBinding.checkKey(Keyboard.KEY_L))
-            {
-                nk.toggle();
-            }
-		}
-			catch(Exception ex){
-				 ex.printStackTrace( );
-		            System.out.println( "Error in CE init: " + ex.toString( ) );
-		            ex.printStackTrace( );
-		            
-		            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-		            logString += "Console Log:\r\n";
-		            logString += "Error in CE Thread init: " + ex.toString( ) + "\r\n\r\n";
-		            for( StackTraceElement ele : ex.getStackTrace( ) ) {
-		                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-		            }
-		            writeCrash( logString );
-		        }
-			}
 
+	/**
+	 * Module keybinding.
+	 * It handles the events and toggle the specified mod with the keybinding specified in the module class.
+	 */
 	
     public void handleKeys( ) {
-        for( Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.getModules( ) ) {
+    	//TODO: Module Keys
+        for( Mod m : mods ) {
             int key = m.getKeybind( );
             if( getKeyStateFromMap( key ) ) {
                 eventHandler.call( new EventKey( this, m.getKeybind( ) ) );
+                m.toggle();
                 break;
             }
+
         }
         if( getKeyStateFromMap( Keyboard.KEY_NUMPAD0 ) ) {
             eventHandler.call( new EventAlert( this, "Event fired!" ) );
         }
-    }
+        }
     
-    public boolean getKeyStateFromMap( int i ) {
+        /**
+        * Get key things.
+        * @param i
+        * @return
+        */
+       public boolean getKeyStateFromMap( int i ) {
         if( getMinecraftInstance().currentScreen != null ) {
             return false;
         }
-        
-        /*
-         * Yes, this is essentially a checkKey. umadbrah?
-         */
         if( Keyboard.isKeyDown( i ) != keymap[ i ] ) {
             return keymap[ i ] = !keymap[ i ];
         } else {
@@ -503,7 +453,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
             }
         } catch( Exception ex ) {
             CELogAgent.logSevere("Can't load X-Ray list. Unreliable results!");
-            ex.printStackTrace( );
             CELogAgent.logSevere( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
             
@@ -567,18 +516,17 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 
 	/**
 	 * Tick the entire mod.
+	 * Initialize the Arrays, Update the pinned frames and get key pressing.
 	 */
 	
 	@Override
 	public void tick() {
 		try{
-	   // eventHandler.call( new EventTick( this ) );
 		modTicks();
         updateArray();
         updatePinnedFrames();
         handleKeyPress();
         handleKeys();
-        handleModuleKeybinding();
       }
 		catch(Exception ex){
 			this.CELogAgent.logSevere("Can't load somethings. IDK what happened, but the error it's down");
@@ -620,30 +568,14 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	public void reload()
     {
-        for (Mod m : mainModLoader.mods)
+        for (Mod m : mods)
         {
             m.turnOff();
         }
 
+        getMinecraftInstance().renderGlobal.loadRenderers();
         modInit();
     }
-
-        
-	/**
-	 * Throws a chat message in world start... I think.
-	 * @param mc
-	 * @param f
-	 */
-	public void onTickInGame(Minecraft mc, float f)
-	{
-	           tick++;
-	           if(tick == 5 && !mc.theWorld.isRemote)
-	           {
-	                mc.thePlayer.addChatMessage(ChatColour.DARK_GRAY + "Cheating Essentials version 2.9.4 running in Minecraft version 1.6.2");
-	           }
-	}
-	
-	private volatile boolean stopRequested = false;
 	
 	@Override
 	public void run() {
@@ -664,7 +596,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
                 CELogAgent.logInfo(Strings.THREAD_NAME + " Started: "  + thread.toString());
                 modInit();
                 //update();
-	    		requestStop();
+	    		requestThreadStop();
 	    		CELogAgent.logInfo("Initialization Thread was sucefully runned and finished.");
 			} catch (Exception ex) {
 				// TODO Auto-generated catch block
@@ -688,11 +620,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	    	
 	    }
 	
-	
-	public void requestStop() {
-		  stopRequested = true;
-		}
-
     public boolean update( ) {
         this.outdatedAlert = false;
         try {
@@ -733,6 +660,10 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         }
     }
     
+    /**
+     * Write a crash in the specified directory.
+     * @param alah
+     */
     public void writeCrash( String alah ) {
         try {
             DateFormat format = new SimpleDateFormat( "MM_dd_yyyy-HH_mm_ss" );
@@ -749,5 +680,8 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	public ILogAgent CELogAgent = new net.minecraft.src.LogAgent("Cheating Essentials", " [Cheating Essentials]", (new File(FileWritter, "CheatingEssentials.log")).getAbsolutePath());
 
+	public void requestThreadStop() {
+		  stopRequested = true;
+		}
 
 }

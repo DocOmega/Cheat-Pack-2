@@ -29,10 +29,12 @@ public class Vars
 	/**
 	 * Hehe, the only one
 	 */
-    public static boolean ChestESP ;
+    public static boolean ChestESP, xray ;
 
    
     public static ArrayList<String> friends = new ArrayList<String>();
     public static ArrayList<String> enemies = new ArrayList<String>();
+
+
     
  }

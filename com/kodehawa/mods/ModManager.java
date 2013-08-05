@@ -8,8 +8,8 @@ import com.kodehawa.CheatingEssentials;
 public class ModManager
 {
     public static ArrayList<Mod> mods;
-    public ArrayList<Mod> worldMods;
-    public ArrayList<Mod> playerMods;
+    public static ArrayList<Mod> worldMods;
+    public static ArrayList<Mod> playerMods;
     public ArrayList<Mod> f3utils;
 
     public ModManager(CheatingEssentials c)
@@ -18,6 +18,9 @@ public class ModManager
         worldMods = new ArrayList<Mod>();
         playerMods = new ArrayList<Mod>();
         f3utils = new ArrayList<Mod>();
+        
+
+        
     }
 
     public void addMod(Mod m)
@@ -43,6 +46,14 @@ public class ModManager
     	return mods;
     }
 
+    public static ArrayList<Mod> getPlayerModules(){
+    	return playerMods;
+    }
+    
+    public static ArrayList<Mod> getWorldModules(){
+    	return worldMods;
+    }
+    
     public Mod getCheatsByName(String name)
     {
         for (int i = 0; i < mods.size(); i++)

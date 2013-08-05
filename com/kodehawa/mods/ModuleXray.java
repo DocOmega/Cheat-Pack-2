@@ -71,9 +71,14 @@ public class ModuleXray extends Mod implements Tickable
         // TODO Auto-generated constructor stub
     }
 
+   public static boolean RENDER_NORMAL = false;
+   public static boolean RENDER_EVENT = true;
+    
     @Override
     public void tick()
     {
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 15.0F;
+
         // TODO Auto-generated method stub
     }
 
@@ -81,17 +86,26 @@ public class ModuleXray extends Mod implements Tickable
     public void onEnable()
     {
     	CheatingEssentials.getCheatingEssentials().addToTick(this);
+        if(ModuleXray.RENDER_EVENT){
     	CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockRender.class, this );
+        }
+        else if(ModuleXray.RENDER_NORMAL){
+        	Vars.xray = true;
+        }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
-        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Fullbright;
     }
 
     @Override
     public void onDisable()
     {
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 0.5F;
+        if(ModuleXray.RENDER_EVENT){
     	CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockRender.class, this );
-        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Normalbright;
+        }
+        else if(ModuleXray.RENDER_NORMAL){
+        	Vars.xray = false;
+        }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
 
