@@ -16,22 +16,22 @@ import net.minecraft.src.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.module.Module;
-import com.kodehawa.module.ModuleManager;
-import com.kodehawa.module.Xray;
+import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 
 public class FileManager {
-    public File colonyDir;
+    public static File colonyDir;
+    public static File crashDir;
+
     private Minecraft mc;
     
     public FileManager( ) {
-        colonyDir = new File( mc.mcDataDir + File.separator + "cfg" );
+        colonyDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir + File.separator + ".cfg" );
+        crashDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir + File.separator + "log");
         
         if( !colonyDir.exists( ) ) {
             colonyDir.mkdirs( );
         }
-        loadKeybinds( );
-        loadXrayList( );
         
         try {
             File file = new File( colonyDir.getAbsolutePath( ), "help.html" );
@@ -44,15 +44,13 @@ public class FileManager {
             out.write( "<th>Key Bind</th>\r\n" );
             out.write( "<th>Description</th>\r\n" );
             out.write( "</tr>\r\n" );
-            for( Module mod : ModuleManager.getModules( ) ) {
-                if( mod.getDesc( ).equals( "" ) ) {
-                    continue;
-                }
+            for( Mod mod : ModManager.getModules( ) ) {
+                
                 out.write( "<tr>\r\n" );
-                out.write( "<td>" + mod.getName( ) + "</td>\r\n" );
+                out.write( "<td>" + mod.name + "</td>\r\n" );
                 out.write( "<td>" + Keyboard.getKeyName( mod.getKeybind( ) ).charAt( 0 )
                         + Keyboard.getKeyName( mod.getKeybind( ) ).substring( 1 ).toLowerCase( ) + "</td>\r\n" );
-                out.write( "<td>" + mod.getDesc( ) + "</td>\r\n" );
+           //     out.write( "<td>" + mod.getDesc( ) + "</td>\r\n" );
                 out.write( "</tr>\r\n" );
             }
             out.write( "</tr>\r\n" );
@@ -74,99 +72,17 @@ public class FileManager {
         }
     }
     
-    public void saveKeybinds( ) {
-        try {
-            File file = new File( colonyDir.getAbsolutePath( ), "keys.txt" );
-            BufferedWriter out = new BufferedWriter( new FileWriter( file ) );
-            for( Module xMod : ModuleManager.getModules( ) ) {
-                out.write( "key-" + xMod.getName( ).toLowerCase( ).replace( " ", "" ) + ":"
-                        + Keyboard.getKeyName( xMod.getKeybind( ) ) );
-                out.write( "\r\n" );
-            }
-            out.close( );
-        } catch( Exception e ) {
-        }
-    }
-    
-    public void loadKeybinds( ) {
-        try {
-            File file = new File( colonyDir.getAbsolutePath( ), "keys.txt" );
-            FileInputStream fstream = new FileInputStream( file.getAbsolutePath( ) );
-            DataInputStream in = new DataInputStream( fstream );
-            BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
-            String line;
-            while( ( line = br.readLine( ) ) != null ) {
-                String curLine = line.toLowerCase( ).trim( );
-                String[ ] s = curLine.split( ":" );
-                String hack = s[ 0 ];
-                int id = Keyboard.getKeyIndex( s[ 1 ].toUpperCase( ) );
-                for( Module mod : ModuleManager.getModules( ) ) {
-                    if( hack.equalsIgnoreCase( "key-" + mod.getName( ).toLowerCase( ).replace( " ", "" ) ) ) {
-                        mod.setKeybind( id );
-                    }
-                }
-            }
-            br.close( );
-        } catch( Exception err ) {
-            err.printStackTrace( );
-            saveKeybinds( );
-            System.out.println( "Failed to initialize Cheating Essentials. Damn :(. " + err.toString( ) );
-            err.printStackTrace( );
-            
-            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-            logString += "Console Log:\r\n";
-            logString += "Failed to initialize Cheating Essentials. Damn :( " + err.toString( ) + "\r\n\r\n";
-            for( StackTraceElement ele : err.getStackTrace( ) ) {
-                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-            }
-            writeCrash( logString );
-        }
-    }
-    
-    
-    public void saveXrayList( ) {
-        try {
-            File file = new File( colonyDir.getAbsolutePath( ), "xray.txt" );
-            BufferedWriter out = new BufferedWriter( new FileWriter( file ) );
-            for( int i : Xray.xrayBlocks ) {
-                out.write( i + "\r\n" );
-            }
-            out.close( );
-        } catch( Exception e ) {
-        }
-    }
-    
-    public void loadXrayList( ) {
-        try {
-            File file = new File( colonyDir.getAbsolutePath( ), "xray.txt" );
-            FileInputStream fstream = new FileInputStream( file.getAbsolutePath( ) );
-            DataInputStream in = new DataInputStream( fstream );
-            BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
-            String line;
-            while( ( line = br.readLine( ) ) != null ) {
-                String curLine = line.toLowerCase( ).trim( );
-                int id = Integer.parseInt( curLine );
-                Xray.xrayBlocks.add( id );
-            }
-            br.close( );
-        } catch( Exception e ) {
-            e.printStackTrace( );
-            saveXrayList( );
-        }
-    }
-
-    
-    public void writeCrash( String alah ) {
+    public static void writeCrash( String alah ) {
         try {
             DateFormat format = new SimpleDateFormat( "MM_dd_yyyy-HH_mm_ss" );
             Date date = new Date( );
-            File file = new File( colonyDir.getAbsolutePath( ), "crashlog-".concat( format.format( date ) ).concat(
-                    ".xen" ) );
+            File file = new File( crashDir.getAbsolutePath( ), "crashlog-".concat( format.format( date ) ).concat(
+                    ".log" ) );
             BufferedWriter outWrite = new BufferedWriter( new FileWriter( file ) );
             outWrite.write( alah );
             outWrite.close( );
         } catch( Exception error ) {
-            System.out.println( "Ohh the irony." );
+            System.out.println( "Can't write a crash log. Ohh the irony." );
         }
     }
 

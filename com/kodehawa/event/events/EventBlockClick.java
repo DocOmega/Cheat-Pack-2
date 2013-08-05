@@ -1,8 +1,8 @@
 package com.kodehawa.event.events;
 
-import paulscode.sound.Vector3D;
 
 import com.kodehawa.event.Event;
+import com.kodehawa.util.Vector3D;
 
 /**
  * Used for sending AutoTool 'n' stuff

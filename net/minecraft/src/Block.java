@@ -3,8 +3,9 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.events.EventBlockRender;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.mods.Vars;
 
 public class Block
 {
@@ -469,12 +470,18 @@ public class Block
      */
     public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
 	{
-		if ( !Vars.xray ) {
-			return ( par5 == 0 ) && ( this.minY > 0.0D ) ? true : ( ( par5 == 1 ) && ( this.maxY < 1.0D ) ? true : ( ( par5 == 2 ) && ( this.minZ > 0.0D ) ? true : ( ( par5 == 3 ) && ( this.maxZ < 1.0D ) ? true : ( ( par5 == 4 ) && ( this.minX > 0.0D ) ? true : ( ( par5 == 5 ) && ( this.maxX < 1.0D ) ? true : !par1IBlockAccess.isBlockOpaqueCube( par2, par3, par4 ) ) ) ) ) );
-		} else {
-			return ModuleXray.xrayBlocks.contains( blockID );
-		}
-    	
+    	//TODO: X-Ray handler - Cheating Essentials
+        EventBlockRender renderAsNormal = ( EventBlockRender ) CheatingEssentials.getCheatingEssentials().eventHandler
+                .call( new EventBlockRender( this, EventBlockRender.EventType.RENDER_XRAY, blockID ) );
+        if( renderAsNormal.isCancelled( ) ) {
+            return ModuleXray.xrayBlocks.contains( blockID );
+        }
+        
+        return ( par5 == 0 ) && ( this.minY > 0.0D ) ? true : ( ( par5 == 1 ) && ( this.maxY < 1.0D ) ? true
+                : ( ( par5 == 2 ) && ( this.minZ > 0.0D ) ? true : ( ( par5 == 3 ) && ( this.maxZ < 1.0D ) ? true
+                        : ( ( par5 == 4 ) && ( this.minX > 0.0D ) ? true
+                                : ( ( par5 == 5 ) && ( this.maxX < 1.0D ) ? true : !par1IBlockAccess.isBlockOpaqueCube(
+                                        par2, par3, par4 ) ) ) ) ) );
     }
 
     /**

@@ -1,10 +1,12 @@
 package com.kodehawa.mods;
 
 import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.Minecraft;
 import net.minecraft.src.Packet13PlayerLookMove;
 
+import org.lwjgl.input.Keyboard;
+
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleNoFall extends Mod implements Tickable
@@ -12,7 +14,7 @@ public class ModuleNoFall extends Mod implements Tickable
     
     public ModuleNoFall( )
     {
-        super(Mods.Nofall);
+        super("Nofall", "I don't like fall damage", Keyboard.KEY_V, Mods.Nofall);
     }
 
     @Override
@@ -35,4 +37,16 @@ public class ModuleNoFall extends Mod implements Tickable
     {
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

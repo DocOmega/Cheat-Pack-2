@@ -26,15 +26,13 @@ import java.util.ArrayList;
 
 public class Vars
 {
-	
-    public static boolean xray, ChestESP, SpeedM ;
+	/**
+	 * Hehe, the only one
+	 */
+    public static boolean ChestESP ;
 
    
     public static ArrayList<String> friends = new ArrayList<String>();
     public static ArrayList<String> enemies = new ArrayList<String>();
-    
-    /**
-     * Who to spy on?
-     */
     
  }

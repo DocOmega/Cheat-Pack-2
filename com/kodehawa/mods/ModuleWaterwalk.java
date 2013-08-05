@@ -1,9 +1,11 @@
 package com.kodehawa.mods;
 
 import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.Minecraft;
+
+import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleWaterwalk extends Mod implements Tickable
@@ -12,7 +14,7 @@ public class ModuleWaterwalk extends Mod implements Tickable
 
     public ModuleWaterwalk()
     {
-        super(Mods.Waterwalk);
+        super("Waterwalk", "Became jesus!", Keyboard.KEY_J, Mods.Waterwalk);
         // TODO Auto-generated constructor stub
     }
 
@@ -49,4 +51,16 @@ public class ModuleWaterwalk extends Mod implements Tickable
     {
         return Math.sqrt((getPlayer().motionX * getPlayer().motionX) + (getPlayer().motionZ * getPlayer().motionZ)) >= 0.04;
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

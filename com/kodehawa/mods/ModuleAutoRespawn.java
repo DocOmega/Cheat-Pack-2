@@ -1,8 +1,11 @@
 package com.kodehawa.mods;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleAutoRespawn extends Mod implements Tickable
@@ -11,7 +14,7 @@ public class ModuleAutoRespawn extends Mod implements Tickable
 
     public ModuleAutoRespawn()
     {
-        super(Mods.Autorespawn);
+        super("Auto-Respawn", "", Keyboard.KEY_NONE, Mods.Autorespawn);
         // TODO Auto-generated constructor stub
         
     }
@@ -42,4 +45,16 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         //cb.getUtils().addChatMessage(getActive());
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

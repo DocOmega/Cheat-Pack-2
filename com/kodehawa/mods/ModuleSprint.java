@@ -1,6 +1,9 @@
 package com.kodehawa.mods;
 
+import org.lwjgl.input.Keyboard;
+
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleSprint extends Mod implements Tickable
@@ -8,7 +11,7 @@ public class ModuleSprint extends Mod implements Tickable
 
     public ModuleSprint( )
     {
-        super(Mods.Sprint);
+        super("Sprint", "Hi, I'm sprinting", Keyboard.KEY_2, Mods.Sprint);
         // TODO Auto-generated constructor stub
     }
 
@@ -37,4 +40,16 @@ public class ModuleSprint extends Mod implements Tickable
     {
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -11,10 +11,9 @@ import java.util.zip.ZipInputStream;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.BaseCommand;
 import com.kodehawa.mods.Mod;
-import com.kodehawa.module.Module;
 
 
-public class CJarLoader implements Runnable {
+public class CJarLoader extends Thread {
     
     /**
      * The directory from which we load modules. Jar files in this directory
@@ -100,8 +99,17 @@ public class CJarLoader implements Runnable {
                     }
                 }
             }
-        } catch( Exception e ) {
-            e.printStackTrace( );
+        } catch( Exception ex ) {
+            System.out.println( "Error in CE init: " + ex.toString( ) );
+            ex.printStackTrace( );
+            
+            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
+            logString += "Console Log:\r\n";
+            logString += "Error in CE Thread init: " + ex.toString( ) + "\r\n\r\n";
+            for( StackTraceElement ele : ex.getStackTrace( ) ) {
+                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
+            }
+            //CheatingEssentials.getCheatingEssentials().writeCrash(logString);
         }
     }
          

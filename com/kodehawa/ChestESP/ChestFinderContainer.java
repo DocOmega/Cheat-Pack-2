@@ -37,12 +37,9 @@ public class ChestFinderContainer
      * @param x
      * @param y
      * @param z
-     * @param d3
-     * @param e
-     * @param f
      */
     
-    public static void drawChestESP(double x, double y, double z, double d3, double e, float f) {
+    public static void drawChestESP(double x, double y, double z) {
     	GL11.glPushMatrix();
         GL11.glEnable( GL11.GL_BLEND );
         GL11.glBlendFunc( GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA );
@@ -65,7 +62,6 @@ public class ChestFinderContainer
         		255F,
         		0.4F); 
         drawBoundingBox( new AltAxisAlignedBB( x + 1, y + 1, z + 1, x, y, z ) );
-        GL11.glRotated( x, y, z, f );
         GL11.glDepthMask( true );
         GL11.glEnable( GL11.GL_TEXTURE_2D);
         GL11.glEnable( GL11.GL_DEPTH_TEST);

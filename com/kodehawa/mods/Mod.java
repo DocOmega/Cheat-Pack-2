@@ -5,13 +5,27 @@
 package com.kodehawa.mods;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
+import com.kodehawa.event.Listener;
+import com.kodehawa.event.events.EventKey;
+import com.kodehawa.event.events.EventRender3D;
+import com.kodehawa.event.events.EventTick;
 import com.kodehawa.util.ChatColour;
 
-public abstract class Mod
+public abstract class Mod implements Listener
 {
-    public Mod(Mods mod)
-    {
-        name = mod.getName();
+    private String desc;
+    private int keybind;
+    private boolean ortho;
+
+
+    
+    public Mod( String name, String desc, int keybind, Mods mod ) {
+        this.name = mod.getName();
+        this.desc = desc;
+        this.keybind = keybind;
+        CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventKey.class, this );
+        CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
     }
 
     public void turnOn()
@@ -24,6 +38,22 @@ public abstract class Mod
     {
         active = false;
         onDisable();
+    }
+    
+    public boolean getOrtho( ) {
+        return ortho;
+    }
+    
+    public void setOrtho( boolean state ) {
+        ortho = state;
+    }
+    
+    public int getKeybind( ) {
+        return keybind;
+    }
+    
+    public void setKeybind( int key ) {
+        this.keybind = key;
     }
 
     public void toggle()
@@ -40,6 +70,18 @@ public abstract class Mod
             onDisable();
             CheatingEssentials.getCheatingEssentials().enabledMods.remove(name);
 
+        }
+        
+        if( this.isActive( ) ) {
+        	 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventTick.class, this );
+            if( this.getOrtho( ) ) {
+            	 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
+            }
+        } else {
+        	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventTick.class, this );
+            if( this.getOrtho( ) ) {
+            	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventRender3D.class, this );
+            }
         }
     }
 
@@ -60,12 +102,28 @@ public abstract class Mod
         }
     }
 
-    public abstract void onEnable();
-
-    public abstract void onDisable();
+    public abstract void onEnable( );
+    public abstract void render( );
+    public abstract void onDisable( );
 
     public String name;
-    //Make booleans! Ready go! *Ehmm... you forgot the static okay no xD
     private boolean active;
     public int keyBind;
+    
+    @Override
+    public void onEvent( Event e ) {
+        if( e instanceof EventTick ) {
+            CheatingEssentials.getCheatingEssentials().modInternalTicks.tick( );
+        }
+        if( e instanceof EventKey ) {
+            if( ( ( EventKey ) e ).getKey( ) == this.getKeybind( ) ) {
+                toggle( );
+            }
+        }
+        if( this.getOrtho( ) ) {
+            if( e instanceof EventRender3D ) {
+                this.render( );
+            }
+        }
+    }
 }

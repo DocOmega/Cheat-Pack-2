@@ -22,11 +22,10 @@
 
 package com.kodehawa.mods;
 
-import java.util.ArrayList;
-
-import net.minecraft.src.Minecraft;
+import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFullbright extends Mod implements Tickable
@@ -37,7 +36,7 @@ public class ModuleFullbright extends Mod implements Tickable
 	
     public ModuleFullbright( )
     {
-        super(Mods.Fullbright);
+        super("Fullbright", "I don't know the darkness", Keyboard.KEY_F, Mods.Fullbright);
         
     }
 
@@ -63,6 +62,24 @@ public class ModuleFullbright extends Mod implements Tickable
     {
     	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = Fullbright;
     }
+
+
+
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 
  
 }

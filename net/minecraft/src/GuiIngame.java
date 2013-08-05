@@ -18,17 +18,6 @@ import com.kodehawa.core.CheckKey;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
-import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleFastBreak;
-import com.kodehawa.mods.ModuleFastPlace;
-import com.kodehawa.mods.ModuleFly;
-import com.kodehawa.mods.ModuleFullbright;
-import com.kodehawa.mods.ModuleKillAura;
-import com.kodehawa.mods.ModuleNoFall;
-import com.kodehawa.mods.ModuleNoKnockback;
-import com.kodehawa.mods.ModuleTestChestFinder;
-import com.kodehawa.mods.ModuleWaterwalk;
-import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.util.ChatColour;
 
 public class GuiIngame extends Gui
@@ -60,17 +49,6 @@ public class GuiIngame extends Gui
     /** The ItemStack that is currently being highlighted */
     private ItemStack highlightingItemStack;
     private CheatingEssentials cheatingEssentials;
-    private static ModManager mod;
-    private static ModuleXray xray;
-    private static ModuleFly fly;
-    private static ModuleTestChestFinder cesp;
-    private static ModuleFullbright fullbright;
-    private static ModuleKillAura killa;
-    private static ModuleNoFall nofall;
-    private static ModuleFastPlace fp;
-    private static ModuleWaterwalk waterw;
-    private static ModuleFastBreak fb;
-    private static ModuleNoKnockback nk;
     private CheckKey ck;
     public ArrayList<Frame> frames;
 	public HashMap<Mod, Integer> keys;
@@ -86,16 +64,6 @@ public class GuiIngame extends Gui
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
         cheatingEssentials = new CheatingEssentials(par1Minecraft, null);
 		ck = new CheckKey(mc);
-		xray = new ModuleXray();
-        fly = new ModuleFly();
-		cesp = new ModuleTestChestFinder();
-		fullbright = new ModuleFullbright();
-	    frames = new ArrayList<Frame>();
-		killa = new ModuleKillAura();
-		fp = new ModuleFastPlace();
-		fb = new ModuleFastBreak();
-		waterw = new ModuleWaterwalk();
-		nk = new ModuleNoKnockback();
         utils = new ModGuiUtils();
 		radar = new Radar();
 		}

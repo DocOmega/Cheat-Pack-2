@@ -24,9 +24,11 @@ package com.kodehawa.mods;
 
 import java.util.ArrayList;
 
-import net.minecraft.src.Minecraft;
+import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
+import com.kodehawa.event.events.EventBlockRender;
 import com.kodehawa.util.Tickable;
 
 public class ModuleXray extends Mod implements Tickable
@@ -36,7 +38,7 @@ public class ModuleXray extends Mod implements Tickable
 
     public ModuleXray( )
     {
-        super(Mods.Xray);
+        super("X-Ray", "Shows the hidden ores!", Keyboard.KEY_X, Mods.Xray);
         
         /**
          * Holy shit...
@@ -79,7 +81,7 @@ public class ModuleXray extends Mod implements Tickable
     public void onEnable()
     {
     	CheatingEssentials.getCheatingEssentials().addToTick(this);
-        Vars.xray = true;
+    	CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockRender.class, this );
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Fullbright;
     }
@@ -88,8 +90,27 @@ public class ModuleXray extends Mod implements Tickable
     public void onDisable()
     {
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
-        Vars.xray = false;
+    	CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockRender.class, this );
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = ModuleFullbright.Normalbright;
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
+
+	@Override
+	public void onEvent(Event e) {
+		// TODO Auto-generated method stub
+		super.onEvent(e);
+		
+		if( e instanceof EventBlockRender ) {
+            EventBlockRender rEvent = ( EventBlockRender ) e;
+            if( rEvent.getType( ).equals( EventBlockRender.EventType.RENDER_XRAY ) ) {
+                rEvent.setCancelled( isActive( ) ? true : false );
+            }
+        }
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

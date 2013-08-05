@@ -1,10 +1,12 @@
 package com.kodehawa.mods;
 
-import net.minecraft.src.Minecraft;
 import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.PotionEffect;
 
+import org.lwjgl.input.Keyboard;
+
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFastBreak extends Mod implements Tickable {
@@ -13,7 +15,7 @@ public class ModuleFastBreak extends Mod implements Tickable {
 	
 	
 	public ModuleFastBreak( ) {
-		super(Mods.Fastbreak);
+		super("Fastbreak", "", Keyboard.KEY_B, Mods.Fastbreak);
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -36,6 +38,18 @@ public class ModuleFastBreak extends Mod implements Tickable {
 	public void tick(){
 		// TODO Auto-generated method stub
         
+	}
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

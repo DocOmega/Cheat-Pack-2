@@ -25,7 +25,10 @@ package com.kodehawa.mods;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 
+import org.lwjgl.input.Keyboard;
+
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Watcher;
@@ -35,7 +38,7 @@ public class ModuleKillAura extends Mod implements Tickable
 
     public ModuleKillAura( )
     {
-        super(Mods.Killaura);
+        super("Mobaura", "Kill every mob!", Keyboard.KEY_Y, Mods.Mobaura);
     }
 
     @Override
@@ -83,5 +86,17 @@ public class ModuleKillAura extends Mod implements Tickable
             }
         }
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

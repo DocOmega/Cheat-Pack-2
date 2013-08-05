@@ -7,7 +7,7 @@ import com.kodehawa.CheatingEssentials;
 
 public class ModManager
 {
-    public ArrayList<Mod> mods;
+    public static ArrayList<Mod> mods;
     public ArrayList<Mod> worldMods;
     public ArrayList<Mod> playerMods;
     public ArrayList<Mod> f3utils;
@@ -37,6 +37,10 @@ public class ModManager
     public void addPMod(Mod m)
     {
         playerMods.add(m);
+    }
+    
+    public static ArrayList<Mod> getModules(){
+    	return mods;
     }
 
     public Mod getCheatsByName(String name)

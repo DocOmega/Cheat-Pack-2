@@ -1,9 +1,11 @@
 package com.kodehawa.mods;
 
 import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.Minecraft;
+
+import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleNoKnockback extends Mod implements Tickable
@@ -12,7 +14,7 @@ public class ModuleNoKnockback extends Mod implements Tickable
 
     public ModuleNoKnockback()
     {
-        super(Mods.NoKnockback);
+        super("", "", Keyboard.KEY_O, Mods.NoKnockback);
         // TODO Auto-generated constructor stub
     }
 
@@ -42,4 +44,16 @@ public class ModuleNoKnockback extends Mod implements Tickable
         // TODO Auto-generated method stub
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

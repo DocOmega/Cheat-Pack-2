@@ -1,5 +1,7 @@
 package com.kodehawa.mods;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Minecraft;
@@ -7,6 +9,7 @@ import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.Packet13PlayerLookMove;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleFly extends Mod implements Tickable
@@ -16,7 +19,7 @@ public class ModuleFly extends Mod implements Tickable
 
     public ModuleFly( )
     {
-        super(Mods.Fly);
+        super("Fly,", "Fly like a bird", Keyboard.KEY_R, Mods.Fly);
         // TODO Auto-generated constructor stub
     }
 
@@ -47,4 +50,16 @@ public class ModuleFly extends Mod implements Tickable
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.capabilities.isFlying = false;
     }
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

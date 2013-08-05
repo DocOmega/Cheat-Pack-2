@@ -1,11 +1,12 @@
 package com.kodehawa.mods;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.Event;
 
 public class F3UtilRerenderLoadedChunks extends Mod {
 
 	public F3UtilRerenderLoadedChunks() {
-		super(Mods.F3Renderers);
+		super("", "", 0, Mods.F3Renderers);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,6 +20,20 @@ public class F3UtilRerenderLoadedChunks extends Mod {
 
 	@Override
 	public void onDisable() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void render() {
 		// TODO Auto-generated method stub
 		
 	}

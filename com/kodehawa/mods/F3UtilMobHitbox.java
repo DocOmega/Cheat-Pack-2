@@ -1,11 +1,13 @@
 package com.kodehawa.mods;
 
+import com.kodehawa.event.Event;
+
 import net.minecraft.src.RenderManager;
 
 public class F3UtilMobHitbox extends Mod{
 
 	public F3UtilMobHitbox() {
-		super(Mods.F3MobHitbox);
+		super("", "", 0, Mods.F3MobHitbox);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -20,6 +22,20 @@ public class F3UtilMobHitbox extends Mod{
 	public void onDisable() {
 		// TODO Auto-generated method stub
 		 RenderManager.field_85095_o = !RenderManager.field_85095_o;
+	}
+
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
