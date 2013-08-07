@@ -25,7 +25,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
 
     public ModuleTestChestFinder( )
     {
-        super("ChestESP", "Shows the hidden chests throught everything!", Keyboard.KEY_N, Mods.ChestESP);
+        super("Chest ESP", "Shows the hidden chests throught everything!", Keyboard.KEY_N);
         this.setOrtho( true );
 
         // TODO Auto-generated constructor stub

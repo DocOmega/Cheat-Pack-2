@@ -15,13 +15,13 @@ import com.kodehawa.util.ChatColour;
 public abstract class Mod implements Listener
 {
     private String desc;
-    private int keybind;
+    public int keybind;
     private boolean ortho;
-
+    public int keyBind;
 
     
-    public Mod( String name, String desc, int keybind, Mods mod ) {
-        this.name = mod.getName();
+    public Mod( String name, String desc, int keybind ) {
+        this.name = name;
         this.desc = desc;
         this.keybind = keybind;
         CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventKey.class, this );
@@ -73,12 +73,12 @@ public abstract class Mod implements Listener
         }
         
         if( this.isActive( ) ) {
-        	 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventTick.class, this );
+        	 //CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
             	 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
             }
         } else {
-        	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventTick.class, this );
+        	 //CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
             	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventRender3D.class, this );
             }
@@ -108,7 +108,7 @@ public abstract class Mod implements Listener
 
     public String name;
     private boolean active;
-    public int keyBind;
+ 
     
     @Override
     public void onEvent( Event e ) {

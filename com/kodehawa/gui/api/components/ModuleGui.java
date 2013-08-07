@@ -204,7 +204,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeKeybindsFrame()
     {
-        Frame kFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Keybinds")
+        Frame kFrame = new Frame(CheatingEssentials.modinstance, 130, 50, 120, 20, 0xff550055, 0xaa000000, "Keybinds")
         {
             @Override
             public void update()
@@ -212,9 +212,9 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
+                for (Mod m : CheatingEssentials.getCheatingEssentials().mods)
                 {
-                    Label l = new Label(m.name + " - " + Keyboard.getKeyName(m.keyBind), 0xffffff);
+                    Label l = new Label(m.name + " - " + Keyboard.getKeyName(m.keybind), 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
                     addChild(l);
                 }
@@ -438,7 +438,7 @@ public class ModuleGui extends GuiScreen
                     addChild(new Label("Y: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posY, 0xffffff));
                     addChild(new Label("Z: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posZ, 0xffffff));
                     addChild(new Label("Dimension: " + dim, 0xffffff));
-                    //addChild( new Label( "Facing " + dir, 0xffffff ) );
+                    addChild(new Label("Facing: " + dir, 0xffffff ));
                     addChild(new Label("", 0xffffff));
                 }
                 catch (Exception e)
@@ -627,5 +627,6 @@ public class ModuleGui extends GuiScreen
         makeActivesFrame( );
         makeTestFrame( );
         makeF3UtilsFrame();
+        makeKeybindsFrame();
     }
 }

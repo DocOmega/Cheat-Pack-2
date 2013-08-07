@@ -12,7 +12,7 @@ public class Reloader implements BaseCommand
         try
         {
             CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reloading. Please hold still.");
-            CGuiIngame.cheatbase.reload();
+            //CGuiIngame.cheatbase.reload();
             CGuiIngame.cheatbase.modinstance.minecraft.renderGlobal.loadRenderers();
             CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reload complete!");
         }

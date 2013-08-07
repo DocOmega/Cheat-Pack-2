@@ -23,10 +23,11 @@ public class ConsoleHelper
         addCommand(new FlySpeed());
         addCommand(new XrayAdd());
         addCommand(new XrayRemove());
+        addCommand(new Bind());
         
         for (BaseCommand b : ConsoleHelper.commands)
         {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Mod command loaded: " + b);
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b);
         }
         
 
@@ -61,7 +62,7 @@ public class ConsoleHelper
         return this.commands;
     }
 
-    @Deprecated
+
     public static void addMessage(String msg)
     {
         Minecraft.getMinecraft().thePlayer.addChatMessage(msg);

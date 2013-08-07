@@ -120,7 +120,7 @@ public class CJarLoader extends Thread {
      * @param s
      */
     public void log( String s ) {
-        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "CJarLoader: " + s );
+        CheatingEssentials.getCheatingEssentials().CELogAgent( "CJarLoader: " + s );
     }
 
 	private volatile boolean stopRequested = false;
@@ -136,7 +136,7 @@ public class CJarLoader extends Thread {
         thread.setName("Cheating Essentials Loader Thread");
         thread.setPriority(1);
         thread.start();
-        CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("External Module Loader Thread: Initialization");
+        CheatingEssentials.getCheatingEssentials().CELogAgent("External Module Loader Thread: Initialization");
 
 		while(!stopRequested){
 		loadJars();

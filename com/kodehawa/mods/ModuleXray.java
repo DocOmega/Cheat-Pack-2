@@ -38,7 +38,7 @@ public class ModuleXray extends Mod implements Tickable
 
     public ModuleXray( )
     {
-        super("X-Ray", "Shows the hidden ores!", Keyboard.KEY_X, Mods.Xray);
+        super("X-Ray", "Shows the hidden ores!", Keyboard.KEY_X);
         
         /**
          * Holy shit...

@@ -10,7 +10,7 @@ public class ModuleClientFastplace extends Mod implements Tickable {
 
 	
 	public ModuleClientFastplace() {
-		super("Fast Place", "Place ALL the blocks!", Keyboard.KEY_K, Mods.ClientFastPlace);
+		super("CFast Place", "Place ALL the blocks!", Keyboard.KEY_K);
 
 		// TODO Auto-generated constructor stub
 	}

@@ -36,7 +36,7 @@ public class ModuleFullbright extends Mod implements Tickable
 	
     public ModuleFullbright( )
     {
-        super("Fullbright", "I don't know the darkness", Keyboard.KEY_F, Mods.Fullbright);
+        super("Full Bright", "I don't know the darkness", Keyboard.KEY_F);
         
     }
 

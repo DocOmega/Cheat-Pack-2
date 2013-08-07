@@ -34,7 +34,8 @@ public class CModLoader {
     private static ModuleSprint s;
     private static ModuleClientFastplace fp;
     private static ModuleFly fly;
-
+    private static ModuleAutoSwitch f;
+    private static ModuleAltXray x;
 	
 	public static void loadModulesforKB(){
 		xray = new ModuleXray();
@@ -48,6 +49,8 @@ public class CModLoader {
 		nofall = new ModuleNoFall();
 		fp = new ModuleClientFastplace();
 		s = new ModuleSprint();
+		f = new ModuleAutoSwitch();
+		x = new ModuleAltXray();
 	}
 	
 	
@@ -81,42 +84,34 @@ public class CModLoader {
         for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.worldMods)
         {
         	CheatingEssentials.getCheatingEssentials().mods.add(m);
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Module Loaded: " + m);
         }
 
         for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.playerMods)
         {
         	CheatingEssentials.getCheatingEssentials().mods.add(m);
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Module Loaded: " + m);
         }
         
         for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
         {
         	CheatingEssentials.getCheatingEssentials().mods.add(m);
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Module Loaded: " + m);
         }
         
 		}
 		catch(Exception ex){
-			CheatingEssentials.getCheatingEssentials().CELogAgent.logSevere("Can't load basic modules at all or some modules can't be loaded. This will be bad, but the mod it still working.");
-			CheatingEssentials.getCheatingEssentials().CELogAgent.logSevere("Report it in MCF thread. Good luck.");
+			CheatingEssentials.getCheatingEssentials().CELogAgent("Can't load basic modules at all or some modules can't be loaded. This will be bad, but the mod it still working.");
+			CheatingEssentials.getCheatingEssentials().CELogAgent("Report it in MCF thread. Good luck.");
 			for (Mod m : CheatingEssentials.getCheatingEssentials().mods)
 	        {
-				CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Can't load module: " + m + " " + ex);
+				CheatingEssentials.getCheatingEssentials().CELogAgent("Can't load module: " + m + " " + ex);
 	        }
-
+	            System.out.println( "Error loading basic modules: " + ex.toString( ) );
 	            ex.printStackTrace( );
-	            System.out.println( "Failed to initialize Cheating Essentials. Damn :(. " + ex.toString( ) );
-	            ex.printStackTrace( );
-	            
-	            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-	            logString += "Console Log:\r\n";
-	            logString += "Error in CE Thread init: " + ex.toString( ) + "\r\n\r\n";
-	            for( StackTraceElement ele : ex.getStackTrace( ) ) {
-	                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-	            }
-	            CheatingEssentials.getCheatingEssentials().writeCrash( logString );
-	        }
+		}
 		}
 	
+	public static void writeModuleDebugInfo(){
+		for(Mod m: CheatingEssentials.getCheatingEssentials().mods){
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Module Loaded: " + m + " (Name: " + m.name + ")");
+		}
+	}
 }

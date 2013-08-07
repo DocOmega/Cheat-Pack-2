@@ -38,7 +38,7 @@ public class ModuleKillAura extends Mod implements Tickable
 
     public ModuleKillAura( )
     {
-        super("Mobaura", "Kill every mob!", Keyboard.KEY_Y, Mods.Mobaura);
+        super("Mob Aura", "Kill every mob!", Keyboard.KEY_Y);
     }
 
     @Override

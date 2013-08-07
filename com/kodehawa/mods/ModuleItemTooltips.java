@@ -13,7 +13,7 @@ public class ModuleItemTooltips extends Mod {
 	
 	
 	public ModuleItemTooltips() {
-		super( "", "", Keyboard.KEY_NONE, Mods.ItemTooltips );
+		super( "Item Tooltips", "", Keyboard.KEY_NONE );
 		// TODO Auto-generated constructor stub
 	}
 

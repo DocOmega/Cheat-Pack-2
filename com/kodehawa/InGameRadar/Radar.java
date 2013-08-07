@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
+import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
 
 public class Radar extends Thread {
@@ -69,7 +70,22 @@ public class Radar extends Thread {
 							GL11.glScalef( 0.5F, 0.5F, 0.5F );
 							EntityPlayer p = (EntityPlayer) entity;
 							String u = p.username;
-							CheatingEssentials.getCheatingEssentials().getMinecraftInstance().fontRenderer.drawString( u, (int) ( finalX ) - ( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().fontRenderer.getStringWidth( u ) / 2 ), (int) finalY - 10, 0xffffff );
+	                        int color = 0xffffff;
+
+	                        if (Vars.friends.contains(u))
+	                        {
+	                            color = 0x00ff00;
+	                        }
+	                        else if (Vars.enemies.contains(u))
+	                        {
+	                            color = 0xff0000;
+	                        }
+	                        else
+	                        {
+	                            color = 0xffffff;
+	                        }
+							CheatingEssentials.getCheatingEssentials().getMinecraftInstance().fontRenderer.drawString( u, (int) ( finalX ) - ( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().fontRenderer.getStringWidth( u ) / 2 ), (int) finalY - 10, color );
+							
 							GL11.glScalef( 1F, 0.5F, 1F );
 						}
 						if ( entity instanceof EntityAnimal ) {

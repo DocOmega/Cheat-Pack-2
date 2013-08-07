@@ -1,15 +1,12 @@
 package com.kodehawa.mods;
 
-import net.minecraft.src.Minecraft;
-
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
-import com.kodehawa.util.Tickable;
 
 public class F3UtilAdvancedTooltips extends Mod{
 
 	public F3UtilAdvancedTooltips( ) {
-		super("", "", 0, Mods.F3AdvancedTooltips);
+		super("Advanced Tooltips", "", 0);
 		// TODO Auto-generated constructor stub
 	}
 

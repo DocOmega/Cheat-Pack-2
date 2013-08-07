@@ -14,7 +14,7 @@ import com.kodehawa.util.Vector3D;
 public class ModuleAutoSwitch extends Mod implements Tickable {
 
 	public ModuleAutoSwitch( ) {
-		super("Autoswitch", "Automatically select tools", Keyboard.KEY_C, Mods.Autoswitch );
+		super("Auto Switch", "Automatically select tools", Keyboard.KEY_C);
 		// TODO Auto-generated constructor stub
 	}
 	

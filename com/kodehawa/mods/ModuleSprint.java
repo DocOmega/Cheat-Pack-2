@@ -11,7 +11,7 @@ public class ModuleSprint extends Mod implements Tickable
 
     public ModuleSprint( )
     {
-        super("Sprint", "Hi, I'm sprinting", Keyboard.KEY_H, Mods.Sprint);
+        super("Sprint", "Hi, I'm sprinting" /* So bad description heh */, Keyboard.KEY_H);
         // TODO Auto-generated constructor stub
     }
 

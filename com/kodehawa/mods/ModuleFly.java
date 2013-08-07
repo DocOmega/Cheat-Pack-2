@@ -19,7 +19,7 @@ public class ModuleFly extends Mod implements Tickable
 
     public ModuleFly( )
     {
-        super("Fly,", "Fly like a bird", Keyboard.KEY_R, Mods.Fly);
+        super("Fly", "Fly like a bird", Keyboard.KEY_R);
         // TODO Auto-generated constructor stub
     }
 

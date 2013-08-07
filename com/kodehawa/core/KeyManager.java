@@ -1,24 +1,3 @@
-/*
-* Copyright (c) 2013 David Rubio
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
 
 package com.kodehawa.core;
 
@@ -46,7 +25,7 @@ public class KeyManager
 
     public KeyManager()
     {
-        keybindsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/keybinds.cfg");
+        keybindsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/CKeybinds.cfg");
 
         if (!keybindsFile.exists())
         {
@@ -57,21 +36,14 @@ public class KeyManager
                 keybindsFile.createNewFile();
                 FileWriter fstream = new FileWriter(keybindsFile);
                 BufferedWriter out = new BufferedWriter(fstream);
-                //Bugs, what bugs? :(
-                out.write("ModuleFullbright=" + Keyboard.KEY_F + "\r\n");
-                out.write("ModuleKillaura=" + Keyboard.KEY_P + "\r\n");
-                out.write("ModuleSprint=" + Keyboard.KEY_K + "\r\n");
-                out.write("ModuleFastPlace=" + Keyboard.KEY_N + "\r\n");
-                out.write("ModuleWaterwalk=" + Keyboard.KEY_L + "\r\n");
-                out.write("ModuleXray=" + Keyboard.KEY_X + "\r\n");
-                out.write("ModuleFly=" + Keyboard.KEY_R + "\r\n");
-                // Close the output stream
+                for (Mod m : CheatingEssentials.getCheatingEssentials().mods){
+                out.write(m.keybind);
+                }
                 out.close();
             }
             catch (Exception e)       // Catch exception if any
             {
-                //System.err.println("[Cheat Pack 2.3] Error writing keybinds!: " + e.getMessage());
-            }
+            	System.out.println("Debug");           }
 
             readKeysAndBind();
         }
@@ -101,59 +73,6 @@ public class KeyManager
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // Create BR
-        br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
-
-        try
-        {
-            while ((line = br.readLine()) != null)
-            {
-                str = line.replaceAll("[^\\d.]", "");
-                name = line.replaceAll("[\\d.]", "");
-                binding = 0;
-
-                if (!str.equals(""))
-                {
-                    binding = Integer.parseInt(str);
-                }
-
-                name = name.replace("=", "");
-
-                //System.out.println( "binding==" + binding );
-                for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
-                {
-                    //System.out.println( "Attempting to print keybinding: " + m.name );
-                    //System.out.println( "m.name==" + m.name + "|||" + "name==" + name );
-                    if (name.equalsIgnoreCase(m.name) || m.name.equalsIgnoreCase(name))
-                    {
-                        if (binding != 0)
-                        {
-                            m.keyBind = binding;
-                            if(CheatingEssentials.debugMode){
-                            CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Mod " + m.name + " was sucefully bound to key ID " + binding + "!" );
-                            }
-                            break;
-                        }
-                        else
-                        {
-                        	 if(CheatingEssentials.debugMode){
-                        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo("Null binding info found.");                        }
-                    }}
-                        
-                    else
-                    {
-                    	 if(CheatingEssentials.debugMode){
-                    		 //System.out.println("I'm bored and because of it I put this :)");
-                    }}
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     public void writeNewKeybinds()
@@ -164,9 +83,9 @@ public class KeyManager
             BufferedWriter out = new BufferedWriter(fstream);
 
             // OOPish
-            for (Mod m : CheatingEssentials.modinstance.mainModLoader.mods)
+            for (Mod m : CheatingEssentials.getCheatingEssentials().mods)
             {
-                out.write(m.name + "=" + m.keyBind + "\r\n");
+                out.write(m.name + "=" + m.keybind + "\r\n");
             }
 
             // Close the output stream
@@ -174,12 +93,12 @@ public class KeyManager
 
             if (CheatingEssentials.modinstance.minecraft.theWorld != null)
             {
-                ConsoleHelper.addMessage(ChatColour.RED + "[Cheat Pack 2]" + " " + ChatColour.DARK_GRAY + "Keybinds written!");
+                ConsoleHelper.addMessage("Keybinds written!");
             }
         }
         catch (Exception e)
         {
-            System.err.println("[Cheat Pack 2.3] Error while writting keybinding D: : ");
+            System.err.println("Error while writting keybinding: " + e.toString());
             e.printStackTrace();
         }
     }

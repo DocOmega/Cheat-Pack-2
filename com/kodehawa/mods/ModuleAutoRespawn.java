@@ -14,7 +14,7 @@ public class ModuleAutoRespawn extends Mod implements Tickable
 
     public ModuleAutoRespawn()
     {
-        super("Auto-Respawn", "Death == Respawn :)", Keyboard.KEY_9, Mods.Autorespawn);
+        super("Auto-Respawn", "Death == Respawn :)", Keyboard.KEY_NUMPAD0);
         // TODO Auto-generated constructor stub
         
     }

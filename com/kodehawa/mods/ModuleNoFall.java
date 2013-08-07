@@ -14,7 +14,7 @@ public class ModuleNoFall extends Mod implements Tickable
     
     public ModuleNoFall( )
     {
-        super("Nofall", "I don't like fall damage", Keyboard.KEY_V, Mods.Nofall);
+        super("No Fall", "I don't like fall damage", Keyboard.KEY_V);
     }
 
     @Override

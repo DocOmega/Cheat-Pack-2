@@ -56,9 +56,7 @@ public class Bind implements BaseCommand
     public String showHelp()
     {
         // TODO Auto-generated method stub
-        return new String(ChatColour.RED + "Usage: " + ChatColour.AQUA + this.getName() + " <hack> <key>");
-        // ConsoleHelper.addMessage( ChatColour.RED + "Hint: " + ChatColour.AQUA
-        // + "To remove a keybind, do \'bind <hack> none\'!" );
+        return new String(ChatColour.RED + "Usage: " + ChatColour.AQUA + this.getName() + " <name> <key>");
     }
 
     @Override

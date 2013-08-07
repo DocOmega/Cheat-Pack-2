@@ -6,7 +6,7 @@ import com.kodehawa.event.Event;
 public class F3UtilRerenderLoadedChunks extends Mod {
 
 	public F3UtilRerenderLoadedChunks() {
-		super("", "", 0, Mods.F3Renderers);
+		super("Chunk Re-Render", "", 0);
 		// TODO Auto-generated constructor stub
 	}
 

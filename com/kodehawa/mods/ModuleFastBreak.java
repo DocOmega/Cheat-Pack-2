@@ -15,7 +15,7 @@ public class ModuleFastBreak extends Mod implements Tickable {
 	
 	
 	public ModuleFastBreak( ) {
-		super("Fastbreak", "", Keyboard.KEY_B, Mods.Fastbreak);
+		super("Fast Break", "You know :D", Keyboard.KEY_B);
 		
 		// TODO Auto-generated constructor stub
 	}

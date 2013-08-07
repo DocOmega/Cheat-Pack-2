@@ -62,7 +62,7 @@ public class GuiIngame extends Gui
         frames = new ArrayList<Frame>();
         this.mc = par1Minecraft;
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
-        cheatingEssentials = new CheatingEssentials(par1Minecraft, null);
+        cheatingEssentials = new CheatingEssentials(par1Minecraft);
 		ck = new CheckKey(mc);
         utils = new ModGuiUtils();
 		radar = new Radar();

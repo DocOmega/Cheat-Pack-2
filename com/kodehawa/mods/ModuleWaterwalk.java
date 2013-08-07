@@ -14,7 +14,7 @@ public class ModuleWaterwalk extends Mod implements Tickable
 
     public ModuleWaterwalk()
     {
-        super("Waterwalk", "Became jesus!", Keyboard.KEY_J, Mods.Waterwalk);
+        super("Water Walk", "Became jesus!", Keyboard.KEY_J);
         // TODO Auto-generated constructor stub
     }
 

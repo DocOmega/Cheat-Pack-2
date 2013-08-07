@@ -7,7 +7,7 @@ import com.kodehawa.CheatingEssentials;
 public class ModuleAltXray extends Mod{
 
 	public ModuleAltXray( ) {
-		super("Alternative X-Ray", "Without lag :)", Keyboard.KEY_P, Mods.AltXray);
+		super("Alt X-Ray", "Without lag :)", Keyboard.KEY_P);
 		// TODO Auto-generated constructor stub
 	}
 

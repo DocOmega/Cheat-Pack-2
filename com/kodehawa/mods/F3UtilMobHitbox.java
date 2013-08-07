@@ -7,7 +7,7 @@ import net.minecraft.src.RenderManager;
 public class F3UtilMobHitbox extends Mod{
 
 	public F3UtilMobHitbox() {
-		super("", "", 0, Mods.F3MobHitbox);
+		super("Mob Hitbox", "", 0);
 		// TODO Auto-generated constructor stub
 	}
 

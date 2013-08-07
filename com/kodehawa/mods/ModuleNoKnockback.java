@@ -14,7 +14,7 @@ public class ModuleNoKnockback extends Mod implements Tickable
 
     public ModuleNoKnockback()
     {
-        super("", "", Keyboard.KEY_O, Mods.NoKnockback);
+        super("No Knockback", "", Keyboard.KEY_O);
         // TODO Auto-generated constructor stub
     }
 

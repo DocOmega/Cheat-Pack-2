@@ -67,9 +67,7 @@ public class Radar
                         ModGuiUtils.drawTriangle(entity, finalX, finalY, 0xff0000ff);
                         GL11.glScalef(0.5F, 0.5F, 0.5F);
                         EntityPlayer p = (EntityPlayer) entity;
-                        //Temporary "fix" | Placeholder, waiting for a vanilla fix for the bad multiplayer usernames.
-                        String u = "A player"
-;
+						String u = p.username;
                         int color = 0xffffff;
 
                         if (Vars.friends.contains(u))

@@ -13,29 +13,29 @@ public class CThreadUpdateChecker extends Thread {
 	public static boolean update( ) {
         CheatingEssentials.getCheatingEssentials().outdatedAlert = false;
         try {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Checking for a Cheating Essentials update..." );
+        	CheatingEssentials.getCheatingEssentials().CELogAgent( "Checking for a Cheating Essentials update..." );
             String ver;
             Strings.VERSION_FOUND = ver = HTMLParser.getStringFromRemoteServer( "http://kodehawa.260mb.net/updates.txt" );
             if( ver.equals( Strings.MOD_VERSION ) ) {
                 // Shouldn't hafta do anything, because we're up to date.
                 // Returns false, because no need to update.
-            	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "No new updates has been found!" );
+            	CheatingEssentials.getCheatingEssentials().CELogAgent( "No new updates has been found!" );
                 return false;
             } else if( !ver.equals( Strings.MOD_VERSION ) ) {
                 if( Integer.parseInt( ver.replaceAll( "\\D+", "" ) ) > Integer.parseInt( Strings.MOD_VERSION.replaceAll(
                         "\\D+", "" ) ) ) {
                     // Obviously, we gotta update!
-                	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Update found: " + ver );
-                	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
+                	CheatingEssentials.getCheatingEssentials().CELogAgent( "Update found: " + ver );
+                	CheatingEssentials.getCheatingEssentials().CELogAgent( "Current version: " + Strings.MOD_VERSION );
                     return true;
                 } else {
                     if( !ver.replaceAll( "[^A-Za-z]", "" ).equals( Strings.MOD_VERSION.replaceAll( "[^A-Za-z]", "" ) ) ) {
-                    	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Update found: " + ver );
-                    	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
+                    	CheatingEssentials.getCheatingEssentials().CELogAgent( "Update found: " + ver );
+                    	CheatingEssentials.getCheatingEssentials().CELogAgent( "Current version: " + Strings.MOD_VERSION );
                         return true;
                     } else {
                     	//We don't want to fave older versions on main servers. Right?
-                    	CheatingEssentials.getCheatingEssentials().CELogAgent.logInfo( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
+                    	CheatingEssentials.getCheatingEssentials().CELogAgent( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
                     	CheatingEssentials.getCheatingEssentials().outdatedAlert = true;
                         return false;
                     }
@@ -44,7 +44,7 @@ public class CThreadUpdateChecker extends Thread {
                 throw new NullPointerException( "No update info found!" );
             }
         } catch( NullPointerException e ) {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent.logSevere( "Issue getting update information" );
+        	CheatingEssentials.getCheatingEssentials().CELogAgent( "Issue getting update information" );
             e.printStackTrace( );
             return false;
         }
