@@ -38,6 +38,8 @@ import com.kodehawa.api.CJarLoader;
 import com.kodehawa.api.reflection.Reflector;
 import com.kodehawa.console.BaseCommand;
 import com.kodehawa.console.ConsoleHelper;
+import com.kodehawa.core.CModLoader;
+import com.kodehawa.core.CThreadUpdateChecker;
 import com.kodehawa.core.CheckKey;
 import com.kodehawa.core.HTMLParser;
 import com.kodehawa.core.KeyManager;
@@ -49,24 +51,8 @@ import com.kodehawa.event.events.EventKey;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.testing.AlertHandler;
-import com.kodehawa.mods.F3UtilAdvancedTooltips;
-import com.kodehawa.mods.F3UtilMobHitbox;
-import com.kodehawa.mods.F3UtilRerenderLoadedChunks;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleAltXray;
-import com.kodehawa.mods.ModuleAutoRespawn;
-import com.kodehawa.mods.ModuleAutoSwitch;
-import com.kodehawa.mods.ModuleFastBreak;
-import com.kodehawa.mods.ModuleFly;
-import com.kodehawa.mods.ModuleFullbright;
-import com.kodehawa.mods.ModuleItemTooltips;
-import com.kodehawa.mods.ModuleKillAura;
-import com.kodehawa.mods.ModuleNoFall;
-import com.kodehawa.mods.ModuleNoKnockback;
-import com.kodehawa.mods.ModuleSprint;
-import com.kodehawa.mods.ModuleTestChestFinder;
-import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.CModTicks;
@@ -104,22 +90,15 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public ConsoleHelper theConsoleHelper;
 	public CJarLoader externalLoader;
 	private AlertHandler alertManager;
+	private static CThreadUpdateChecker update;
 	private int tick = 0;
-	private static boolean outdatedAlert = false;
+	public static boolean outdatedAlert = false;
 	private BaseCommand consoleBase;
 	private long now;
 	private long then;
-    private static ModuleXray xray;
     private boolean[ ] keymap;
-    private static ModuleFly fly;
     public static File crashDir;
-    private static ModuleTestChestFinder cesp;
-    private static ModuleFullbright fullbright;
-    private static ModuleKillAura killa;
-    private static ModuleNoFall nofall;
-    private static ModuleWaterwalk waterw;
-    private static ModuleFastBreak fb;
-    private static ModuleNoKnockback nk;
+
 	private FileManager filemanager;
 	private volatile boolean stopRequested = false;
 
@@ -164,7 +143,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         }
         eventHandler = new EventHandler();
 		mainModLoader = new ModManager(this);
-		this.addModulestoArray();
+		CModLoader.addModulestoArray();
 		modUtils = new Utils(minecraft);
 		MainGui = new ModuleGui();
 		minecraft = getMinecraftInstance();
@@ -176,108 +155,20 @@ public final class CheatingEssentials extends Thread implements CModTicks {
         theFriendManager = new FrenemyManager();
         getModWrapper = new Wrapper();
         modKeyManager = new KeyManager();
-		xray = new ModuleXray();
-        fly = new ModuleFly();
-		cesp = new ModuleTestChestFinder();
-		fullbright = new ModuleFullbright();
-		killa = new ModuleKillAura();
-		fb = new ModuleFastBreak();
-		waterw = new ModuleWaterwalk();
-		nk = new ModuleNoKnockback();
-		nofall = new ModuleNoFall();
         keymap = new boolean[ 256 ];
         externalLoader = new CJarLoader();
-        
+        update = new CThreadUpdateChecker();
+        CModLoader.loadModulesforKB();
         if(!mainDir.exists()){
         saveXrayList();
         }
         loadXrayList();
-        for (Mod m : mainModLoader.mods)
-        {
-            keys.put(m, m.keyBind);
-        }
         Random rand = new Random();
         CELogAgent.logInfo("CE Startup ID: " + rand.nextInt(9000) );
         CELogAgent.logInfo(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
 	    
 		
 	}
-	
-	/**
-	 * Register modules. 
-	 * - I'm the only that think that this it's like Item / Block vanilla registering? :)
-	 */
-	
-	public void addModulestoArray(){
-		
-		try{
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFullbright( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleWaterwalk( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleXray( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAltXray( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAutoRespawn( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleTestChestFinder( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleFastBreak( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addWMod(new ModuleAutoSwitch( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleFly( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleKillAura( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleNoFall( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleSprint( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleNoKnockback( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addPMod(new ModuleItemTooltips( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilRerenderLoadedChunks( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilMobHitbox( ));
-        CheatingEssentials.getCheatingEssentials().mainModLoader.addUtils(new F3UtilAdvancedTooltips( ));
-
-        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.worldMods)
-        {
-            mods.add(m);
-            CELogAgent.logInfo("Module Loaded: " + m);
-        }
-
-        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.playerMods)
-        {
-            mods.add(m);
-            CELogAgent.logInfo("Module Loaded: " + m);
-        }
-        
-        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
-        {
-            mods.add(m);
-            CELogAgent.logInfo("Module Loaded: " + m);
-        }
-        
-		}
-		catch(Exception ex){
-			CELogAgent.logSevere("Can't load basic modules at all or some modules can't be loaded. This will be bad, but the mod it still working.");
-			CELogAgent.logSevere("Report it in MCF thread. Good luck.");
-			for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.worldMods)
-	        {
-	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
-	        }
-
-	        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.playerMods)
-	        {
-	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
-	        }
-	        
-	        for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
-	        {
-	            CELogAgent.logInfo("Can't load module: " + m + " " + ex);
-	        }
-	            ex.printStackTrace( );
-	            System.out.println( "Failed to initialize Cheating Essentials. Damn :(. " + ex.toString( ) );
-	            ex.printStackTrace( );
-	            
-	            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-	            logString += "Console Log:\r\n";
-	            logString += "Error in CE Thread init: " + ex.toString( ) + "\r\n\r\n";
-	            for( StackTraceElement ele : ex.getStackTrace( ) ) {
-	                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-	            }
-	           writeCrash( logString );
-	        }
-		}
 	
 
 	
@@ -290,7 +181,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 		return CheatingEssentials.modinstance;
 	}
 	
-	
 	/**
 	 * Get Wrapper instance.
 	 * @return
@@ -298,30 +188,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	public Wrapper getModWrapper(){
 		return getModWrapper;
-	}
-	
-	/**
-	 * Gets the mod version as a string
-	 */
-	
-	public static String getModVersion(){
-		return "3.0.0 A3";	
-		}
-	
-    public static String getMCVersionForMod(){
-    	return "Minecraft version 1.6.2";
-        }
-	
-	/**
-	 * Tick the modules
-	 */
-
-	@Override
-	public void modTicks() {
-		for(Tickable tickable : modInternalTicksArray){
-			tickable.tick();
-		}
-		
 	}
 	
 	/**
@@ -342,33 +208,16 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	}
 
 	/**
-	 * Handle GUI key press.
-	 */
-
-	@Override
-	public void handleKeyPress() {
-		// TODO Keys
-	
-		if(KeyBinding.checkKey(Keyboard.KEY_G)){
-			 minecraft.displayGuiScreen(MainGui);
-		
-		 for (Map.Entry<Mod, Integer> e : keys.entrySet())
-         {
-             if (KeyBinding.checkKey(e.getKey().keyBind))
-             {
-                 e.getKey().toggle();
-             }
-			 }
-		}
-	}
-
-	/**
 	 * Module keybinding.
 	 * It handles the events and toggle the specified mod with the keybinding specified in the module class.
 	 */
 	
     public void handleKeys( ) {
     	//TODO: Module Keys
+    	
+		if( getKeyStateFromMap(Keyboard.KEY_G)){
+			 minecraft.displayGuiScreen(MainGui);
+		}
         for( Mod m : mods ) {
             int key = m.getKeybind( );
             if( getKeyStateFromMap( key ) ) {
@@ -521,28 +370,15 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	@Override
 	public void tick() {
-		try{
-		modTicks();
-        updateArray();
-        updatePinnedFrames();
-        handleKeyPress();
-        handleKeys();
-      }
-		catch(Exception ex){
-			this.CELogAgent.logSevere("Can't load somethings. IDK what happened, but the error it's down");
-			 ex.printStackTrace( );
-			 CELogAgent.logSevere( "Error in CE init: " + ex.toString( ) );
-	            ex.printStackTrace( );
-	            
-	            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-	            logString += "Console Log:\r\n";
-	            logString += "Failed to initialize Cheating Essentials. Damn :( " + ex.toString( ) + "\r\n\r\n";
-	            for( StackTraceElement ele : ex.getStackTrace( ) ) {
-	                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-	            }
-	            writeCrash( logString );
-     }
+		
+		for(Tickable tickable : modInternalTicksArray){
+			tickable.tick();
 		}
+		
+		updateArray();
+        updatePinnedFrames();
+        handleKeys();
+	}
 	
 	
 	/**
@@ -595,7 +431,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	    		CELogAgent.logInfo(Strings.THREAD_NAME + " starting in " + Strings.MOD_NAME + " " + Strings.MOD_VERSION + " for " + Strings.MINECRAFT_VERSION);
                 CELogAgent.logInfo(Strings.THREAD_NAME + " Started: "  + thread.toString());
                 modInit();
-                //update();
+                update.run();
 	    		requestThreadStop();
 	    		CELogAgent.logInfo("Initialization Thread was sucefully runned and finished.");
 			} catch (Exception ex) {
@@ -620,45 +456,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	    	
 	    }
 	
-    public boolean update( ) {
-        this.outdatedAlert = false;
-        try {
-        	CELogAgent.logInfo( "Checking for a Cheating Essentials update..." );
-            String ver;
-            Strings.VERSION_FOUND = ver = HTMLParser.getStringFromRemoteServer( "http://kodehawa.260mb.net/updates.txt" );
-            if( ver.equals( Strings.MOD_VERSION ) ) {
-                // Shouldn't hafta do anything, because we're up to date.
-                // Returns false, because no need to update.
-               CELogAgent.logInfo( "No new updates has been found!" );
-                return false;
-            } else if( !ver.equals( Strings.MOD_VERSION ) ) {
-                if( Integer.parseInt( ver.replaceAll( "\\D+", "" ) ) > Integer.parseInt( Strings.MOD_VERSION.replaceAll(
-                        "\\D+", "" ) ) ) {
-                    // Obviously, we gotta update!
-                	CELogAgent.logInfo( "Update found: " + ver );
-                	CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
-                    return true;
-                } else {
-                    if( !ver.replaceAll( "[^A-Za-z]", "" ).equals( Strings.MOD_VERSION.replaceAll( "[^A-Za-z]", "" ) ) ) {
-                    	CELogAgent.logInfo( "Update found: " + ver );
-                    	CELogAgent.logInfo( "Current version: " + Strings.MOD_VERSION );
-                        return true;
-                    } else {
-                    	//We don't want to fave older versions on main servers. Right?
-                    	CELogAgent.logInfo( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
-                        this.outdatedAlert = true;
-                        return false;
-                    }
-                }
-            } else {
-                throw new NullPointerException( "No update info found!" );
-            }
-        } catch( NullPointerException e ) {
-        	CELogAgent.logSevere( "Issue getting update information" );
-            e.printStackTrace( );
-            return false;
-        }
-    }
     
     /**
      * Write a crash in the specified directory.

@@ -6,7 +6,7 @@ public class Strings {
 	
 	private static CheatingEssentials Main;
 	
-	public static String MOD_VERSION = CheatingEssentials.getModVersion();
+	public static String MOD_VERSION = getModVersion();
 	public static String MOD_NAME = "Cheating Essentials";
 	public static String MOD_COMPATIBILITY = "Optifine," +
     		" ModLoader," +
@@ -23,8 +23,27 @@ public class Strings {
     		" NoFall," +
     		" Chest Finder," +
     		" Sprint.";
-	public static String MINECRAFT_VERSION = CheatingEssentials.getMCVersionForMod();
+	public static String MINECRAFT_VERSION = getMCVersionForMod();
 	public static String VERSION_FOUND = "";
 	public static String THREAD_NAME = "Main Thread";
+	
+	
+	
+	/**
+	 * Gets the mod version as a string
+	 */
+	
+	public static String getModVersion(){
+		return "3.0.0 A5";	
+		}
+	
+	/**
+	 * Get Minecraft version. A simple string for logs.
+	 * @return
+	 */
+	
+    public static String getMCVersionForMod(){
+    	return "Minecraft version 1.6.2";
+        }
 	
 }

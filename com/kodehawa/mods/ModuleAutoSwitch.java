@@ -38,23 +38,21 @@ public class ModuleAutoSwitch extends Mod implements Tickable {
 	@Override
 	public void tick( ) {
 		// TODO Auto-generated method stub
-		if( isActive( ) ) {
-			 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockClick.class, this );
-        } else {
-        	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockClick.class, this );
-        }
+		
 	}
 
 	@Override
 	public void onEnable( ) {
 		// TODO Auto-generated method stub
 		CheatingEssentials.getCheatingEssentials().addToTick(this);
+		CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockClick.class, this );
 	}
 
 	@Override
 	public void onDisable( ) {
 		// TODO Auto-generated method stub
 		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
+		CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockClick.class, this );
 	}
 
 	@Override

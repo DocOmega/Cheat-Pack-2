@@ -11,7 +11,7 @@ public class Utils
 
     public void addChatMessage(String message)
     {
-        String toSend = ChatColour.DARK_GRAY + "[Cheating Essentials] " + message;
+        String toSend = message;
         minecraft.thePlayer.addChatMessage(toSend);
     }
 
