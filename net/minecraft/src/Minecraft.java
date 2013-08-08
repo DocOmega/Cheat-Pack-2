@@ -36,16 +36,7 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 
 import com.google.common.collect.Lists;
-import com.kodehawa.core.CheckKey;
-import com.kodehawa.mods.ModuleFastBreak;
-import com.kodehawa.mods.ModuleFly;
-import com.kodehawa.mods.ModuleFullbright;
-import com.kodehawa.mods.ModuleKillAura;
-import com.kodehawa.mods.ModuleNoFall;
-import com.kodehawa.mods.ModuleNoKnockback;
-import com.kodehawa.mods.ModuleTestChestFinder;
-import com.kodehawa.mods.ModuleWaterwalk;
-import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.CheatingEssentials;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -207,16 +198,14 @@ public class Minecraft implements IPlayerUsage
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
     private KeyBinding key;
-    private CheckKey ckey;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
+    	
     	//Comprobate it's the CE main class it's in the class patch. If not, close the Minecraft instance.
     	checkMainClass("CheatingEssentials");
     	
     	//Attempt to stop minecraft loading if the current instance it's using Lex's Minecraft Forge | Only for non-forge version.
-    
-
     
     	 if (ClientBrandRetriever.getClientModName().contains("fml")) {
 			 printForgeFMLVersionCheck("Trying to start the main Minecraft Instance, but we can't!");
@@ -1409,7 +1398,8 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
-		
+    	CheatingEssentials.replaceGUI();
+
     	   
 
     	if (this.rightClickDelayTimer > 0)

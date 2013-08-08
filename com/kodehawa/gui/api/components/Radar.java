@@ -17,7 +17,6 @@ import net.minecraft.src.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.gui.CGuiIngame;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Vars;
 
@@ -27,11 +26,11 @@ public class Radar
 
     public void drawRadar(int x, int y)
     {
-        CGuiIngame.tick++ ;
+        CheatingEssentials.getCheatingEssentials().tick++ ;
 
-        if (CGuiIngame.tick >= 50)
+        if (CheatingEssentials.getCheatingEssentials().tick >= 50)
         {
-            CGuiIngame.tick = 0;
+        	CheatingEssentials.getCheatingEssentials().tick = 0;
         }
 
         GL11.glLineWidth(1.0F);
@@ -40,7 +39,7 @@ public class Radar
         ModGuiUtils.drawCircle(x, y, 38, 0xff000000);
         ModGuiUtils.drawCircle(x, y, 25, 0xff000000);
         ModGuiUtils.drawCircle(x, y, 13, 0xff000000);
-        ModGuiUtils.drawCircle(x, y, CGuiIngame.tick, 0xff00ffff);
+        ModGuiUtils.drawCircle(x, y, CheatingEssentials.getCheatingEssentials().tick, 0xff00ffff);
         ModGuiUtils.drawCircle(x, y, 1, 0xffffffff);   // Player
         List list1 = this.mc.theWorld.loadedEntityList;
         GL11.glLineWidth(1.0F);

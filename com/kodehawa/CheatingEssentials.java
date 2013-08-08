@@ -1,11 +1,10 @@
 /**
  * Base classes modified:
  * 
- * 1- @GuiIngame.java
- * 2- @Block.java
- * 3- @EntityPlayer.java
- * 4- @Minecraft.java
- * 5- @TileEntityChestRenderer.java
+ * 1- @Block.java
+ * 2- @EntityPlayer.java
+ * 3- @Minecraft.java
+ * 4- @TileEntityChestRenderer.java
  */
 
 
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.src.Gui;
-import net.minecraft.src.ILogAgent;
 import net.minecraft.src.Minecraft;
 
 import org.lwjgl.input.Keyboard;
@@ -33,7 +31,6 @@ import com.kodehawa.console.BaseCommand;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CModLoader;
 import com.kodehawa.core.CThreadUpdateChecker;
-import com.kodehawa.core.CheckKey;
 import com.kodehawa.core.KeyManager;
 import com.kodehawa.core.Strings;
 import com.kodehawa.event.Event;
@@ -43,6 +40,7 @@ import com.kodehawa.event.events.EventKey;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.testing.AlertHandler;
+import com.kodehawa.hooks.CE_GuiIngameH;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
 import com.kodehawa.mods.ModuleXray;
@@ -63,7 +61,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public Minecraft minecraft;
 	public Wrapper getModWrapper;
 	public File mainDir;
-	public CheckKey KeyBinding;
 	private Event theInternalEvents;
 	public ModuleGui MainGui;
 	private Utils modUtils;
@@ -81,13 +78,12 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	public CJarLoader externalLoader;
 	private AlertHandler alertManager;
 	private static CThreadUpdateChecker update;
-	private int tick = 0;
+	public int tick = 0;
 	public static boolean outdatedAlert = false;
 	private BaseCommand consoleBase;
 	private long now;
 	private long then;
     private boolean[ ] keymap;
-    public static File crashDir;
 	private FileManager filemanager;
 	private volatile boolean stopRequested = false;
 
@@ -98,7 +94,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	
 	public CheatingEssentials(Minecraft mc) {
 		minecraft = mc;
-		KeyBinding = new CheckKey(mc);
 		run();
 	}
 	
@@ -119,7 +114,6 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 		
 		//TODO: Mod initialization.
 		mainDir = new File(getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
-        crashDir = new File(getMinecraftInstance().mcDataDir, "/Cheating Essentials/crash/" + File.separator + ".log");
 		modinstance = this;
 		CELogAgent("OpenGL: " + GL11.glGetString(GL11.GL_VERSION));
         CELogAgent(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " " + "starting in" + " " + Strings.MINECRAFT_VERSION + "...");
@@ -217,7 +211,7 @@ public final class CheatingEssentials extends Thread implements CModTicks {
     
         /**
         * Get key things.
-        * Like com.kodehawa.core.CheckKey.class
+        * Like the old CheckKey :)
         */
        public boolean getKeyStateFromMap( int i ) {
         if( getMinecraftInstance().currentScreen != null ) {
@@ -246,9 +240,9 @@ public final class CheatingEssentials extends Thread implements CModTicks {
             bufferedwritter.close( );
         	
         } catch( Exception ex ) {
-        	CELogAgent("Can't write X-Ray configuration file! Custom blocks for X-Ray will be disabled!");
+        	CELogErrorAgent("Can't write X-Ray configuration file! Custom blocks for X-Ray will be disabled!");
         	 ex.printStackTrace( );
-        	 CELogAgent( "Error in CE init: " + ex.toString( ) );
+        	 CELogErrorAgent("Error in CE init: " + ex.toString( ) );
 	            ex.printStackTrace( );
         }
     }
@@ -272,8 +266,8 @@ public final class CheatingEssentials extends Thread implements CModTicks {
             }
             br.close( );
         } catch( Exception ex ) {
-            CELogAgent("Can't load X-Ray list. Unreliable results!");
-            CELogAgent( "Error in CE init: " + ex.toString( ) );
+        	CELogErrorAgent("Can't load X-Ray list. Unreliable results!");
+            CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
             saveXrayList( );
     } 
@@ -326,6 +320,14 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	        }
 	}
 
+	public static void replaceGUI(){
+		if(Minecraft.getMinecraft().ingameGUI.getClass() != CE_GuiIngameH.class){
+			System.out.println("[CE Hook Manager] [INFO] GuiIngame MC " + Minecraft.getMinecraft().ingameGUI.getClass() );
+			Minecraft.getMinecraft().ingameGUI = new CE_GuiIngameH(getMinecraftInstance());
+			System.out.println("[CE Hook Manager] [INFO] GuiIngame new " + Minecraft.getMinecraft().ingameGUI.getClass());
+		}
+	}
+	
 	/**
 	 * Tick the entire mod.
 	 * Initialize the Arrays, Update the pinned frames and get key pressing.
@@ -380,21 +382,24 @@ public final class CheatingEssentials extends Thread implements CModTicks {
 	    		CELogAgent(Strings.THREAD_NAME + " starting in " + Strings.MOD_NAME + " " + Strings.MOD_VERSION + " for " + Strings.MINECRAFT_VERSION);
                 CELogAgent(Strings.THREAD_NAME + " Started: "  + thread.toString());
                 modInit();
-                update.run();
+               // update.run();
 	    		requestThreadStop();
 	    		CELogAgent("Initialization Thread was sucefully runned and finished.");
 			} catch (Exception ex) {
-				CELogAgent(Strings.THREAD_NAME + " was interrupted for some reason! Unreleable results!");
-			    CELogAgent("With this, I'm not sure if the mod can be inited, and Minecraft instance will be affected.");
+				CELogErrorAgent(Strings.THREAD_NAME + " was interrupted for some reason! Unreleable results!");
+				CELogErrorAgent("With this, I'm not sure if the mod can be inited, and Minecraft instance will be affected.");
 			    ex.printStackTrace( );
-	            System.out.println( "Error in CE Thread init: " + ex.toString( ) );
-	            ex.printStackTrace( );
+			    CELogErrorAgent( "Error in CE Thread init: " + ex.toString( ) );
 			}
 	    }
 	    }
 	
 	public void CELogAgent(String log){
-		System.out.println("Cheating Essentials - " + log);
+		System.out.println("[Cheating Essentials] [INFO] " + log);
 	}
+	
+	public void CELogErrorAgent(String log){
+		System.err.println("[Cheating Essentials] [ERROR] " + log);
+		}
 
 }

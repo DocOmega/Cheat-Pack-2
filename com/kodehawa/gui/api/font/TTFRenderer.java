@@ -9,7 +9,7 @@ import com.kodehawa.CheatingEssentials;
 
 public class TTFRenderer
 {
-    static Minecraft mc = CheatingEssentials.modinstance.minecraft;
+    static Minecraft mc = CheatingEssentials.getCheatingEssentials().getMinecraftInstance();
 
     public static void drawTTFString(CustomFont f, String text, double x, double y, int color)
     {

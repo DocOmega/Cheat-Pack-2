@@ -1,6 +1,8 @@
 package com.kodehawa.gui.api.components;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.gui.api.font.CustomFont;
+import com.kodehawa.gui.api.font.TTFRenderer;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
 
@@ -9,6 +11,7 @@ public class Button extends Item
     Frame parent;
     Mod m = null;
     int oldColor = 0;
+    private static CustomFont cf;
 
     public Button(String s, int color, int color2)
     {
@@ -22,6 +25,7 @@ public class Button extends Item
         this.color2 = color2;
         this.oldColor = color2;
         this.m = m;
+        cf = new CustomFont(CheatingEssentials.getCheatingEssentials().getMinecraftInstance(), "Verdana Bold", 12);
     }
 
     @Override
@@ -29,8 +33,8 @@ public class Button extends Item
     {
         // TODO Auto-generated method stub
         ModGuiUtils.drawBorderedRect(x, y, x + width, y + height, 2, color, 0x77000077);
-        CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, x + 2, y + 2, color2);
-        
+       CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, x + 2, y + 2, color2);
+       
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.kodehawa.ChestESP;
 
 import org.lwjgl.opengl.GL11;
 
+import com.kodehawa.render.GLHelper;
+
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.TileEntityChest;
@@ -56,7 +58,7 @@ public class ChestFinderContainer
         GL11.glDisable( GL11.GL_DEPTH_TEST );
         GL11.glDepthMask( false );
         GL11.glEnable( GL11.GL_LINE_SMOOTH );
-        drawOutlinedBoundingBox( new AltAxisAlignedBB( x + 1, y + 1, z + 1, x , y , z));
+        GLHelper.drawCrossedOutlinedBoundingBox( new AltAxisAlignedBB( x + 1, y + 1, z + 1, x , y , z));
         GL11.glColor4f(0.0F,
         		0.0F,
         		255F,

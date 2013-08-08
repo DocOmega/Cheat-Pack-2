@@ -3,7 +3,6 @@ package com.kodehawa.render;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.RenderGlobal;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.Tessellator;
 
@@ -11,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.ChestESP.AltAxisAlignedBB;
 
 public class GLHelper {
     
@@ -156,7 +156,7 @@ public class GLHelper {
         GL11.glPopMatrix( );
     }
     
-    public static void drawCrossedOutlinedBoundingBox( AxisAlignedBB var0 ) {
+    public static void drawCrossedOutlinedBoundingBox( AltAxisAlignedBB var0 ) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawing( 3 );
         tessellator.addVertex( var0.minX, var0.minY, var0.minZ );

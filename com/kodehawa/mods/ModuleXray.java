@@ -89,9 +89,6 @@ public class ModuleXray extends Mod implements Tickable
         if(ModuleXray.RENDER_EVENT){
     	CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockRender.class, this );
         }
-        else if(ModuleXray.RENDER_NORMAL){
-        	Vars.xray = true;
-        }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
 
@@ -102,9 +99,6 @@ public class ModuleXray extends Mod implements Tickable
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 0.5F;
         if(ModuleXray.RENDER_EVENT){
     	CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockRender.class, this );
-        }
-        else if(ModuleXray.RENDER_NORMAL){
-        	Vars.xray = false;
         }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }

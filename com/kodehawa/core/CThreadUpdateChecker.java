@@ -5,12 +5,11 @@ import com.kodehawa.CheatingEssentials;
 public class CThreadUpdateChecker extends Thread {
 
 	private volatile boolean stopRequested = false;
-
+	
 	public CThreadUpdateChecker() {
-		
 	}
 	
-	public static boolean update( ) {
+	public boolean update( ) {
         CheatingEssentials.getCheatingEssentials().outdatedAlert = false;
         try {
         	CheatingEssentials.getCheatingEssentials().CELogAgent( "Checking for a Cheating Essentials update..." );
@@ -21,6 +20,7 @@ public class CThreadUpdateChecker extends Thread {
                 // Returns false, because no need to update.
             	CheatingEssentials.getCheatingEssentials().CELogAgent( "No new updates has been found!" );
                 return false;
+                
             } else if( !ver.equals( Strings.MOD_VERSION ) ) {
                 if( Integer.parseInt( ver.replaceAll( "\\D+", "" ) ) > Integer.parseInt( Strings.MOD_VERSION.replaceAll(
                         "\\D+", "" ) ) ) {
@@ -43,6 +43,7 @@ public class CThreadUpdateChecker extends Thread {
             } else {
                 throw new NullPointerException( "No update info found!" );
             }
+           
         } catch( NullPointerException e ) {
         	CheatingEssentials.getCheatingEssentials().CELogAgent( "Issue getting update information" );
             e.printStackTrace( );

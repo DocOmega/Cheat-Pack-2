@@ -1,6 +1,6 @@
 package com.kodehawa.console;
 
-import com.kodehawa.gui.CGuiIngame;
+import com.kodehawa.CheatingEssentials;
 import com.kodehawa.util.ChatColour;
 
 public class Reloader implements BaseCommand
@@ -11,10 +11,10 @@ public class Reloader implements BaseCommand
         // TODO Auto-generated method stub
         try
         {
-            CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reloading. Please hold still.");
+        	CheatingEssentials.getCheatingEssentials().minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reloading. Please hold still.");
             //CGuiIngame.cheatbase.reload();
-            CGuiIngame.cheatbase.modinstance.minecraft.renderGlobal.loadRenderers();
-            CGuiIngame.cheatbase.modinstance.minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reload complete!");
+        	CheatingEssentials.getCheatingEssentials().minecraft.renderGlobal.loadRenderers();
+        	CheatingEssentials.getCheatingEssentials().minecraft.thePlayer.addChatMessage(ChatColour.RED + "Reload complete!");
         }
         catch (Exception e)
         {
