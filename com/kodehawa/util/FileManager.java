@@ -46,7 +46,7 @@ public class FileManager {
             outWrite.write( alah );
             outWrite.close( );
         } catch( Exception error ) {
-            System.out.println( "Can't write a crash log. Ohh the irony." );
+           CheatingEssentials.getCheatingEssentials().CELogErrorAgent( "Can't write a crash log. Ohh the irony." );
         }
     }
     

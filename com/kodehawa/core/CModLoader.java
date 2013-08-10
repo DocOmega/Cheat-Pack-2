@@ -46,7 +46,6 @@ public class CModLoader {
 	public CModLoader(){
 		addModulestoArray();
 		writeDebugInfo();
-		loadModulesforKB();
 	}
     
 	public static void loadModulesforKB(){
@@ -126,7 +125,7 @@ public class CModLoader {
 
 
 		for(Mod m: CheatingEssentials.getCheatingEssentials().mods){
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Module Loaded: " + m + " (Name: " + m.name + ")");
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Module Loaded: " + m + " (Name: " + m.name + ") " + "(Key: " + m.getKeybind() + ")");
 		}
 		
 		CheatingEssentials.getCheatingEssentials().CELogAgent(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);

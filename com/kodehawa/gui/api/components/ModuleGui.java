@@ -167,7 +167,7 @@ public class ModuleGui extends GuiScreen
             wFrame.addChild(b);
         }
 
-        wFrame.setPinnable(false);
+        wFrame.setPinnable(true);
         addFrame(wFrame);
     }
     
@@ -183,7 +183,7 @@ public class ModuleGui extends GuiScreen
             f3Frame.addChild(b);
         }
 
-        f3Frame.setPinnable(false);
+        f3Frame.setPinnable(true);
         addFrame(f3Frame);
     	
     }
@@ -200,6 +200,7 @@ public class ModuleGui extends GuiScreen
             pFrame.addChild(b);
         }
 
+        pFrame.setPinnable(true);
         addFrame(pFrame);
     }
 
@@ -287,7 +288,7 @@ public class ModuleGui extends GuiScreen
                 }
             }
         };
-        kFrame.setPinnable(false);
+        kFrame.setPinnable(true);
         addFrame(kFrame);
     }
 
@@ -396,7 +397,7 @@ public class ModuleGui extends GuiScreen
                 }
             }
         };
-        aFrame.setPinnable(false);
+        aFrame.setPinnable(true);
         addFrame(aFrame);
     }
 
@@ -610,6 +611,7 @@ public class ModuleGui extends GuiScreen
                 }
             }
         };
+        tFrame.setPinnable(true);
         tFrame.addChild(new TextArea("", tFrame.x, tFrame.y + (tFrame.children.size() * 12), 100, 10, 0x77770077));
         addFrame(tFrame);
     }

@@ -1,5 +1,7 @@
 package com.kodehawa.mods;
 
+import net.minecraft.src.EntityClientPlayerMP;
+
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
@@ -20,12 +22,10 @@ public class ModuleSprint extends Mod implements Tickable
     {
 
         // TODO Auto-generated method stub
-        if (!CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.isSprinting())
-        {
-        	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.setSprinting(true);
-
-            
-            }
+        final EntityClientPlayerMP p = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer;
+        if (p.movementInput.moveForward > 0) {
+                p.setSprinting(true);
+        }
         }
    
 

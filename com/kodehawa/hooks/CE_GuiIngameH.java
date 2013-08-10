@@ -13,6 +13,7 @@ import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.radar.Radar;
 import com.kodehawa.util.ChatColour;
+import com.kodehawa.util.KeyboardListener;
 
 public class CE_GuiIngameH extends GuiIngame {
 
@@ -42,7 +43,7 @@ public class CE_GuiIngameH extends GuiIngame {
         {
         	
 
-    		if( CheatingEssentials.getCheatingEssentials().getKeyStateFromMap(Keyboard.KEY_G)){
+    		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_G)){
     			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Gui);
     		}
     		
@@ -56,12 +57,12 @@ public class CE_GuiIngameH extends GuiIngame {
         }
         
 		
-		if(CheatingEssentials.getCheatingEssentials().getKeyStateFromMap(Keyboard.KEY_I)){
+		if(KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_I)){
     		radarActive = !radarActive;
     		
     	}
     	
-    	if(CheatingEssentials.getCheatingEssentials().getKeyStateFromMap(Keyboard.KEY_Z)){
+    	if(KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_Z)){
     		activese = !activese;
     	}
     	

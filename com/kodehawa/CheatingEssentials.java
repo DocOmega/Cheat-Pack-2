@@ -24,22 +24,33 @@ import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.FileManager;
+import com.kodehawa.util.KeyboardListener;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
 
+
+/**
+ * @author Kodehawa, Godshawk
+ */
+
 public final class CheatingEssentials {
-	
+
 	/**
-	 * @author Kodehawa, Godshawk
+	 * Variables
 	 */
 	
     public static CheatingEssentials modinstance;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
     public ArrayList<Mod> mods = new ArrayList<Mod>();
     public static ArrayList<String> enabledMods = new ArrayList<String>();
-    private boolean[ ] keymap;
 
+    
+    /**
+     * The constructor. 
+     * It initialize the mod in GuiIngame (The hook one) and tick it.
+     */
+    
 	public CheatingEssentials( ) {
 		modInit();
 	}
@@ -47,7 +58,7 @@ public final class CheatingEssentials {
 	/**
 	 * Private method that initialize the basic and integrated things in Cheating Essentials.
 	 * It initialize all classes that are needed for the correctly mod funcionality and some debug messages for know things
-	 * Yeah, I know that CModLoader it's the most ugly thing in the world, but it's needed for make Keybinding to work :)
+	 * Yeah, I know that CModLoader it's the most ugly / hardcoded thing in the world, but it's needed for make Keybinding to work :)
 	 */
 	
 	private void modInit() {
@@ -55,11 +66,11 @@ public final class CheatingEssentials {
 		modinstance = this;
         EventHandler.getInstance();
         ModManager.getInstance();
+        CModLoader.getMInstance();
+        KeyboardListener.getInstance();
         FileManager.getInstance();
         FrenemyManager.getInstance();
         Wrapper.getWInstance();
-        CModLoader.getMInstance();
-        keymap = new boolean[ 256 ];
 	}
 	
 	/**
@@ -97,60 +108,6 @@ public final class CheatingEssentials {
 	public static Minecraft getMinecraftInstance(){
 		return Minecraft.getMinecraft();
 	}
-
-	/**
-	 * Module keybinding.
-	 * It handles the events and toggle the specified mod with the keybinding specified in the module class and CModLoader.
-	 * Also it handles the GUI key, that shows a hacked-client-style GUI. Sorry for that.
-	 * I'm making another GUI, promise :)
-	 */
-	
-    public void handleKeys( ) {
-    	//TODO: Module Keys
-    	
-        for( Mod m : mods ) {
-            int key = m.getKeybind( );
-            if( getKeyStateFromMap( key ) ) {
-                EventHandler.getInstance().call( new EventKey( this, m.getKeybind( ) ) );
-                m.toggle();
-                break;
-            }
-          }
-        }
-    
-        /**
-        * Get key things.
-        * Like the old CheckKey :)
-        */
-       public boolean getKeyStateFromMap( int i ) {
-        if( getMinecraftInstance().currentScreen != null ) {
-            return false;
-        }
-        if( Keyboard.isKeyDown( i ) != keymap[ i ] ) {
-            return keymap[ i ] = !keymap[ i ];
-        } else {
-            return false;
-        }
-    }
-
-	/**
-	 * Update "Active Cheats" frame and GUI utils for see what mods are actives.
-	 */
-	
-	public void updateArray() {
-		for (int i = 0; i < ModManager.getInstance().mods.size(); i++)
-        {
-            if (ModManager.getInstance().mods.get(i).isActive() && !enabledMods.contains(ModManager.getInstance().mods.get(i).name))
-            {
-                enabledMods.add(ModManager.getInstance().mods.get(i).name);
-            }
-            else if (!ModManager.getInstance().mods.get(i).isActive())
-            {
-                enabledMods.remove(ModManager.getInstance().mods.get(i).name);
-            }
-        }
-	}
-	
 
 	/**
 	 * Tick a mod in the Minecraft instance, needed for most modules, but some modules don't need it.
@@ -194,8 +151,7 @@ public final class CheatingEssentials {
 			tickable.tick();
 		}
 		
-		updateArray();
-        handleKeys();
+		KeyboardListener.getInstance().handleKeys();
 	}
 	
 	public void CELogAgent(String log){
