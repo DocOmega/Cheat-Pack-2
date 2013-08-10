@@ -8,7 +8,7 @@ import net.minecraft.src.TileEntityChest;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.chestesp.ChestFinderContainer;
+import com.kodehawa.chestfinder.ChestFinderContainer;
 import com.kodehawa.event.Event;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventRender3D;
