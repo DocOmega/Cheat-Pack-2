@@ -14,15 +14,11 @@ import java.util.ArrayList;
 
 import net.minecraft.src.Minecraft;
 
-import org.lwjgl.input.Keyboard;
-
+import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CModLoader;
-import com.kodehawa.event.EventHandler;
-import com.kodehawa.event.events.EventKey;
 import com.kodehawa.hooks.CE_GuiIngameH;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
-import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.FileManager;
 import com.kodehawa.util.KeyboardListener;
 import com.kodehawa.util.Tickable;
@@ -64,13 +60,10 @@ public final class CheatingEssentials {
 	private void modInit() {
 		//TODO: Mod initialization.
 		modinstance = this;
-        EventHandler.getInstance();
         ModManager.getInstance();
+        ConsoleHelper.getInstance();
         CModLoader.getMInstance();
-        KeyboardListener.getInstance();
         FileManager.getInstance();
-        FrenemyManager.getInstance();
-        Wrapper.getWInstance();
 	}
 	
 	/**
@@ -158,8 +151,8 @@ public final class CheatingEssentials {
 		System.out.println("[Cheating Essentials] [INFO] " + log);
 	}
 	
-	public void CELogErrorAgent(String log){
-		System.err.println("[Cheating Essentials] [ERROR] " + log);
+	public void CELogErrorAgent(String elog){
+		System.err.println("[Cheating Essentials] [ERROR] " + elog);
 	}
 
 }

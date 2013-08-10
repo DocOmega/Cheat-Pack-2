@@ -23,10 +23,7 @@ public class ModManager
         worldMods = new ArrayList<Mod>();
         playerMods = new ArrayList<Mod>();
         f3utils = new ArrayList<Mod>();
-        
-        
-        Utils.getInstance();
-        ConsoleHelper.getInstance();
+
         
     }
 

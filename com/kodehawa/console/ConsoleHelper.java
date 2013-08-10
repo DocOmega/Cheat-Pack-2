@@ -27,7 +27,7 @@ public class ConsoleHelper
         
         for (BaseCommand b : ConsoleHelper.commands)
         {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b + "(Name:" + b.getName() + ")" );
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b + " (Name:" + b.getName() + ")" );
         }
         
 
