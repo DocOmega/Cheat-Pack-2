@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.ChestESP.AltAxisAlignedBB;
+import com.kodehawa.chestesp.AltAxisAlignedBB;
 
 public class GLHelper {
     

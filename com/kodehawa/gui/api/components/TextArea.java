@@ -40,7 +40,7 @@ public class TextArea extends Item
         GL11.glScaled(0.5, 0.5, 0.5);
         // TTFRenderer.drawTTFString( Colony.instance.guiFont, text, x * 2, y *
         // 2, 0xffffffff );
-        CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, (x * 2) + 2, (y * 2) + 6, 0xffffff);
+        CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(text, (x * 2) + 2, (y * 2) + 6, 0xffffff);
         GL11.glScaled(1, 1, 1);
         GL11.glPopMatrix();
     }
@@ -144,14 +144,14 @@ public class TextArea extends Item
                             // TTFRenderer.drawTTFString( Colony.guiFont, add, (
                             // x * 2 ) + 6, ( y * 2 ) - 6, color );
                             /* String, x, y, width, color */
-                        	CheatingEssentials.modinstance.minecraft.fontRenderer.drawSplitString(add, x * 2, y * 2, 236, 0xffffff);
+                        	CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString(add, x * 2, y * 2, 236, 0xffffff);
                         }
                         else
                         {
                             // TTFRenderer.drawTTFString( Colony.guiFont,
                             // "ERROR PROCESSING COMMAND", ( x * 2 ) + 6, ( y *
                             // 2 ) - 6, color );
-                        	CheatingEssentials.modinstance.minecraft.fontRenderer.drawSplitString("COMMAND COULD NOT BE PROCESSED", (x * 2) - 2, y * 2, 100, 0xffffff);
+                        	CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString("COMMAND COULD NOT BE PROCESSED", (x * 2) - 2, y * 2, 100, 0xffffff);
                         }
 
                         GL11.glPopMatrix();
@@ -174,7 +174,7 @@ public class TextArea extends Item
                                 // add, (
                                 // x * 2 ) + 6, ( y * 2 ) - 6, color );
                                 /* String, x, y, width, color */
-                                CheatingEssentials.modinstance.minecraft.fontRenderer.drawSplitString(add2, x * 2, y * 2, 236, 0xffffff);
+                                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString(add2, x * 2, y * 2, 236, 0xffffff);
                             }
                             else
                             {
@@ -182,7 +182,7 @@ public class TextArea extends Item
                                 // "ERROR PROCESSING COMMAND", ( x * 2 ) + 6, (
                                 // y *
                                 // 2 ) - 6, color );
-                            	CheatingEssentials.modinstance.minecraft.fontRenderer.drawSplitString("COMMAND COULD NOT BE PROCESSED", (x * 2) - 2, y * 2, 100, 0xffffff);
+                            	CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString("COMMAND COULD NOT BE PROCESSED", (x * 2) - 2, y * 2, 100, 0xffffff);
                             }
 
                             GL11.glPopMatrix();

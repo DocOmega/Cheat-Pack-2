@@ -2,6 +2,7 @@ package com.kodehawa.console;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.util.FileManager;
 
 public class XrayRemove implements BaseCommand{
 	
@@ -38,7 +39,7 @@ public class XrayRemove implements BaseCommand{
         	ModuleXray.xrayBlocks.remove( blockID );
             System.out.println(ModuleXray.xrayBlocks.size());
             CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
-            CheatingEssentials.getCheatingEssentials().saveXrayList();
+            FileManager.saveXrayList();
         	CheatingEssentials.getCheatingEssentials().CELogAgent("You've removed a block from the X-Ray list: " + blockID);
             return "Block ID removed from X-Ray list: " + blockID + " NOTE: Default id's can't be removed, one the ones that you've added";
             

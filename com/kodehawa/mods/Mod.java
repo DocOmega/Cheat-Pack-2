@@ -6,11 +6,13 @@ package com.kodehawa.mods;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.Listener;
 import com.kodehawa.event.events.EventKey;
 import com.kodehawa.event.events.EventRender3D;
 import com.kodehawa.event.events.EventTick;
 import com.kodehawa.util.ChatColour;
+import com.kodehawa.util.Tickable;
 
 public abstract class Mod implements Listener
 {
@@ -18,14 +20,15 @@ public abstract class Mod implements Listener
     public int keybind;
     private boolean ortho;
     public int keyBind;
+    private Tickable tick;
 
     
     public Mod( String name, String desc, int keybind ) {
         this.name = name;
         this.desc = desc;
         this.keybind = keybind;
-        CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventKey.class, this );
-        CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
+        EventHandler.getInstance().registerListener( EventKey.class, this );
+        EventHandler.getInstance().registerListener( EventRender3D.class, this );
     }
 
     public void turnOn()
@@ -75,12 +78,12 @@ public abstract class Mod implements Listener
         if( this.isActive( ) ) {
         	 //CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
-            	 CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
+            	EventHandler.getInstance().registerListener( EventRender3D.class, this );
             }
         } else {
         	 //CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
-            	 CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventRender3D.class, this );
+            	EventHandler.getInstance().unRegisterListener( EventRender3D.class, this );
             }
         }
     }
@@ -113,7 +116,7 @@ public abstract class Mod implements Listener
     @Override
     public void onEvent( Event e ) {
         if( e instanceof EventTick ) {
-            CheatingEssentials.getCheatingEssentials().modInternalTicks.tick( );
+            tick.tick( );
         }
         if( e instanceof EventKey ) {
             if( ( ( EventKey ) e ).getKey( ) == this.getKeybind( ) ) {

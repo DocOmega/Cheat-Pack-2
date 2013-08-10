@@ -26,6 +26,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 import com.kodehawa.util.ChatColour;
 
 public class Bind implements BaseCommand
@@ -76,15 +77,15 @@ public class Bind implements BaseCommand
             }
             else if (cmd.length == 2)
             {
-                Mod m = CheatingEssentials.modinstance.mainModLoader.getCheatsByName(cmd [ 1 ]);
-                CheatingEssentials.modinstance.modKeyManager.writeNewKeybinds();
+                Mod m = ModManager.getInstance().getCheatsByName(cmd [ 1 ]);
+                //CheatingEssentials.modinstance.modKeyManager.writeNewKeybinds();
                 return new String(ChatColour.AQUA + m.name + " unbound!");
             }
             else if (cmd.length == 3)
             {
-                Mod m = CheatingEssentials.modinstance.mainModLoader.getCheatsByName(cmd [ 1 ]);
+                Mod m = ModManager.getInstance().getCheatsByName(cmd [ 1 ]);
                 m.keyBind = Keyboard.getKeyIndex(cmd [ 2 ].toUpperCase());
-                CheatingEssentials.modinstance.modKeyManager.writeNewKeybinds();
+                //CheatingEssentials.modinstance.modKeyManager.writeNewKeybinds();
                 return new String(ChatColour.AQUA + m.name + " bound to " + cmd [ 2 ] + "!");
             }
 

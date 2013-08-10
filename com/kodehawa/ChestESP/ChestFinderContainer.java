@@ -1,4 +1,4 @@
-package com.kodehawa.ChestESP;
+package com.kodehawa.chestesp;
 
 import org.lwjgl.opengl.GL11;
 

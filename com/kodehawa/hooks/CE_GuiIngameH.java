@@ -8,9 +8,10 @@ import net.minecraft.src.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.InGameRadar.Radar;
 import com.kodehawa.gui.api.components.Frame;
+import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.render.ModGuiUtils;
+import com.kodehawa.radar.Radar;
 import com.kodehawa.util.ChatColour;
 
 public class CE_GuiIngameH extends GuiIngame {
@@ -20,12 +21,16 @@ public class CE_GuiIngameH extends GuiIngame {
     private Radar radar;
     private boolean radarActive;
     private boolean activese;
+    private ModuleGui Gui;
+	public static int tick = 0;
+
 	
 	public CE_GuiIngameH(Minecraft par1Minecraft) {
 		super(par1Minecraft);
-        cheatingEssentials = new CheatingEssentials(par1Minecraft);
+        cheatingEssentials = new CheatingEssentials( );
         utils = new ModGuiUtils();
 		radar = new Radar();
+		Gui = new ModuleGui( );
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -35,7 +40,14 @@ public class CE_GuiIngameH extends GuiIngame {
 		
 		CheatingEssentials.getCheatingEssentials().tick();
         {
-    	for(Frame e : CheatingEssentials.getCheatingEssentials().MainGui.frames) {
+        	
+
+    		if( CheatingEssentials.getCheatingEssentials().getKeyStateFromMap(Keyboard.KEY_G)){
+    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Gui);
+    		}
+    		
+    		
+    	for(Frame e : Gui.frames) {
     		if(e.pinned) {
     		e.update();
     		e.draw();

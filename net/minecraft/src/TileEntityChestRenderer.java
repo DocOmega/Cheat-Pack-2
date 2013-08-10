@@ -1,10 +1,11 @@
 package net.minecraft.src;
 
 import java.util.Calendar;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.kodehawa.ChestESP.ChestFinderContainer;
+import com.kodehawa.chestesp.ChestFinderContainer;
 import com.kodehawa.mods.Vars;
 
 public class TileEntityChestRenderer extends TileEntitySpecialRenderer

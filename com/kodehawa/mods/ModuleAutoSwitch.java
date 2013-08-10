@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventBlockClick;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Vector3D;
@@ -45,14 +46,14 @@ public class ModuleAutoSwitch extends Mod implements Tickable {
 	public void onEnable( ) {
 		// TODO Auto-generated method stub
 		CheatingEssentials.getCheatingEssentials().addToTick(this);
-		CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockClick.class, this );
+		EventHandler.getInstance().registerListener( EventBlockClick.class, this );
 	}
 
 	@Override
 	public void onDisable( ) {
 		// TODO Auto-generated method stub
 		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
-		CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockClick.class, this );
+		EventHandler.getInstance().unRegisterListener( EventBlockClick.class, this );
 	}
 
 	@Override

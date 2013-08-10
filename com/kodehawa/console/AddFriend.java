@@ -24,6 +24,7 @@ package com.kodehawa.console;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Vars;
+import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.ChatColour;
 
 public class AddFriend implements BaseCommand
@@ -75,7 +76,7 @@ public class AddFriend implements BaseCommand
             else
             {
                 Vars.friends.add(cmd [ 1 ]);
-                CheatingEssentials.modinstance.theFriendManager.writeEnemies();
+                FrenemyManager.getInstance().writeEnemies();
                 return cmd [ 1 ] + " is now a friend!";
             }
         }

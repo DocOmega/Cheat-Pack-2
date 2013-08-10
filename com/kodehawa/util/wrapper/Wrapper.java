@@ -19,7 +19,8 @@ import com.kodehawa.mods.ModManager;
 public class Wrapper
 {
 	private Minecraft mc;
-	
+    private static volatile Wrapper instance;
+
     public Minecraft getMinecraft()
     {
        return mc;
@@ -133,4 +134,11 @@ public class Wrapper
     {
         getMinecraft().thePlayer.sendQueue.addToSendQueue(yoloswaq);
     }
+    
+    public static Wrapper getWInstance() {
+        if (instance == null) {
+                instance = new Wrapper();
+        }
+        return instance;
+}
 }

@@ -35,6 +35,7 @@ import java.nio.charset.Charset;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.ConsoleHelper;
+import com.kodehawa.mods.ModManager;
 import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
 
@@ -42,11 +43,13 @@ public class FrenemyManager
 {
     public File friendsFile;
     public File enemyFile;
+    private static volatile FrenemyManager instance;
 
+    
     public FrenemyManager()
     {
-        friendsFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/CEFriendsList.txt");
-        enemyFile = new File(CheatingEssentials.modinstance.minecraft.mcDataDir, "/config/Cheating Essentials/CEEnemiesList.txt");
+        friendsFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEFriendsList.txt");
+        enemyFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEEnemiesList.txt");
 
         /**
          * WARNING: Hardcoded!
@@ -199,7 +202,7 @@ public class FrenemyManager
             // Close the output stream
             out.close();
 
-            if (CheatingEssentials.modinstance.minecraft.theWorld != null)
+            if (CheatingEssentials.modinstance.getMinecraftInstance().theWorld != null)
             {
                 ConsoleHelper.addMessage(ChatColour.BLUE + "Friends written!");
             }
@@ -227,7 +230,7 @@ public class FrenemyManager
             // Close the output stream
             out.close();
 
-            if (CheatingEssentials.modinstance.minecraft.theWorld != null)
+            if (CheatingEssentials.modinstance.getMinecraftInstance().theWorld != null)
             {
             }
         }
@@ -237,4 +240,11 @@ public class FrenemyManager
             e.printStackTrace();
         }
     }
+    
+    public static FrenemyManager getInstance( ) {
+        if (instance == null) {
+                instance = new FrenemyManager( );
+        }
+        return instance;
+}
 }

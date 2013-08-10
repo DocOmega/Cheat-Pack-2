@@ -11,6 +11,7 @@ import java.util.zip.ZipInputStream;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.BaseCommand;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 
 
 public class CJarLoader extends Thread {
@@ -88,7 +89,7 @@ public class CJarLoader extends Thread {
                                         Constructor ctr = clazz.getConstructor( );
                                         Mod q = ( Mod ) ctr.newInstance( );
                                         log( "Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                        CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils.add( q );
+                                        ModManager.getInstance().f3utils.add( q );
                                     }
                                 }
                             }

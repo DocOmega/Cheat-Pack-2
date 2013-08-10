@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 
 import net.minecraft.src.Minecraft;
 
 public class ConsoleHelper
 {
     public static ArrayList<BaseCommand> commands;
+    private static volatile ConsoleHelper instance;
 
     public ConsoleHelper()
     {
@@ -19,15 +21,13 @@ public class ConsoleHelper
         addCommand(new Speed());
         addCommand(new AddFriend());
         addCommand(new AddEnemy());
-        addCommand(new Reloader());
         addCommand(new FlySpeed());
         addCommand(new XrayAdd());
         addCommand(new XrayRemove());
-        addCommand(new Bind());
         
         for (BaseCommand b : ConsoleHelper.commands)
         {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b);
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b + "(Name:" + b.getName() + ")" );
         }
         
 
@@ -67,4 +67,11 @@ public class ConsoleHelper
     {
         Minecraft.getMinecraft().thePlayer.addChatMessage(msg);
     }
+     
+    public static ConsoleHelper getInstance( ) {
+        if (instance == null) {
+                instance = new ConsoleHelper( );
+        }
+        return instance;
+}
 }

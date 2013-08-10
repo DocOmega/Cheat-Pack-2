@@ -24,6 +24,7 @@ package com.kodehawa.console;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.Vars;
+import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.ChatColour;
 
 public class AddEnemy implements BaseCommand
@@ -75,7 +76,7 @@ public class AddEnemy implements BaseCommand
             else
             {
                 Vars.enemies.add(cmd [ 1 ]);
-                CheatingEssentials.modinstance.theFriendManager.writeEnemies();
+                FrenemyManager.getInstance().writeEnemies();
                 return cmd [ 1 ] + " is now an enemy!";
             }
         }

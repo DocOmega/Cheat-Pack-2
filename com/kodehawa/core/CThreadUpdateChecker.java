@@ -5,12 +5,13 @@ import com.kodehawa.CheatingEssentials;
 public class CThreadUpdateChecker extends Thread {
 
 	private volatile boolean stopRequested = false;
+	public boolean outdatedAlert;
 	
 	public CThreadUpdateChecker() {
 	}
 	
 	public boolean update( ) {
-        CheatingEssentials.getCheatingEssentials().outdatedAlert = false;
+        outdatedAlert = false;
         try {
         	CheatingEssentials.getCheatingEssentials().CELogAgent( "Checking for a Cheating Essentials update..." );
             String ver;
@@ -36,7 +37,7 @@ public class CThreadUpdateChecker extends Thread {
                     } else {
                     	//We don't want to fave older versions on main servers. Right?
                     	CheatingEssentials.getCheatingEssentials().CELogAgent( "No new updates found! (Older version is on the server, report this to the in the Minecraft Forum post!)" );
-                    	CheatingEssentials.getCheatingEssentials().outdatedAlert = true;
+                    	outdatedAlert = true;
                         return false;
                     }
                 }

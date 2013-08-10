@@ -34,6 +34,7 @@ import org.lwjgl.opengl.GL11;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 
 public class ModuleGui extends GuiScreen
 {
@@ -158,7 +159,7 @@ public class ModuleGui extends GuiScreen
     {
         Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, 0xff550055, 0xaa000000, "World");
 
-        for (Mod m : CheatingEssentials.modinstance.mainModLoader.worldMods)
+        for (Mod m : ModManager.getInstance().worldMods)
         {
             Button b = new Button(m.name, 0xff000077, 0xffffff, m);
             b.setWidth(wFrame.width - 6);
@@ -174,7 +175,7 @@ public class ModuleGui extends GuiScreen
     public void makeF3UtilsFrame(){
     	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0xff550055, 0xaa000000, "Utils");
     	
-    	for (Mod m : CheatingEssentials.getCheatingEssentials().mainModLoader.f3utils)
+    	for (Mod m : ModManager.getInstance().f3utils)
         {
             Button b = new Button(m.name, 0xff000077, 0xffffff, m);
             b.setWidth(f3Frame.width - 6);
@@ -191,7 +192,7 @@ public class ModuleGui extends GuiScreen
     {
         Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0xff550055, 0xaa000000, "Player");
 
-        for (Mod m : CheatingEssentials.modinstance.mainModLoader.playerMods)
+        for (Mod m : ModManager.getInstance().playerMods)
         {
             Button b = new Button(m.name, 0xff000077, 0xffffff, m);
             b.setWidth(pFrame.width - 6);
@@ -255,7 +256,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
                 if (minimized)
                 {
@@ -368,7 +369,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
                 // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
                 // y, 0x87b5ff );
 
@@ -434,9 +435,9 @@ public class ModuleGui extends GuiScreen
                 {
                     children.clear();
                     addChild(new Label("FPS: " + mc.debugFPS, 0xffffff));
-                    addChild(new Label("X: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posX, 0xffffff));
-                    addChild(new Label("Y: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posY, 0xffffff));
-                    addChild(new Label("Z: " + (int) CheatingEssentials.modinstance.minecraft.thePlayer.posZ, 0xffffff));
+                    addChild(new Label("X: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posX, 0xffffff));
+                    addChild(new Label("Y: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posY, 0xffffff));
+                    addChild(new Label("Z: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posZ, 0xffffff));
                     addChild(new Label("Dimension: " + dim, 0xffffff));
                     addChild(new Label("Facing: " + dir, 0xffffff ));
                     addChild(new Label("", 0xffffff));
@@ -482,7 +483,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
                 
 
                 if (minimized)
@@ -568,7 +569,7 @@ public class ModuleGui extends GuiScreen
                 }
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
                 // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
                 // y,
@@ -582,7 +583,7 @@ public class ModuleGui extends GuiScreen
                 {
                     GL11.glPushMatrix();
                     GL11.glScaled(0.5, 0.5, 0.5);
-                    CheatingEssentials.modinstance.minecraft.fontRenderer.drawString("Type \'clear\' to clear history. ", (this.x * 2) + 6, ((this.y + this.oldHeight) * 2) - 4, 0xffffff);
+                    CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString("Type \'clear\' to clear history. ", (this.x * 2) + 6, ((this.y + this.oldHeight) * 2) - 4, 0xffffff);
                     GL11.glScaled(1, 1, 1);
                     GL11.glPopMatrix();
                     int diff = 0;

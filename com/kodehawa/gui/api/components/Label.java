@@ -23,7 +23,7 @@ public class Label extends Item
     public void draw()
     {
         // TODO Auto-generated method stub
-        CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, x + 3, y + 3, color);
+        CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(text, x + 3, y + 3, color);
         // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 3, y - 3,
         // color );
     }

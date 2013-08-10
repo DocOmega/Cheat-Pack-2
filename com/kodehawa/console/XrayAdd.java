@@ -1,11 +1,9 @@
 package com.kodehawa.console;
 
-import java.util.ArrayList;
-
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.mods.Vars;
 import com.kodehawa.util.ChatColour;
+import com.kodehawa.util.FileManager;
 
 public class XrayAdd implements BaseCommand{
 
@@ -53,7 +51,7 @@ public class XrayAdd implements BaseCommand{
         		
             	ModuleXray.xrayBlocks.add( blockID );
             	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
-                CheatingEssentials.getCheatingEssentials().saveXrayList();
+                FileManager.saveXrayList();
             	CheatingEssentials.getCheatingEssentials().CELogAgent("You've added a block to the X-Ray list: " + blockID);
                 return "Block ID added to Int: " + blockID;
             }

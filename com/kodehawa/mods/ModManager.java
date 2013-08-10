@@ -4,6 +4,9 @@ package com.kodehawa.mods;
 import java.util.ArrayList;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.console.ConsoleHelper;
+import com.kodehawa.event.EventHandler;
+import com.kodehawa.util.Utils;
 
 public class ModManager
 {
@@ -11,18 +14,24 @@ public class ModManager
     public static ArrayList<Mod> worldMods;
     public static ArrayList<Mod> playerMods;
     public ArrayList<Mod> f3utils;
+    private static volatile ModManager instance;
 
-    public ModManager(CheatingEssentials c)
+
+    public ModManager( )
     {
         mods = new ArrayList<Mod>();
         worldMods = new ArrayList<Mod>();
         playerMods = new ArrayList<Mod>();
         f3utils = new ArrayList<Mod>();
         
-
+        
+        Utils.getInstance();
+        ConsoleHelper.getInstance();
         
     }
 
+  
+    
     public void addMod(Mod m)
     {
         mods.add(m);
@@ -66,4 +75,11 @@ public class ModManager
 
         return null;
     }
+    
+    public static ModManager getInstance() {
+        if (instance == null) {
+                instance = new ModManager();
+        }
+        return instance;
+}
 }

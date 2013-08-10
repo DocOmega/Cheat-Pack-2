@@ -28,6 +28,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventBlockRender;
 import com.kodehawa.util.Tickable;
 
@@ -87,7 +88,7 @@ public class ModuleXray extends Mod implements Tickable
     {
     	CheatingEssentials.getCheatingEssentials().addToTick(this);
         if(ModuleXray.RENDER_EVENT){
-    	CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventBlockRender.class, this );
+        	EventHandler.getInstance().registerListener( EventBlockRender.class, this );
         }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
@@ -98,7 +99,7 @@ public class ModuleXray extends Mod implements Tickable
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 0.5F;
         if(ModuleXray.RENDER_EVENT){
-    	CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventBlockRender.class, this );
+        	EventHandler.getInstance().unRegisterListener( EventBlockRender.class, this );
         }
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }

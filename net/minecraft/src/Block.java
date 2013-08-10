@@ -3,10 +3,9 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
-import com.kodehawa.CheatingEssentials;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventBlockRender;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.mods.Vars;
 
 public class Block
 {
@@ -474,7 +473,7 @@ public class Block
     	//TODO: X-Ray handler - Cheating Essentials
         
     	if(ModuleXray.RENDER_EVENT){
-            EventBlockRender renderAsNormal = ( EventBlockRender ) CheatingEssentials.getCheatingEssentials().eventHandler
+            EventBlockRender renderAsNormal = ( EventBlockRender ) EventHandler.getInstance()
                     .call( new EventBlockRender( this, EventBlockRender.EventType.RENDER_XRAY, blockID ) );
             if( renderAsNormal.isCancelled( ) ) {
                 return ModuleXray.xrayBlocks.contains( blockID );

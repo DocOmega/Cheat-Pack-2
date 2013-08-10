@@ -1,4 +1,4 @@
-package com.kodehawa.ChestESP;
+package com.kodehawa.chestesp;
 
 import net.minecraft.src.AABBPool;
 import net.minecraft.src.AxisAlignedBB;

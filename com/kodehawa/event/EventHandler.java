@@ -19,7 +19,9 @@ import com.kodehawa.event.events.EventTick;
 public class EventHandler
 {
     private HashMap < Class < ? extends Event > , CopyOnWriteArrayList< Listener >> eventMap;
+    private static volatile EventHandler instance;
 
+    
     public EventHandler()
     {
         eventMap = new HashMap < Class < ? extends Event > , CopyOnWriteArrayList< Listener >> ();
@@ -87,4 +89,11 @@ public class EventHandler
 
         return e;
     }
+    
+    public static EventHandler getInstance() {
+        if (instance == null) {
+                instance = new EventHandler();
+        }
+        return instance;
+}
 }

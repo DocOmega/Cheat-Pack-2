@@ -1,19 +1,30 @@
 package com.kodehawa.util;
 
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.mods.ModManager;
+
 import net.minecraft.src.Minecraft;
 
 public class Utils
 {
-    public Utils(Minecraft mc)
+    private static volatile Utils instance;
+
+	
+    public Utils( )
     {
-        minecraft = mc;
     }
 
     public void addChatMessage(String message)
     {
         String toSend = message;
-        minecraft.thePlayer.addChatMessage(toSend);
+        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.addChatMessage(toSend);
     }
 
-    private Minecraft minecraft;
+    public static Utils getInstance() {
+        if (instance == null) {
+                instance = new Utils();
+        }
+        return instance;
+}
+    
 }

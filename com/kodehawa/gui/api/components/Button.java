@@ -33,7 +33,7 @@ public class Button extends Item
     {
         // TODO Auto-generated method stub
         ModGuiUtils.drawBorderedRect(x, y, x + width, y + height, 2, color, 0x77000077);
-       CheatingEssentials.modinstance.minecraft.fontRenderer.drawString(text, x + 2, y + 2, color2);
+       CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(text, x + 2, y + 2, color2);
        
     }
 

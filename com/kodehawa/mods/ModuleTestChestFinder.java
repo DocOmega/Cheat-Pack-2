@@ -8,9 +8,9 @@ import net.minecraft.src.TileEntityChest;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.ChestESP.ChestFinderContainer;
+import com.kodehawa.chestesp.ChestFinderContainer;
 import com.kodehawa.event.Event;
-import com.kodehawa.event.events.EventBlockRender;
+import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventRender3D;
 import com.kodehawa.util.Tickable;
 
@@ -45,7 +45,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     public void onEnable()
     {
     	Vars.ChestESP = true;
-    	CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventRender3D.class, this );
+    	EventHandler.getInstance().registerListener( EventRender3D.class, this );
     	CheatingEssentials.getCheatingEssentials().addToTick(this);
         // TODO Auto-generated method stub
     }
@@ -57,7 +57,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	Vars.ChestESP = false;
-    	CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventRender3D.class, this );
+    	EventHandler.getInstance().unRegisterListener( EventRender3D.class, this );
         CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         
     }

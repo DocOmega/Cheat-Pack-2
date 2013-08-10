@@ -1,4 +1,4 @@
-package com.kodehawa.InGameRadar;
+package com.kodehawa.radar;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAnimal;
@@ -17,7 +17,6 @@ import org.lwjgl.opengl.GL11;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Vars;
-import com.kodehawa.util.ChatColour;
 
 public class Radar extends Thread {
 
