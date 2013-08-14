@@ -12,6 +12,7 @@ import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.render.ModGuiUtils;
+import com.kodehawa.mods.ModManager;
 import com.kodehawa.radar.Radar;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.KeyboardListener;
@@ -88,10 +89,10 @@ public class CE_GuiIngameH extends GuiIngame {
          * This it's self-explanatory :)
          */
     	if(this.activese){
-   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
+   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( ModManager.getInstance().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
    			this.drawString( var8, ChatColour.DARK_GRAY + "Enabled Modules", var6 - 98, 151, 0xffffff );
-   			for ( int i = 0; i < CheatingEssentials.getCheatingEssentials().enabledMods.size( ); i++ ) {
-   				this.drawString( var8, CheatingEssentials.getCheatingEssentials().enabledMods.get( i ), var6 - 98, 150 + CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
+   			for ( int i = 0; i < ModManager.getInstance().enabledMods.size( ); i++ ) {
+   				this.drawString( var8, ModManager.getInstance().enabledMods.get( i ), var6 - 98, 150 + ModManager.getInstance().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
    			}
    	}
 	}

@@ -4,6 +4,8 @@ import com.kodehawa.CheatingEssentials;
 import com.kodehawa.console.BaseCommand;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
+
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -31,7 +33,7 @@ public class DebugInfo {
 
 
 
-        for(Mod m: CheatingEssentials.getCheatingEssentials().mods){
+        for(Mod m: ModManager.getInstance().mods){
             CheatingEssentials.getCheatingEssentials().CELogAgent("Module Loaded: " + m + " (Name: " + m.name + ") " + "(Key: " + Keyboard.getKeyName(m.getKeybind()) + ")");
         }
 

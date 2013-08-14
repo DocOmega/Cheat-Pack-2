@@ -25,7 +25,7 @@ public class ConsoleHelper
         addCommand(new XrayAdd());
         addCommand(new XrayRemove());
         addCommand(new StepHeight());
-        
+        addCommand(new CBind( ));
 
     }
 

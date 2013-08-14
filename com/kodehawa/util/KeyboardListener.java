@@ -7,6 +7,7 @@ import com.kodehawa.core.CModLoader;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventKey;
 import com.kodehawa.mods.Mod;
+import com.kodehawa.mods.ModManager;
 
 public class KeyboardListener {
 
@@ -32,7 +33,7 @@ public class KeyboardListener {
     public void handleKeys( ) {
     	//TODO: Module Keys
     	
-        for( Mod m : CheatingEssentials.getCheatingEssentials().mods ) {
+        for( Mod m : ModManager.getInstance().mods ) {
             int key = m.getKeybind( );
             if( getKeyStateFromMap( key ) ) {
                 EventHandler.getInstance().call( new EventKey( this, m.getKeybind( ) ) );

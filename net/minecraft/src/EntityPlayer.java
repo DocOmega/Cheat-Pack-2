@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.chestfinder.GuiChest2;
+
 public abstract class EntityPlayer extends EntityLivingBase implements ICommandSender
 {
     /** Inventory of the player */
@@ -879,7 +882,9 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     /**
      * Displays the GUI for interacting with a chest inventory. Args: chestInventory
      */
-    public void displayGUIChest(IInventory par1IInventory) {}
+    public void displayGUIChest(IInventory par1IInventory) {
+        CheatingEssentials.getMinecraftInstance().displayGuiScreen(new GuiChest2(this.inventory, par1IInventory));
+    }
 
     public void displayGUIHopper(TileEntityHopper par1TileEntityHopper) {}
 
@@ -2189,7 +2194,4 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         return this.getDataWatcher().func_111145_d(17);
     }
     
-    public static void CheatingEssentialsM(){
-    	
-    }
 }

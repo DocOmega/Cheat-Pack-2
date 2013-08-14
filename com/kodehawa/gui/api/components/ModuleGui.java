@@ -220,7 +220,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (Mod m : CheatingEssentials.getCheatingEssentials().mods)
+                for (Mod m : ModManager.getInstance().mods)
                 {
                     Label l = new Label(m.name + " - " + Keyboard.getKeyName(m.keybind), 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
@@ -340,7 +340,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (String s : CheatingEssentials.modinstance.enabledMods)
+                for (String s : ModManager.getInstance().enabledMods)
                 {
                     Label l = new Label(s, 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);

@@ -98,24 +98,24 @@ public class CModLoader {
 
         for (Mod m : ModManager.getInstance().worldMods)
         {
-        	CheatingEssentials.getCheatingEssentials().mods.add(m);
+        	ModManager.getInstance().mods.add(m);
         }
 
         for (Mod m : ModManager.getInstance().playerMods)
         {
-        	CheatingEssentials.getCheatingEssentials().mods.add(m);
+        	ModManager.getInstance().mods.add(m);
         }
         
         for (Mod m : ModManager.getInstance().f3utils)
         {
-        	CheatingEssentials.getCheatingEssentials().mods.add(m);
+        	ModManager.getInstance().mods.add(m);
         }
         
 		}
 		catch(Exception ex){
 			CheatingEssentials.getCheatingEssentials().CELogAgent("Can't load basic modules at all or some modules can't be loaded. This will be bad, but the mod it still working.");
 			CheatingEssentials.getCheatingEssentials().CELogAgent("Report it in MCF thread. Good luck.");
-			for (Mod m : CheatingEssentials.getCheatingEssentials().mods)
+			for (Mod m : ModManager.getInstance().mods)
 	        {
 				CheatingEssentials.getCheatingEssentials().CELogAgent("Can't load module: " + m + " " + ex);
 	        }

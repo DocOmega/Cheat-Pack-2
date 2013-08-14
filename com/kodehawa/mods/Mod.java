@@ -82,12 +82,12 @@ public abstract class Mod implements Listener
         if (active)
         {
             onEnable();
-            CheatingEssentials.getCheatingEssentials().enabledMods.add(name);
+            ModManager.getInstance().enabledMods.add(name);
         }
         else
         {
             onDisable();
-            CheatingEssentials.getCheatingEssentials().enabledMods.remove(name);
+            ModManager.getInstance().enabledMods.remove(name);
 
         }
         

@@ -10,6 +10,7 @@ import com.kodehawa.util.Utils;
 
 public class ModManager
 {
+    public static ArrayList<String> enabledMods = new ArrayList<String>();
     public static ArrayList<Mod> mods;
     public static ArrayList<Mod> worldMods;
     public static ArrayList<Mod> playerMods;
@@ -24,7 +25,6 @@ public class ModManager
         playerMods = new ArrayList<Mod>();
         f3utils = new ArrayList<Mod>();
 
-        
     }
 
   

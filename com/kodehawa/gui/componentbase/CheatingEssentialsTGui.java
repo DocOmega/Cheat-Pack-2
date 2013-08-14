@@ -72,9 +72,7 @@ public class CheatingEssentialsTGui extends GuiScreen {
     {
        this.drawDefaultBackground();
        this.drawCenteredString(this.fontRenderer, "Cheating Essentials 3.2.0 for Minecraft 1.6.2", this.width / 2, 5, 16777215);
-       for ( int i1 = 0; i1 < CheatingEssentials.getCheatingEssentials().enabledMods.size( ); i1++ ) {
-				this.drawString( this.fontRenderer, CheatingEssentials.getCheatingEssentials().enabledMods.get( i1 ), this.width - 98, 150 + CheatingEssentials.getCheatingEssentials().enabledMods.size( ) + ( ( 12 * ( i1 + 1 ) ) - ( i1 * 3 ) ), 0x00ff00 );
-		}
+       
        super.drawScreen(i, j, f);
 
     }

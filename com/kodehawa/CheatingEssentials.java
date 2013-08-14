@@ -34,16 +34,8 @@ import com.kodehawa.util.wrapper.Wrapper;
 
 public final class CheatingEssentials {
 
-	/**
-	 * Variables
-	 */
-	
     public volatile static CheatingEssentials modinstance;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
-    public ArrayList<Mod> mods = new ArrayList<Mod>();
-    public static ArrayList<String> enabledMods = new ArrayList<String>();
-    private boolean message = true;
-
     
     /**
      * The constructor. 
