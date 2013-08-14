@@ -7,7 +7,6 @@
  * 4- @TileEntityChestRenderer.java
  */
 
-
 package com.kodehawa;
 
 import java.util.ArrayList;
@@ -16,6 +15,9 @@ import net.minecraft.src.Minecraft;
 
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CModLoader;
+import com.kodehawa.core.DebugInfo;
+import com.kodehawa.event.EventHandler;
+import com.kodehawa.event.events.EventTick;
 import com.kodehawa.hooks.CE_GuiIngameH;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
@@ -36,48 +38,39 @@ public final class CheatingEssentials {
 	 * Variables
 	 */
 	
-    public static CheatingEssentials modinstance;
+    public volatile static CheatingEssentials modinstance;
 	public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
     public ArrayList<Mod> mods = new ArrayList<Mod>();
     public static ArrayList<String> enabledMods = new ArrayList<String>();
+    private boolean message = true;
 
     
     /**
      * The constructor. 
      * It initialize the mod in GuiIngame (The hook one) and tick it.
+     * It initialize all classes that are needed for the correctly mod funcionality and some debug messages for know things
+     * Yeah, I know that CModLoader it's the most ugly / hardcoded thing in the world, but it's needed for make Keybinding to work :)
      */
     
 	public CheatingEssentials( ) {
-		modInit();
-	}
-	
-	/**
-	 * Private method that initialize the basic and integrated things in Cheating Essentials.
-	 * It initialize all classes that are needed for the correctly mod funcionality and some debug messages for know things
-	 * Yeah, I know that CModLoader it's the most ugly / hardcoded thing in the world, but it's needed for make Keybinding to work :)
-	 */
-	
-	private void modInit() {
-		//TODO: Mod initialization.
-		modinstance = this;
+        modinstance = this;
         ModManager.getInstance();
         ConsoleHelper.getInstance();
         CModLoader.getMInstance();
+        DebugInfo.debugInfo();
         FileManager.getInstance();
 	}
-	
+
 	/**
 	 * Get the singleton mod instance
-	 * @return
 	 */
 	
 	public static CheatingEssentials getCheatingEssentials(){
-		return CheatingEssentials.modinstance;
+		return modinstance;
 	}
 	
 	/**
 	 * Get Wrapper instance.
-	 * @return
 	 */
 	
 	public Wrapper getModWrapper(){
@@ -126,33 +119,32 @@ public final class CheatingEssentials {
 	}
 
 	public static void replaceGUI(){
-		if(Minecraft.getMinecraft().ingameGUI.getClass() != CE_GuiIngameH.class){
-			System.out.println("[CE Hook Manager] [INFO] GuiIngame MC " + Minecraft.getMinecraft().ingameGUI.getClass() );
-			Minecraft.getMinecraft().ingameGUI = new CE_GuiIngameH(getMinecraftInstance());
-			System.out.println("[CE Hook Manager] [INFO] GuiIngame new " + Minecraft.getMinecraft().ingameGUI.getClass());
+		if(getMinecraftInstance().ingameGUI.getClass() != CE_GuiIngameH.class){
+			CELogAgent("GuiIngame MC " + Minecraft.getMinecraft().ingameGUI.getClass() );
+			getMinecraftInstance().ingameGUI = new CE_GuiIngameH(getMinecraftInstance());
+			CELogAgent("GuiIngame new " + Minecraft.getMinecraft().ingameGUI.getClass());
 		}
 	}
 	
 	/**
 	 * Tick the entire mod.
-	 * Initialize the Arrays, Update the pinned frames and get key pressing.
 	 */
 	
 	public void tick() {
-		
+
 		for(Tickable tickable : modInternalTicksArray){
 			tickable.tick();
 		}
-		
+
 		KeyboardListener.getInstance().handleKeys();
 	}
 	
-	public void CELogAgent(String log){
-		System.out.println("[Cheating Essentials] [INFO] " + log);
+	public static void CELogAgent(String log){
+		getMinecraftInstance().field_94139_O.logInfo("[Cheating Essentials] " + log);
 	}
 	
-	public void CELogErrorAgent(String elog){
-		System.err.println("[Cheating Essentials] [ERROR] " + elog);
+	public static void CELogErrorAgent(String elog){
+		getMinecraftInstance().field_94139_O.logSevere( "[Cheating Essentials] " + elog);
 	}
 
 }

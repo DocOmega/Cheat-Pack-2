@@ -27,7 +27,7 @@ public class TextArea extends Item
         this.y = y;
         this.width = w;
         this.height = h;
-        this.color = color;
+        this.bgcolor = color;
         Keyboard.enableRepeatEvents(true);
     }
 
@@ -35,7 +35,7 @@ public class TextArea extends Item
     public void draw()
     {
         // TODO Auto-generated method stub
-        ModGuiUtils.drawRect(x, y, x + width, y + height, color);
+        ModGuiUtils.drawRect(x, y, x + width, y + height, bgcolor);
         GL11.glPushMatrix();
         GL11.glScaled(0.5, 0.5, 0.5);
         // TTFRenderer.drawTTFString( Colony.instance.guiFont, text, x * 2, y *

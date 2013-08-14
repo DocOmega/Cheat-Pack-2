@@ -10,8 +10,12 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleWaterwalk extends Mod implements Tickable
 {
-   
-
+    @ModuleInformation(
+    		credits = "Godshawk",
+    		desc = "Allows to the player to feel like a jesus",
+    		name = "Water Walking / Dolphin")
+    
+	
     public ModuleWaterwalk()
     {
         super("Water Walk", "Became jesus!", Keyboard.KEY_J);

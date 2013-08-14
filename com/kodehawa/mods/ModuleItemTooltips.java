@@ -10,7 +10,10 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleItemTooltips extends Mod {
 
-	
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Disable the item name in the top of the hot bar when changing a item",
+			name = "Item Tooltips")
 	
 	public ModuleItemTooltips() {
 		super( "Item Tooltips", "", Keyboard.KEY_NONE );
@@ -41,5 +44,6 @@ public class ModuleItemTooltips extends Mod {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

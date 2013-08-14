@@ -25,6 +25,7 @@ package com.kodehawa.gui.api.components;
 import java.util.ArrayList;
 
 import net.minecraft.src.Direction;
+import net.minecraft.src.EnumChatFormatting;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.MathHelper;
 
@@ -97,6 +98,9 @@ public class ModuleGui extends GuiScreen
     @Override
     public void drawScreen(int i, int j, float f)
     {
+    	
+        this.drawDefaultBackground();
+        this.drawString(this.fontRenderer, EnumChatFormatting.YELLOW + "Version 3.1.0", this.width / 2 - 32, this.height / 9 - 96, 16777965);
         for (Frame e : frames)
         {
             e.update();
@@ -123,6 +127,8 @@ public class ModuleGui extends GuiScreen
         }
 
         this.mouseDragged(i, j);
+
+
     }
 
     @Override
@@ -157,11 +163,11 @@ public class ModuleGui extends GuiScreen
 
     public void makeWorldFrame()
     {
-        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, 0xff550055, 0xaa000000, "World");
+        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, /*0xFF000055*/0x96777777, 0xaa000000, "World" + " (" + ModManager.getInstance().worldMods.size() + ")");
 
         for (Mod m : ModManager.getInstance().worldMods)
         {
-            Button b = new Button(m.name, 0xff000077, 0xffffff, m);
+            Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(wFrame.width - 6);
             b.setHeight(wFrame.oldHeight - 8);
             wFrame.addChild(b);
@@ -173,11 +179,11 @@ public class ModuleGui extends GuiScreen
     
     
     public void makeF3UtilsFrame(){
-    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0xff550055, 0xaa000000, "Utils");
+    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0x96777777, 0xaa000000, "Utils" + " (" + ModManager.getInstance().f3utils.size() + ")");
     	
     	for (Mod m : ModManager.getInstance().f3utils)
         {
-            Button b = new Button(m.name, 0xff000077, 0xffffff, m);
+            Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(f3Frame.width - 6);
             b.setHeight(f3Frame.oldHeight - 8);
             f3Frame.addChild(b);
@@ -190,11 +196,11 @@ public class ModuleGui extends GuiScreen
 
     public void makePlayerFrame()
     {
-        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0xff550055, 0xaa000000, "Player");
+        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0x96777777, 0xaa000000, "Player" + " (" + ModManager.getInstance().playerMods.size() + ")");
 
         for (Mod m : ModManager.getInstance().playerMods)
         {
-            Button b = new Button(m.name, 0xff000077, 0xffffff, m);
+            Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(pFrame.width - 6);
             b.setHeight(pFrame.oldHeight - 8);
             pFrame.addChild(b);
@@ -206,7 +212,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeKeybindsFrame()
     {
-        Frame kFrame = new Frame(CheatingEssentials.modinstance, 130, 50, 120, 20, 0xff550055, 0xaa000000, "Keybinds")
+        Frame kFrame = new Frame(CheatingEssentials.modinstance, 130, 50, 120, 20, 0x96777777, 0xaa000000, "Keybinds")
         {
             @Override
             public void update()
@@ -220,30 +226,37 @@ public class ModuleGui extends GuiScreen
                     l.setParent(this, (x) + 3, (y) - 21);
                     addChild(l);
                 }
+                    Label l1 = new Label("New Radar" + " - " + Keyboard.getKeyName(Keyboard.KEY_I), 0xffffff);
+                    l1.setParent(this, (x) + 4, y - 22);
+                    addChild(l1);
+
+                    Label l2 = new Label("Enabled Modules" + " - "  + Keyboard.getKeyName(Keyboard.KEY_Z), 0xffffff);
+                    l2.setParent(this, (x) + 5, y - 23);
+                    addChild(l2);
             }
             @Override
             public void draw()
             {
                 // TODO Auto-generated method stub
-                if (color2 > -1)
+                if (bgcolor2 > -1)
                 {
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, color);
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(color * 1.1));
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
                 }
                 else
                 {
-                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, color, color2);
-                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, color2);
+                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
+                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
                 }
 
                 /**
                  * Minimize button
                  */
-                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xff00dd66);
+                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
 
                 if (minimized)
                 {
-                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xaa000000);
+                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
                 }
 
                 if (pinnable)
@@ -295,7 +308,7 @@ public class ModuleGui extends GuiScreen
     public void makeRadarFrame()
     {
         final Radar r = new Radar();
-        Frame rFrame = new Frame(CheatingEssentials.modinstance, 250, 30, 120, 20, 0xff550055, 0xaa000000, "Radar")
+        Frame rFrame = new Frame(CheatingEssentials.modinstance, 250, 30, 120, 20, 0x96777777, 0xaa000000, "Radar")
         {
             @Override
             public void update()
@@ -319,7 +332,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeActivesFrame()
     {
-        Frame aFrame = new Frame(CheatingEssentials.modinstance, 130, 30, 120, 20, 0xff550055, 0xaa000000, "Active Cheats")
+        Frame aFrame = new Frame(CheatingEssentials.modinstance, 130, 30, 120, 20, 0x96777777, 0xaa000000, "Active Cheats")
         {
             @Override
             public void update()
@@ -338,25 +351,25 @@ public class ModuleGui extends GuiScreen
             public void draw()
             {
                 // TODO Auto-generated method stub
-                if (color2 > -1)
+                if (bgcolor2 > -1)
                 {
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, color);
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(color * 1.1));
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
                 }
                 else
                 {
-                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, color, color2);
-                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, color2);
+                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
+                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
                 }
 
                 /**
                  * Minimize button
                  */
-                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xff00dd66);
+                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
 
                 if (minimized)
                 {
-                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xaa000000);
+                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
                 }
 
                 if (pinnable)
@@ -404,7 +417,7 @@ public class ModuleGui extends GuiScreen
     public void makeInfoFrame()
     {
     	//10, 10, 120, 20
-        final Frame iFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0xff550055, 0xaa000000, "Player Info")
+        final Frame iFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0x96777777, 0xaa000000, "Player Info")
         {
             @Override
             public void update()
@@ -452,25 +465,25 @@ public class ModuleGui extends GuiScreen
             public void draw()
             {
                 // TODO Auto-generated method stub
-                if (color2 > -1)
+                if (bgcolor2 > -1)
                 {
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, color);
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(color * 1.1));
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
                 }
                 else
                 {
-                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, color, color2);
-                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, color2);
+                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
+                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
                 }
 
                 /**
                  * Minimize button
                  */
-                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xff00dd66);
+                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
 
                 if (minimized)
                 {
-                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xaa000000);
+                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
                 }
 
                 if (pinnable)
@@ -522,7 +535,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeTestFrame()
     {
-        Frame tFrame = new Frame(CheatingEssentials.modinstance, 10, 30, 120, 20, 0xff550000, 0xaa000055, "Console")
+        Frame tFrame = new Frame(CheatingEssentials.modinstance, 10, 30, 120, 20, 0x96777777, 0xaa000055, "Console")
         {
             @Override
             public void update()
@@ -538,25 +551,25 @@ public class ModuleGui extends GuiScreen
             public void draw()
             {
                 // TODO Auto-generated method stub
-                if (color2 > -1)
+                if (bgcolor2 > -1)
                 {
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, color);
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(color * 1.1));
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
+                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
                 }
                 else
                 {
-                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, color, color2);
-                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, color2);
+                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
+                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
                 }
 
                 /**
                  * Minimize button
                  */
-                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xff00dd66);
+                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
 
                 if (minimized)
                 {
-                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xaa000000);
+                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
                 }
 
                 if (pinnable)

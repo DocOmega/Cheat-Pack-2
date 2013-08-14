@@ -1,5 +1,9 @@
 package com.kodehawa.mods;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.EnumChatFormatting;
+import net.minecraft.src.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
@@ -8,6 +12,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleClientFastplace extends Mod implements Tickable {
 
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Allows to the player in SP to place blocks more fast than normal",
+			name = "Client Block Fast Place"
+			)
 	
 	public ModuleClientFastplace() {
 		super("CFast Place", "Place ALL the blocks!", Keyboard.KEY_K);
@@ -24,13 +33,14 @@ public class ModuleClientFastplace extends Mod implements Tickable {
 	@Override
 	public void onEnable() {
 		// TODO Auto-generated method stub
-		if(CheatingEssentials.getCheatingEssentials().getMinecraftInstance().isIntegratedServerRunning()){
+		if(CheatingEssentials.getCheatingEssentials().getMinecraftInstance().isSingleplayer()){
 			CheatingEssentials.getCheatingEssentials().addToTick(this);
 		}
 		else{
-			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.addChatMessage(ChatColour.BLUE + "[CE v3] Can't enable Fast Place module in MP servers.");
 			CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
-			//System.out.println("This it's freaking working?");
+			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.addChatMessage(EnumChatFormatting.YELLOW + "Can't enable Fast Place module in MP servers.");
+			System.out.println("Single Player mode = " +
+			Boolean.valueOf(Minecraft.getMinecraft().isSingleplayer()));
 		}
 		
 	}

@@ -2,15 +2,17 @@ package com.kodehawa.mods;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.src.Minecraft;
-
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
 public class ModuleAutoRespawn extends Mod implements Tickable
 {
-   
+   @ModuleInformation(
+		   credits = "Godshawk",
+		   desc = "If you death, you will respawn.",
+		   name = "Auto Respawn"
+		   )
 
     public ModuleAutoRespawn()
     {
@@ -34,8 +36,6 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	CheatingEssentials.getCheatingEssentials().addToTick(this);
-        //cb.getUtils().addChatMessage(getActive());
-        //cb.getUtils().addChatMessage("I don't like the holy death screen.");
     }
 
     @Override
@@ -43,7 +43,6 @@ public class ModuleAutoRespawn extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
-        //cb.getUtils().addChatMessage(getActive());
     }
 
 	@Override

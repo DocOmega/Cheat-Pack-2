@@ -46,7 +46,7 @@ public class Minecraft implements IPlayerUsage
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */
     public static byte[] memoryReserve = new byte[10485760];
     private static final List field_110445_I = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
-    private final ILogAgent field_94139_O;
+    public final ILogAgent field_94139_O;
     private final File field_130070_K;
     private ServerData currentServerData;
 
@@ -65,7 +65,7 @@ public class Minecraft implements IPlayerUsage
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private Timer timer = new Timer(20.0F);
+    public Timer timer = new Timer(20.0F);
 
     /** Instance of PlayerUsageSnooper. */
     private PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.func_130071_aq());
@@ -197,7 +197,6 @@ public class Minecraft implements IPlayerUsage
     /** Holds the current CE instance */
     
     private HashMap<String, Integer> compat; //0 - disabled; 1 - normal; 2 - mcp
-    private KeyBinding key;
 
     public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
     {
@@ -281,6 +280,32 @@ public class Minecraft implements IPlayerUsage
         else
         {
             System.out.println("#@?@# Game crashed! Crash report could not be saved. #@?@#");
+            System.exit(-2);
+        }
+    }
+    
+    /**
+     * Wrapper around displayCrashReportInternal
+     */
+    public void displayCrashReportCE(CrashReport par1CrashReport)
+    {
+        File var2 = new File(getMinecraft().mcDataDir, "Cheating Essentials Crashes");
+        File var3 = new File(var2, "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-ce.txt");
+        System.out.println(par1CrashReport.getCompleteReport());
+
+        if (par1CrashReport.getFile() != null)
+        {
+            System.out.println("#@!@# Cheating Essentials crashed! Crash report saved to: #@!@# " + par1CrashReport.getFile());
+            System.exit(-1);
+        }
+        else if (par1CrashReport.saveToFile(var3, this.getLogAgent()))
+        {
+            System.out.println("#@!@# Cheating Essentials crashed! Crash report saved to: #@!@# " + var3.getAbsolutePath());
+            System.exit(-1);
+        }
+        else
+        {
+            System.out.println("#@?@# Cheating Essentials crashed! Crash report could not be saved. #@?@#");
             System.exit(-2);
         }
     }
@@ -1379,7 +1404,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * Called to resize the current screen.
      */
-    private void resize(int par1, int par2)
+    public void resize(int par1, int par2)
     {
         this.displayWidth = par1 <= 0 ? 1 : par1;
         this.displayHeight = par2 <= 0 ? 1 : par2;
@@ -2450,7 +2475,7 @@ public class Minecraft implements IPlayerUsage
         return this.field_135017_as;
     }
 
-    static String func_110431_a(Minecraft par0Minecraft)
+    public static String func_110431_a(Minecraft par0Minecraft)
     {
         return par0Minecraft.field_110447_Z;
     }
@@ -2495,7 +2520,7 @@ public class Minecraft implements IPlayerUsage
 ;            	System.exit(1);
             }
              
-            System.out.println("[Cheating Essentials] [Class Patch] Mod class comprobation finised succefully.");
+            System.out.println("[Cheating Essentials] [Class Patch] Mod class comprobation finished succefully.");
             
             return;
         }

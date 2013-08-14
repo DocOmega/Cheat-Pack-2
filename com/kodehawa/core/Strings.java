@@ -1,6 +1,7 @@
 package com.kodehawa.core;
 
 import com.kodehawa.CheatingEssentials;
+import net.minecraft.src.Minecraft;
 
 public class Strings {
 	
@@ -43,7 +44,7 @@ public class Strings {
 	 */
 	
     public static String getMCVersionForMod(){
-    	return "Minecraft version 1.6.2";
+    	return Minecraft.getMinecraft().func_110431_a(Minecraft.getMinecraft());
         }
 	
 }

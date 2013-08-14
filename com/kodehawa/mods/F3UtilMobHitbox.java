@@ -6,6 +6,11 @@ import net.minecraft.src.RenderManager;
 
 public class F3UtilMobHitbox extends Mod{
 
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Shows mob hitbox",
+			name = "Mob Hitbox")
+	
 	public F3UtilMobHitbox() {
 		super("Mob Hitbox", "", 0);
 		// TODO Auto-generated constructor stub
@@ -37,5 +42,6 @@ public class F3UtilMobHitbox extends Mod{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

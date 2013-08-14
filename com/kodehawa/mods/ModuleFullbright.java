@@ -22,47 +22,42 @@
 
 package com.kodehawa.mods;
 
+import net.minecraft.src.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
 import com.kodehawa.util.Tickable;
 
-public class ModuleFullbright extends Mod implements Tickable
+public class ModuleFullbright extends Mod
 {
-	
-	public static float Fullbright = 15.0F;
-	public static float Normalbright = 0.5F;
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Allows to the player to see though the darkness without any troubles",
+			name = "Fullbright")
 	
     public ModuleFullbright( )
     {
         super("Full Bright", "I don't know the darkness", Keyboard.KEY_F);
         
     }
-
     
-
     
     @Override
     public void onEnable()
     {
-    	CheatingEssentials.getCheatingEssentials().addToTick(this);
+    	float[] brightness = Minecraft.getMinecraft().theWorld.provider.lightBrightnessTable;
+        for(int i = 0; i < brightness.length; i++) {
+           brightness[i] = 1.0F;
+        }
     }
 
     @Override
     public void onDisable()
     {
-        
-    	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = Normalbright;
-    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
+    	Minecraft.getMinecraft().theWorld.provider.registerWorld(Minecraft.getMinecraft().theWorld);
     }
-
-    @Override
-    public void tick()
-    {
-    	CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = Fullbright;
-    }
-
 
 
 
@@ -80,6 +75,7 @@ public class ModuleFullbright extends Mod implements Tickable
 		// TODO Auto-generated method stub
 		
 	}
+
 
  
 }

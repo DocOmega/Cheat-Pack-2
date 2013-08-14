@@ -24,6 +24,8 @@ package com.kodehawa.mods;
 
 import java.util.ArrayList;
 
+import net.minecraft.src.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
@@ -36,6 +38,11 @@ public class ModuleXray extends Mod implements Tickable
 {
 	public static ArrayList< Integer > xrayBlocks = new ArrayList< Integer >( );
     
+   @ModuleInformation(
+		   credits = "Godshawk, Kodehawa",
+		   desc = "Allows to the player to see ores through everything",
+		   name = "X-Ray")
+
 
     public ModuleXray( )
     {
@@ -72,36 +79,31 @@ public class ModuleXray extends Mod implements Tickable
         // TODO Auto-generated constructor stub
     }
 
-   public static boolean RENDER_NORMAL = false;
-   public static boolean RENDER_EVENT = true;
     
     @Override
     public void tick()
     {
-        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 15.0F;
-
+    	float[] brightness = CheatingEssentials.getMinecraftInstance().theWorld.provider.lightBrightnessTable;
+        for(int i = 0; i < brightness.length; i++) {
+           brightness[i] = 1.0F;
+        }
         // TODO Auto-generated method stub
     }
 
     @Override
     public void onEnable()
     {
-    	CheatingEssentials.getCheatingEssentials().addToTick(this);
-        if(ModuleXray.RENDER_EVENT){
         	EventHandler.getInstance().registerListener( EventBlockRender.class, this );
-        }
-        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
+            CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
     }
 
     @Override
     public void onDisable()
     {
-    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
-        CheatingEssentials.getCheatingEssentials().getMinecraftInstance().gameSettings.gammaSetting = 0.5F;
-        if(ModuleXray.RENDER_EVENT){
-        	EventHandler.getInstance().unRegisterListener( EventBlockRender.class, this );
-        }
+        EventHandler.getInstance().unRegisterListener( EventBlockRender.class, this );
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
+        CheatingEssentials.getMinecraftInstance().theWorld.provider.registerWorld(Minecraft.getMinecraft().theWorld);
+
     }
 
 	@Override

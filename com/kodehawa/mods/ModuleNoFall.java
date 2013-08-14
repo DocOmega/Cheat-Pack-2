@@ -11,6 +11,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleNoFall extends Mod implements Tickable
 {
+	
+	@ModuleInformation(
+			credits = "Godshawk",
+			desc = "Allows to the player to avoid any sort of fall damage.",
+			name = "No Fall")
     
     public ModuleNoFall( )
     {

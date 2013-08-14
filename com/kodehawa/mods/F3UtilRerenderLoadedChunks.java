@@ -5,6 +5,11 @@ import com.kodehawa.event.Event;
 
 public class F3UtilRerenderLoadedChunks extends Mod {
 
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Re renderize minecraft chunks",
+			name = "Chunk Re-Render")
+	
 	public F3UtilRerenderLoadedChunks() {
 		super("Chunk Re-Render", "", 0);
 		// TODO Auto-generated constructor stub
@@ -37,5 +42,6 @@ public class F3UtilRerenderLoadedChunks extends Mod {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

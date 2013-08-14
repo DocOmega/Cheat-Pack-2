@@ -3,8 +3,14 @@ package com.kodehawa.mods;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
 
-public class F3UtilAdvancedTooltips extends Mod{
+public class F3UtilAdvancedTooltips extends Mod {
 
+	@ModuleInformation(
+			credits = "Kodehawa",
+			desc = "Shows the advanced Tooltips",
+			name = "Advanced Tooltips"
+		)
+	
 	public F3UtilAdvancedTooltips( ) {
 		super("Advanced Tooltips", "", 0);
 		// TODO Auto-generated constructor stub
@@ -38,5 +44,6 @@ public class F3UtilAdvancedTooltips extends Mod{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

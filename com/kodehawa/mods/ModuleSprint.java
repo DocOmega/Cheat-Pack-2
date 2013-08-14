@@ -11,6 +11,11 @@ import com.kodehawa.util.Tickable;
 public class ModuleSprint extends Mod implements Tickable
 {
 
+	@ModuleInformation(
+			credits = "Kodehawa, Godshawk",
+			desc = "Allows to the player to sprint infinitely unless if the player is not moving",
+			name = "Sprint")
+	
     public ModuleSprint( )
     {
         super("Sprint", "Hi, I'm sprinting" /* So bad description heh */, Keyboard.KEY_H);

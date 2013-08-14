@@ -16,12 +16,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleTestChestFinder extends Mod implements Tickable
 {
-    protected Minecraft minecraft;
+    @ModuleInformation(
+    		credits = "Kodehawa, Godshawk",
+    		desc = "Allows to the player to see chest throught everthing.",
+    		name = "Chest Finder")
 
-    /**
-     * I need OpenGL for this. Dammit!
-     * @param mod
-     */
 
     public ModuleTestChestFinder( )
     {
@@ -45,8 +44,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     public void onEnable()
     {
     	Vars.ChestESP = true;
-    	EventHandler.getInstance().registerListener( EventRender3D.class, this );
-    	CheatingEssentials.getCheatingEssentials().addToTick(this);
+    	//CheatingEssentials.getCheatingEssentials().addToTick(this);
         // TODO Auto-generated method stub
     }
 
@@ -57,8 +55,7 @@ public class ModuleTestChestFinder extends Mod implements Tickable
     {
         // TODO Auto-generated method stub
     	Vars.ChestESP = false;
-    	EventHandler.getInstance().unRegisterListener( EventRender3D.class, this );
-        CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
+       // CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
         
     }
     

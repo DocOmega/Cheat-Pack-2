@@ -24,11 +24,7 @@ public class ConsoleHelper
         addCommand(new FlySpeed());
         addCommand(new XrayAdd());
         addCommand(new XrayRemove());
-        
-        for (BaseCommand b : ConsoleHelper.commands)
-        {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Mod command loaded: " + b + " (Name:" + b.getName() + ")" );
-        }
+        addCommand(new StepHeight());
         
 
     }

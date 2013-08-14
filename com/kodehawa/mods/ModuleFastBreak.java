@@ -11,7 +11,11 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleFastBreak extends Mod implements Tickable {
 
-	public NetClientHandler netClientHandler;
+    @ModuleInformation(
+    		credits = "Kodehawa, Godshawk",
+    		desc = "Allows to the player to break blocks more fast",
+    		name = "Fast Break"
+    		)
 	
 	
 	public ModuleFastBreak( ) {
@@ -23,7 +27,7 @@ public class ModuleFastBreak extends Mod implements Tickable {
 	@Override
 	public void onEnable() {
 		// TODO Auto-generated method stub
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
+		//CheatingEssentials.getCheatingEssentials().addToTick(this);
 		CheatingEssentials.getCheatingEssentials( ).getMinecraftInstance( ).thePlayer.addPotionEffect( new PotionEffect( 3, 999999999,
                 3, true ) );
 	}

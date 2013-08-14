@@ -10,7 +10,7 @@ public class Label extends Item
     public Label(String s, int color)
     {
         this.text = s;
-        this.color = color;
+        this.bgcolor = color;
     }
 
     @Override
@@ -23,9 +23,7 @@ public class Label extends Item
     public void draw()
     {
         // TODO Auto-generated method stub
-        CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(text, x + 3, y + 3, color);
-        // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 3, y - 3,
-        // color );
+        CheatingEssentials.getMinecraftInstance().fontRenderer.drawString(text, x + 3, y + 3, bgcolor);
     }
 
     @Override

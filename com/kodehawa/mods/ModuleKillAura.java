@@ -29,9 +29,15 @@ import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
+import com.kodehawa.mods.Mod.ModuleInformation;
 import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Watcher;
+
+@ModuleInformation(
+		credits = "Godshawk",
+		desc = "Kill any mob in a range automatically.",
+		name = "Mob Aura")
 
 public class ModuleKillAura extends Mod implements Tickable
 {

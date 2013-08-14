@@ -6,11 +6,15 @@ import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.Event;
+import com.kodehawa.mods.Mod.ModuleInformation;
 import com.kodehawa.util.Tickable;
 
 public class ModuleNoKnockback extends Mod implements Tickable
 {
- 
+	@ModuleInformation(
+			credits = "Godshawk",
+			desc = "Gives to the player the ability to avoid knockback while fighting.",
+			name = "No Knockback")
 
     public ModuleNoKnockback()
     {
@@ -35,14 +39,14 @@ public class ModuleNoKnockback extends Mod implements Tickable
     public void onEnable()
     {
         // TODO Auto-generated method stub
-    	CheatingEssentials.getCheatingEssentials().addToTick(this);
+    	//CheatingEssentials.getCheatingEssentials().addToTick(this);
     }
 
     @Override
     public void onDisable()
     {
         // TODO Auto-generated method stub
-    	CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
+    	//CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 }
 
 	@Override

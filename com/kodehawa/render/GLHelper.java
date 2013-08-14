@@ -1,6 +1,5 @@
 package com.kodehawa.render;
 
-import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.RenderManager;
@@ -14,7 +13,7 @@ import com.kodehawa.chestfinder.AltAxisAlignedBB;
 
 public class GLHelper {
     
-    public static void drawBoundingBox( AxisAlignedBB axisalignedbb ) {
+    public static void drawBoundingBox( AltAxisAlignedBB axisalignedbb ) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads( ); // starts x
         tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
@@ -126,7 +125,7 @@ public class GLHelper {
         Minecraft.getMinecraft( ).entityRenderer.enableLightmap( 0.0D );
     }
     
-    public static void lines( AxisAlignedBB ax ) {
+    public static void lines( AltAxisAlignedBB ax ) {
         GL11.glLineWidth( 1.8F );
         GL11.glPushMatrix( );
         GL11.glBegin( GL11.GL_LINES );
@@ -155,7 +154,37 @@ public class GLHelper {
         GL11.glEnd( );
         GL11.glPopMatrix( );
     }
-    
+
+    public static void drawOutlinedBoundingBox(AltAxisAlignedBB altAxisAlignedBB)
+    {
+        Tessellator var2 = Tessellator.instance;
+        var2.startDrawing(3);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.minY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.minY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.minY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.minY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.minY, altAxisAlignedBB.minZ);
+        var2.draw();
+        var2.startDrawing(3);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.maxY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.maxY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.maxY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.maxY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.maxY, altAxisAlignedBB.minZ);
+        var2.draw();
+        var2.startDrawing(1);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.minY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.maxY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.minY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.maxY, altAxisAlignedBB.minZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.minY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.maxX, altAxisAlignedBB.maxY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.minY, altAxisAlignedBB.maxZ);
+        var2.addVertex(altAxisAlignedBB.minX, altAxisAlignedBB.maxY, altAxisAlignedBB.maxZ);
+        var2.draw();
+    }
+
+
     public static void drawCrossedOutlinedBoundingBox( AltAxisAlignedBB var0 ) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawing( 3 );

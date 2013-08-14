@@ -400,7 +400,7 @@ public class Block
      */
     protected Block setBlockUnbreakable()
     {
-        this.setHardness(-1.0F);
+        this.setHardness(-1);
         return this;
     }
 
@@ -472,13 +472,12 @@ public class Block
 	{
     	//TODO: X-Ray handler - Cheating Essentials
         
-    	if(ModuleXray.RENDER_EVENT){
             EventBlockRender renderAsNormal = ( EventBlockRender ) EventHandler.getInstance()
                     .call( new EventBlockRender( this, EventBlockRender.EventType.RENDER_XRAY, blockID ) );
             if( renderAsNormal.isCancelled( ) ) {
                 return ModuleXray.xrayBlocks.contains( blockID );
             }
-    	}
+    	
     	
         return ( par5 == 0 ) && ( this.minY > 0.0D ) ? true : ( ( par5 == 1 ) && ( this.maxY < 1.0D ) ? true
                 : ( ( par5 == 2 ) && ( this.minZ > 0.0D ) ? true : ( ( par5 == 3 ) && ( this.maxZ < 1.0D ) ? true

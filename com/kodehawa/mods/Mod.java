@@ -30,6 +30,22 @@ public abstract class Mod implements Listener
         EventHandler.getInstance().registerListener( EventKey.class, this );
         EventHandler.getInstance().registerListener( EventRender3D.class, this );
     }
+    
+    /**
+     * Information for ppl that are reading the code.
+     * @author Kodehawa
+     */
+    
+    public @interface ModuleInformation {
+    	public String name = "";
+    	public String desc = "";
+    	public int keybind = 0;
+    	
+		public String name();
+    	String desc();
+    	String credits();
+    	}
+    
 
     public void turnOn()
     {
@@ -76,12 +92,10 @@ public abstract class Mod implements Listener
         }
         
         if( this.isActive( ) ) {
-        	 //CheatingEssentials.getCheatingEssentials().eventHandler.registerListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
             	EventHandler.getInstance().registerListener( EventRender3D.class, this );
             }
         } else {
-        	 //CheatingEssentials.getCheatingEssentials().eventHandler.unRegisterListener( EventTick.class, this );
             if( this.getOrtho( ) ) {
             	EventHandler.getInstance().unRegisterListener( EventRender3D.class, this );
             }

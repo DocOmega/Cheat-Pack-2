@@ -14,8 +14,12 @@ import com.kodehawa.util.Tickable;
 
 public class ModuleFly extends Mod implements Tickable
 {
-    public NetClientHandler sendQueue;
-    public EntityPlayerMP playerEntity;
+    
+	@ModuleInformation(
+			credits = "Kodehawa, Godshawk",
+			desc = "Give to the player the ability of Fly, with a plus for take no fall damage.",
+			name = "Fly"
+			)
 
     public ModuleFly( )
     {

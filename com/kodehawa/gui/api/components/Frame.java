@@ -64,8 +64,8 @@ public class Frame extends Item
         this.width = w;
         this.height = h;
         this.oldHeight = h;
-        this.color = color;
-        this.color2 = color2;
+        this.bgcolor = 0xff000055;
+        this.bgcolor2 = 0xaa000000;
         this.text = s;
         this.setDraggable(true);
     }
@@ -80,25 +80,25 @@ public class Frame extends Item
     public void draw()
     {
         // TODO Auto-generated method stub
-        if (color2 > -1)
+        if (bgcolor2 > -1)
         {
-            ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, color);
-            ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(color * 1.1));
+            ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
+            ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
         }
         else
         {
-            ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, color, color2);
-            ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, color2);
+            ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
+            ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
         }
 
         /**
          * Minimize button
          */
-        ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xff00dd66);
+        ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
 
         if (minimized)
         {
-            ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xaa000000);
+            ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
         }
 
         if (pinnable)
@@ -112,7 +112,7 @@ public class Frame extends Item
         }
 
         ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-        CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
+        CheatingEssentials.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
 
         if (minimized)
         {

@@ -1,8 +1,6 @@
 package com.kodehawa.gui.api.components;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.gui.api.font.CustomFont;
-import com.kodehawa.gui.api.font.TTFRenderer;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.mods.Mod;
 
@@ -11,7 +9,6 @@ public class Button extends Item
     Frame parent;
     Mod m = null;
     int oldColor = 0;
-    private static CustomFont cf;
 
     public Button(String s, int color, int color2)
     {
@@ -21,19 +18,18 @@ public class Button extends Item
     public Button(String s, int color, int color2, Mod m)
     {
         this.text = s;
-        this.color = color;
-        this.color2 = color2;
+        this.bgcolor = color;
+        this.bgcolor2 = color2;
         this.oldColor = color2;
         this.m = m;
-        cf = new CustomFont(CheatingEssentials.getCheatingEssentials().getMinecraftInstance(), "Verdana Bold", 12);
     }
 
     @Override
     public void draw()
     {
         // TODO Auto-generated method stub
-        ModGuiUtils.drawBorderedRect(x, y, x + width, y + height, 2, color, 0x77000077);
-       CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(text, x + 2, y + 2, color2);
+        ModGuiUtils.drawBorderedRect(x, y, x + width, y + height, 2, bgcolor, 0x77000077);
+       CheatingEssentials.getMinecraftInstance().fontRenderer.drawString(text, x + 2, y + 2, bgcolor2);
        
     }
 
@@ -46,11 +42,11 @@ public class Button extends Item
 
             if (m.isActive())
             {
-                color2 = 0x00ff00;
+                bgcolor2 = 0xFF00CC00;
             }
             else
             {
-                color2 = oldColor;
+                bgcolor2 = oldColor;
             }
         }
 
@@ -102,6 +98,7 @@ public class Button extends Item
     @Override
     public boolean mouseOver(int x, int y)
     {
+
         if (x >= this.x)
         {
             if (x <= (this.x + this.width))

@@ -6,22 +6,23 @@ import com.kodehawa.mods.F3UtilMobHitbox;
 import com.kodehawa.mods.F3UtilRerenderLoadedChunks;
 import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleAltXray;
 import com.kodehawa.mods.ModuleAutoRespawn;
-import com.kodehawa.mods.ModuleAutoSwitch;
 import com.kodehawa.mods.ModuleClientFastplace;
+import com.kodehawa.mods.ModuleCreativeFly;
 import com.kodehawa.mods.ModuleFastBreak;
 import com.kodehawa.mods.ModuleFly;
 import com.kodehawa.mods.ModuleFullbright;
 import com.kodehawa.mods.ModuleItemTooltips;
 import com.kodehawa.mods.ModuleKillAura;
+import com.kodehawa.mods.ModuleMobESP;
 import com.kodehawa.mods.ModuleNoFall;
 import com.kodehawa.mods.ModuleNoKnockback;
+import com.kodehawa.mods.ModuleRInvicibility;
 import com.kodehawa.mods.ModuleSprint;
+import com.kodehawa.mods.ModuleStep;
 import com.kodehawa.mods.ModuleTestChestFinder;
 import com.kodehawa.mods.ModuleWaterwalk;
 import com.kodehawa.mods.ModuleXray;
-import com.kodehawa.util.wrapper.Wrapper;
 
 public class CModLoader {
 	
@@ -39,13 +40,13 @@ public class CModLoader {
     private static ModuleSprint s;
     private static ModuleClientFastplace fp;
     private static ModuleFly fly;
-    private static ModuleAutoSwitch f;
-    private static ModuleAltXray x;
+    private static ModuleMobESP me;
+    private static ModuleCreativeFly fly2;
+    private static ModuleStep step;
     private static volatile CModLoader instance;
 
 	public CModLoader(){
 		addModulestoArray();
-		writeDebugInfo();
 	}
     
 	public static void loadModulesforKB(){
@@ -55,13 +56,14 @@ public class CModLoader {
 		fullbright = new ModuleFullbright();
 		killa = new ModuleKillAura();
 		fb = new ModuleFastBreak();
+        me = new ModuleMobESP();
 		waterw = new ModuleWaterwalk();
 		nk = new ModuleNoKnockback();
 		nofall = new ModuleNoFall();
 		fp = new ModuleClientFastplace();
 		s = new ModuleSprint();
-		f = new ModuleAutoSwitch();
-		x = new ModuleAltXray();
+		fly2 = new ModuleCreativeFly();
+		step = new ModuleStep();
 	}
 	
 	
@@ -77,18 +79,19 @@ public class CModLoader {
 		ModManager.getInstance().addWMod(new ModuleFullbright( ));
 		ModManager.getInstance().addWMod(new ModuleWaterwalk( ));
 		ModManager.getInstance().addWMod(new ModuleXray( ));
-		ModManager.getInstance().addWMod(new ModuleAltXray( ));
 		ModManager.getInstance().addWMod(new ModuleAutoRespawn( ));
 		ModManager.getInstance().addWMod(new ModuleTestChestFinder( ));
 		ModManager.getInstance().addWMod(new ModuleFastBreak( ));
-		ModManager.getInstance().addWMod(new ModuleAutoSwitch( ));
         ModManager.getInstance().addWMod(new ModuleClientFastplace( ));
         ModManager.getInstance().addPMod(new ModuleFly( ));
+        ModManager.getInstance().addPMod(new ModuleCreativeFly( ));
         ModManager.getInstance().addPMod(new ModuleKillAura( ));
         ModManager.getInstance().addPMod(new ModuleNoFall( ));
         ModManager.getInstance().addPMod(new ModuleSprint( ));
+        ModManager.getInstance().addPMod(new ModuleStep( ));
         ModManager.getInstance().addPMod(new ModuleNoKnockback( ));
         ModManager.getInstance().addPMod(new ModuleItemTooltips( ));
+        ModManager.getInstance().addPMod(new ModuleRInvicibility( ));
         ModManager.getInstance().addUtils(new F3UtilRerenderLoadedChunks( ));
         ModManager.getInstance().addUtils(new F3UtilMobHitbox( ));
         ModManager.getInstance().addUtils(new F3UtilAdvancedTooltips( ));
@@ -120,17 +123,7 @@ public class CModLoader {
 	            ex.printStackTrace( );
 		}
 		}
-	
-	public static void writeDebugInfo(){
 
-
-		for(Mod m: CheatingEssentials.getCheatingEssentials().mods){
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Module Loaded: " + m + " (Name: " + m.name + ") " + "(Key: " + m.getKeybind() + ")");
-		}
-		
-		CheatingEssentials.getCheatingEssentials().CELogAgent(Strings.MOD_NAME + " " + Strings.MOD_VERSION + " started succefully in " + Strings.MINECRAFT_VERSION);
-
-	}
 	
     public static CModLoader getMInstance() {
         if (instance == null) {
