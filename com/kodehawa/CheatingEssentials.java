@@ -16,17 +16,15 @@ import net.minecraft.src.Minecraft;
 import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.core.CModLoader;
 import com.kodehawa.core.DebugInfo;
-import com.kodehawa.event.EventHandler;
-import com.kodehawa.event.events.EventTick;
 import com.kodehawa.hooks.CE_GuiIngameH;
-import com.kodehawa.mods.Mod;
 import com.kodehawa.mods.ModManager;
+import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.FileManager;
 import com.kodehawa.util.KeyboardListener;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Utils;
 import com.kodehawa.util.wrapper.Wrapper;
-
+import com.reeszrbteam.ce.console.CommandManager;
 
 /**
  * @author Kodehawa, Godshawk
@@ -47,10 +45,21 @@ public final class CheatingEssentials {
 	public CheatingEssentials( ) {
         modinstance = this;
         ModManager.getInstance();
+        //ModuleManager.getInstance();
         ConsoleHelper.getInstance();
         CModLoader.getMInstance();
         DebugInfo.debugInfo();
+        FrenemyManager.getInstance();
         FileManager.getInstance();
+	}
+	
+    /**
+     * Rees crap
+     */
+	public static void onStart(){
+		CELogAgent("Initializing Command interface...");
+        CommandManager.getInstance();
+		CELogAgent("Initialized Command interface...");
 	}
 
 	/**
@@ -87,10 +96,6 @@ public final class CheatingEssentials {
 		return Minecraft.getMinecraft();
 	}
 
-	/**
-	 * Tick a mod in the Minecraft instance, needed for most modules, but some modules don't need it.
-	 */
-
 	public void addToTick(Tickable tickable) {
 		 if (!modInternalTicksArray.contains(tickable))
 	        {
@@ -98,10 +103,6 @@ public final class CheatingEssentials {
 	        }
 		
 	}
-
-	/**
-	 * Remove a mod from a current tick.
-	 */
 	
 	public void removeFromCurrentTick(Tickable tickable) {
 		 if (modInternalTicksArray.contains(tickable))
@@ -117,10 +118,6 @@ public final class CheatingEssentials {
 			CELogAgent("GuiIngame new " + Minecraft.getMinecraft().ingameGUI.getClass());
 		}
 	}
-	
-	/**
-	 * Tick the entire mod.
-	 */
 	
 	public void tick() {
 

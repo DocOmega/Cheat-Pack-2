@@ -1,0 +1,129 @@
+package com.kodehawa.module;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import com.kodehawa.CheatingEssentials;
+import com.kodehawa.module.annotations.ModuleExperimental;
+import com.kodehawa.module.classes.ChestESP;
+import com.kodehawa.util.TestClassEnumerator;
+
+public class ModuleManager {
+
+    public volatile ArrayList<ModuleBase> modules;
+    public volatile ArrayList<ModuleBase> worldModules;
+    public volatile ArrayList<ModuleBase> playerModules;
+    public volatile ArrayList<ModuleBase> utilsModules;
+    public ArrayList<ModuleBase> enabledModules = new ArrayList<ModuleBase>();
+    private volatile static ModuleManager instance;
+	
+	public ModuleManager( ){
+        modules = new ArrayList<ModuleBase>();
+        worldModules = new ArrayList<ModuleBase>();
+        playerModules = new ArrayList<ModuleBase>();
+        utilsModules = new ArrayList<ModuleBase>();
+
+        CheatingEssentials.getCheatingEssentials().CELogAgent(
+        		"Scanning minecraft.jar for built-in modules and loading them...");
+        
+        List<Class<?>> modulesFound = new ArrayList<Class<?>>();
+        
+        try {
+            modulesFound = TestClassEnumerator.getClassesInPackage(ChestESP.class.getPackage().getName());
+    } catch (final IOException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+    }
+
+        for (final Class<?> e : modulesFound) {
+            try {
+                    if (e.getName().contains("$")) {
+                            continue;
+                    }
+                    final ModuleBase f = (ModuleBase) e.newInstance();
+                    if (f.getClass().isAnnotationPresent(ModuleExperimental.class)) {
+                    	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + f.getName() + "\" is experimental! Use at own risk!");
+                    }
+                    addModule(f);
+            } catch (final InstantiationException e1) {
+                    e1.printStackTrace(); 
+            } catch (final IllegalAccessException e1) {
+                    e1.printStackTrace(); 
+            }
+    }
+    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + modules.size() + " module(s)!");
+    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + worldModules.size() + " World module(s)!");
+    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + playerModules.size() + " Player module(s)!");
+    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + utilsModules.size() + " Utils module(s)!");
+	}
+	
+	public void addModule(final ModuleBase e) {
+        synchronized (modules) {
+            modules.add( e );
+            if (e.getClass().isAnnotationPresent(ModuleExperimental.class)) {
+           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is experimental! Use at own risk!");
+           }
+        }
+	}
+	
+	public void addWorldModule( final ModuleBase e ){
+		synchronized(worldModules){
+			worldModules.add( e );
+			if (e.getClass().isAnnotationPresent(ModuleExperimental.class)) {
+	           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is WIP! Use at own risk!");
+	           }
+		}
+	}
+	
+	public void addPlayerModule( final ModuleBase e ){
+		synchronized(playerModules){
+			playerModules.add( e );
+			if (e.getClass().isAnnotationPresent(ModuleExperimental.class)) {
+	           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is WIP! Use at own risk!");
+	           }
+		}
+	}
+	
+	public void addUtilModule( final ModuleBase e ){
+		synchronized(utilsModules){
+			utilsModules.add( e );
+			if (e.getClass().isAnnotationPresent(ModuleExperimental.class)) {
+	           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is WIP! Use at own risk!");
+	           }
+		}
+	}
+
+	public void removeModule(final ModuleBase e) {
+        synchronized (modules) {
+                modules.remove( e );
+        }
+	}
+	
+    public final ModuleBase getModuleByClass(final Class module) {
+                synchronized (modules) {
+                        for (final ModuleBase e : modules) {
+                                if (e.getClass().equals(module)) {
+                                        return e;
+                                }
+                        }
+                }
+                return null;
+        }
+
+     public final List<ModuleBase> getModules() {
+                synchronized (modules) {
+                        return Collections.unmodifiableList(modules);
+                }
+        }
+     
+
+ 	public static ModuleManager getInstance(){
+ 		if(instance == null){
+ 			instance = new ModuleManager();
+ 		}
+ 		return instance;
+ 	}
+ 	
+}

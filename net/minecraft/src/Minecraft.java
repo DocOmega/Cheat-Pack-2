@@ -463,6 +463,7 @@ public class Minecraft implements IPlayerUsage
         {
             this.toggleFullscreen();
         }
+        CheatingEssentials.onStart();
     }
 
     public void func_110436_a()

@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,17 +31,25 @@ public class FileManager {
 
         loadXrayList();
         if(!mainDir.exists()){
+            mainDir.getParentFile().mkdirs();
+            try {
+				mainDir.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         saveXrayList();
         }
-		
-		
-        }
+    }
+        
 
     public static void writeCrash( String alah ) {
         try {
+            crashDir.getParentFile().mkdirs();
+            crashDir.createNewFile();
             DateFormat format = new SimpleDateFormat( "MM_dd_yyyy-HH_mm_ss" );
             Date date = new Date( );
-            File file = new File( crashDir.getAbsolutePath( ), "crashlog-".concat( format.format( date ) ).concat(
+            File file = new File( crashDir.getAbsolutePath( ), "CECrashLog-".concat( format.format( date ) ).concat(
                     ".log" ) );
             BufferedWriter outWrite = new BufferedWriter( new FileWriter( file ) );
             outWrite.write( alah );

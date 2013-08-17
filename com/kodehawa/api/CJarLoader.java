@@ -9,24 +9,17 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.console.BaseCommand;
-import com.kodehawa.mods.Mod;
-import com.kodehawa.mods.ModManager;
+import com.kodehawa.module.ModuleBase;
+import com.kodehawa.module.ModuleManager;
 
 
 public class CJarLoader extends Thread {
     
     /**
-     * The directory from which we load modules. Jar files in this directory
-     * will have their classes checked for the "@CommandAnnotation" or
-     * "@ModuleAnnotation". If the annotation is NOT found, the class is simply
-     * injected into the classpath. If the annotation IS found, the class is
-     * loaded and instantiated, then added to the corresponding category. Note
-     * that this only works if the constructor for the class takes no
-     * parameters.
+     * The directory from which we load modules.
      */
-    File jarDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance( ).mcDataDir + File.separator + "Cheating Essentials"
-            + File.separator + "Modules" );
+    File jarDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance( ).mcDataDir + File.separator + "modules"
+            + File.separator + "files" );
     
     public CJarLoader( ) {
         // TODO Auto-generated constructor stub
@@ -80,19 +73,30 @@ public class CJarLoader extends Thread {
                                     clazz = ucl.loadClass( yolo.getName( ).substring( 0, yolo.getName( ).length( ) - 6 )
                                             .replace( "/", "." ) );
                                     log( "Class loaded: " + yolo.getName( ).replace( "/", "." ) );
-                                    if( clazz.isAnnotationPresent( CommandAnnotation.class ) ) {
-                                        Constructor ctr = clazz.getConstructor( );
-                                        BaseCommand q = ( BaseCommand ) ctr.newInstance( );
-                                        log( "Command added: " + yolo.getName( ).replace( "/", "." ) );
-                                        CheatingEssentials.getCheatingEssentials( ).getModWrapper( ).getConsoleManager( ).addCommand( q );
-                                    } else if( clazz.isAnnotationPresent( ModuleAnnotation.class ) ) {
-                                        Constructor ctr = clazz.getConstructor( );
-                                        Mod q = ( Mod ) ctr.newInstance( );
-                                        log( "Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                        ModManager.getInstance().f3utils.add( q );
-                                    }
+                                 if(yolo.getName().startsWith("Player-") && yolo.getName().endsWith(".class")){
+                                	  Constructor ctr = clazz.getConstructor( );
+                                      ModuleBase q = ( ModuleBase ) ctr.newInstance( );
+                                      log( "Player Module added: " + yolo.getName( ).replace( "/", "." ) );
+                                      ModuleManager.getInstance().addPlayerModule( q );
+                                      ModuleManager.getInstance().addModule( q );
+                                 }
+                                 if(yolo.getName().startsWith("World-") && yolo.getName().endsWith(".class")){
+                               	  Constructor ctr = clazz.getConstructor( );
+                                     ModuleBase q = ( ModuleBase ) ctr.newInstance( );
+                                     log( "World Module added: " + yolo.getName( ).replace( "/", "." ) );
+                                     ModuleManager.getInstance().addWorldModule( q );
+                                     ModuleManager.getInstance().addModule( q );
                                 }
-                            }
+                                if(yolo.getName().startsWith("Util-") && yolo.getName().endsWith(".class")){
+                                  	  Constructor ctr = clazz.getConstructor( );
+                                        ModuleBase q = ( ModuleBase ) ctr.newInstance( );
+                                        log( "Utils Module added: " + yolo.getName( ).replace( "/", "." ) );
+                                        ModuleManager.getInstance().addUtilModule( q );
+                                        ModuleManager.getInstance().addModule( q );
+                                   }
+                                else{
+                                	log("Can't recognize Module type.");
+                                }
                         }
                         jis.close( );
                         fis.close( );
@@ -100,7 +104,10 @@ public class CJarLoader extends Thread {
                     }
                 }
             }
-        } catch( Exception ex ) {
+        }
+     }
+   }
+            catch( Exception ex ) {
             System.out.println( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
             
@@ -121,7 +128,7 @@ public class CJarLoader extends Thread {
      * @param s
      */
     public void log( String s ) {
-        CheatingEssentials.getCheatingEssentials().CELogAgent( "CJarLoader: " + s );
+        CheatingEssentials.getCheatingEssentials().CELogAgent( "[External Loader] " + s );
     }
 
 	private volatile boolean stopRequested = false;

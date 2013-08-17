@@ -1,6 +1,7 @@
 package com.kodehawa.console;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.mods.ModManager;
 import com.kodehawa.mods.ModuleXray;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.FileManager;

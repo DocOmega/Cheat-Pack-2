@@ -1,6 +1,8 @@
 package com.kodehawa.hooks;
 
 import com.kodehawa.gui.componentbase.CheatingEssentialsTGui;
+
+import com.reeszrbteam.ce.console.GuiConsole;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
 import net.minecraft.src.Minecraft;
@@ -26,6 +28,7 @@ public class CE_GuiIngameH extends GuiIngame {
     private boolean activese;
     private ModuleGui Gui;
     private CheatingEssentialsTGui Gui2;
+    private GuiConsole Console;
 	public static int tick = 0;
 
 	
@@ -36,6 +39,7 @@ public class CE_GuiIngameH extends GuiIngame {
 		radar = new Radar();
 		Gui = new ModuleGui( );
         Gui2 = new CheatingEssentialsTGui(null);
+        Console = new GuiConsole();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -49,6 +53,9 @@ public class CE_GuiIngameH extends GuiIngame {
 
     		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_G)){
     			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Gui);
+    		}
+    		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_GRAVE)){
+    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Console);
     		}
     		
     	for(Frame e : Gui.frames) {
@@ -85,6 +92,7 @@ public class CE_GuiIngameH extends GuiIngame {
         int var7 = var5.getScaledHeight();
         FontRenderer var8 = CheatingEssentials.getMinecraftInstance().fontRenderer;
     	
+        
         /**
          * This it's self-explanatory :)
          */

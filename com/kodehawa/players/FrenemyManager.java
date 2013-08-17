@@ -48,6 +48,7 @@ public class FrenemyManager
     
     public FrenemyManager()
     {
+    	CheatingEssentials.getCheatingEssentials().CELogAgent("FrenemyManager instance starting...");
         friendsFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEFriendsList.txt");
         enemyFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEEnemiesList.txt");
 
@@ -59,23 +60,21 @@ public class FrenemyManager
         {
             try
             {
-                // Create file
+            	CheatingEssentials.getCheatingEssentials().CELogAgent("Writting friends file...");
                 friendsFile.getParentFile().mkdirs();
                 friendsFile.createNewFile();
                 FileWriter fstream = new FileWriter(friendsFile);
                 BufferedWriter out = new BufferedWriter(fstream);
-                // This will, ideally, only be used once.
                 out.write("Kodehawa\r\n");
                 out.write("Ubu13\r\n");
                 out.write("Notch\r\n");
                 out.write("jeb_\r\n");
                 out.write("Kraiback\r\n");
-                // Close the output stream
                 out.close();
             }
-            catch (Exception e)       // Catch exception if any
+            catch (Exception e)
             {
-                System.err.println("[Cheating Essentials] Error writing friends!: " + e.getMessage());
+                CheatingEssentials.getCheatingEssentials().CELogAgent("Error writing friends!: " + e.getMessage());
             }
 
             readAndBind();
@@ -87,20 +86,17 @@ public class FrenemyManager
 
         if (!enemyFile.exists())
         {
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Writting enemy's file...");
             try
             {
-                // Create file
                 enemyFile.getParentFile().mkdirs();
                 enemyFile.createNewFile();
                 FileWriter fstream = new FileWriter(enemyFile);
                 BufferedWriter out = new BufferedWriter(fstream);
-                // Hardcoded: Just to be sure we get the initial stuff good.
-                // This will, ideally, only be used once.
                 out.write("PvpTroll\r\n");
-                // Close the output stream
                 out.close();
             }
-            catch (Exception e)       // Catch exception if any
+            catch (Exception e)
             {
                 System.err.println("[Cheat Pack 2.3] Error writing enemies!: " + e.getMessage());
             }
@@ -126,23 +122,17 @@ public class FrenemyManager
             try
             {
                 fis = new FileInputStream(friendsFile);
-                // Create BR
                 br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
-
-                // Don't forget to catch exceptions!
                 try
                 {
                     while ((line = br.readLine()) != null)
                     {
-                        // Deal with the line
-                        // Get the name and keybind number
                         str = line;
                         Vars.friends.add(str);
                     }
                 }
                 catch (IOException e)
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
