@@ -14,19 +14,23 @@ public class Fullbright extends ModuleBase {
 		super("Full Bright", "No more darkness!", "1.6.2",
 				Keyboard.KEY_F, EnumGuiCategory.WORLD, true);
 		// TODO Auto-generated constructor stub
+        super.setTick(true);
 	}
 
 	@Override
 	public void onEnableModule() {
-		float[] brightness = CheatingEssentials.getMinecraftInstance().theWorld.provider.lightBrightnessTable;
-        for(int i = 0; i < brightness.length; i++) {
-        brightness[i] = 1.0F; 
-       }
 	}
 
 	@Override
 	public void onDisableModule() {
         CheatingEssentials.getMinecraftInstance().theWorld.provider.registerWorld(Minecraft.getMinecraft().theWorld);
-	}
+    }
 
+    @Override
+    public void tick() {
+        float[] brightness = CheatingEssentials.getMinecraftInstance().theWorld.provider.lightBrightnessTable;
+        for(int i = 0; i < brightness.length; i++) {
+            brightness[i] = 1.0F;
+        }
+    }
 }

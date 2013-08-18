@@ -33,7 +33,7 @@ import com.kodehawa.util.Tickable;
  * Main module class. All modules should extends it.
  * @author Kodehawa
  */
-public abstract class ModuleBase implements Listener {
+public abstract class ModuleBase implements Listener, Tickable {
 
 
     /**
@@ -74,13 +74,17 @@ public abstract class ModuleBase implements Listener {
 	/**
 	 * Is module active?
 	 */
-	private static boolean active;
+	private boolean active;
 	
 	/**
 	 * Tickable method, that define the mod ticks.
 	 */
     private Tickable Tickable;
-    
+
+    /**
+    * It's this tickable ?
+    */
+    private boolean tick;
 
     /**
      * Defines color, mostly used by WIP modules
@@ -105,10 +109,14 @@ public abstract class ModuleBase implements Listener {
     @ModuleRetention( type = "Base" )
     public ModuleBase(final String name, final String desc, final int key) {
        this(name, desc, "1.6.2", key, EnumGuiCategory.UTILS, true);
+        EventHandler.getInstance().registerListener( EventKey.class, this );
+        EventHandler.getInstance().registerListener( EventRender3D.class, this );
       }
 
     public ModuleBase(final String name, final String desc, final EnumGuiCategory type) {
        this(name, desc, "1.6.2", -1, type, true);
+        EventHandler.getInstance().registerListener( EventKey.class, this );
+        EventHandler.getInstance().registerListener( EventRender3D.class, this );
        }
 
     public ModuleBase(final String name, final String desc, final String version, final int key, final EnumGuiCategory type, final boolean enabled) {
@@ -149,12 +157,16 @@ public abstract class ModuleBase implements Listener {
     	active = !active;
     	if (active) {
     		onEnableModule();
-    		ModuleManager.getInstance().enabledModules.add(this);
-    	}
+    		ModuleManager.getInstance().enabledModules.add(name);
+            if(this.getTick())   {
+            CheatingEssentials.getCheatingEssentials().addToTick(this);  }
+        }
     	else{
     		onDisableModule();
-    		ModuleManager.getInstance().enabledModules.remove(this);
-    	}
+    		ModuleManager.getInstance().enabledModules.remove(name);
+            if(this.getTick())   {
+            CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);  }
+        }
     	  if( this.isActive( ) ) {
               if( this.getRender( ) ) {
               	EventHandler.getInstance().registerListener( EventRender3D.class, this );
@@ -177,7 +189,7 @@ public abstract class ModuleBase implements Listener {
      * Get module state. Mostly for debugging
      * @return
      */
-    public static boolean isActive( ){
+    public boolean isActive( ){
     	return active;
     }
     
@@ -264,6 +276,14 @@ public abstract class ModuleBase implements Listener {
     
     public boolean getRender( ) {
         return ortho;
+    }
+
+    public boolean getTick(){
+        return tick;
+    }
+
+    public void setTick(boolean shit){
+       tick = shit;
     }
     
     public void setRender( boolean state ) {
@@ -362,8 +382,8 @@ public abstract class ModuleBase implements Listener {
          }
     
     protected void setFly(boolean state){
-		EntityPlayer.getInstance().capabilities.allowFlying = state;
-		EntityPlayer.getInstance().sendPlayerAbilities();
+        getMinecraft().thePlayer.capabilities.allowFlying = state;
+		getMinecraft().thePlayer.sendPlayerAbilities();
 	}
 
       protected static List<Entity> getEntitiesInRange(final double range) {
@@ -436,4 +456,6 @@ public abstract class ModuleBase implements Listener {
 	 */
 	public void onRenderInModule( ){}
 
+    @Override
+    public void tick(){}
 }

@@ -2,12 +2,12 @@ package com.kodehawa.gui.api.components;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
-import com.kodehawa.mods.Mod;
+import com.kodehawa.module.ModuleBase;
 
 public class Button extends Item
 {
     Frame parent;
-    Mod m = null;
+    ModuleBase m = null;
     int oldColor = 0;
 
     public Button(String s, int color, int color2)
@@ -15,7 +15,7 @@ public class Button extends Item
         this(s, color, color2, null);
     }
 
-    public Button(String s, int color, int color2, Mod m)
+    public Button(String s, int color, int color2, ModuleBase m)
     {
         this.text = s;
         this.bgcolor = color;
@@ -68,7 +68,7 @@ public class Button extends Item
         {
             if (this.m != null)
             {
-                this.m.toggle();
+                this.m.toggleModule();
             }
             else
             {

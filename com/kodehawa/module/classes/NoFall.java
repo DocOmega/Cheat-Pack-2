@@ -1,21 +1,18 @@
 package com.kodehawa.module.classes;
 
-import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.Packet13PlayerLookMove;
 
 import org.lwjgl.input.Keyboard;
 
-import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.enums.EnumGuiCategory;
-import com.kodehawa.util.Tickable;
 
-public class NoFall extends ModuleBase implements Tickable {
+public class NoFall extends ModuleBase {
 
 	public NoFall( ) {
 		super("No Fall", "No fall damage", "1.6.2", Keyboard.KEY_V, 
 				EnumGuiCategory.PLAYER, true);
-		// TODO Auto-generated constructor stub
+        super.setTick(true);
 	}
 
 
@@ -27,11 +24,9 @@ public class NoFall extends ModuleBase implements Tickable {
 	}
 	
 	public void onEnableModule(){
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
 	}
 	
 	public void onDisableModule(){
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 	}
 
 }

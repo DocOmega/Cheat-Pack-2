@@ -27,18 +27,15 @@ import net.minecraft.src.GuiScreen;
 
 import org.lwjgl.input.Keyboard;
 
-import com.kodehawa.console.ConsoleHelper;
 
 public class Console extends GuiScreen
 {
     protected String message;
     private int updateCounter;
     private static final String allowedCharacters;
-    public static ConsoleHelper chelper;
 
     public Console()
     {
-        chelper = new ConsoleHelper();
         message = "";
         updateCounter = 0;
     }
@@ -73,7 +70,7 @@ public class Console extends GuiScreen
         if (i == 28)
         {
             String[ ] cmd = message.split(" ");
-            chelper.parse(cmd);
+            //chelper.parse(cmd);
             mc.displayGuiScreen(null);
             return;
         }

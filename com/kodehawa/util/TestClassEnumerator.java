@@ -15,8 +15,7 @@ import com.kodehawa.module.annotations.ModuleExperimental;
 
 
 /**
- * Enumerates all classes in a package. Originally implemented in DarkBot by
- * DarkStorm_.
+ * Enumerates all classes in a package.
  * 
  * @see {@link https://github.com/DarkStorm652/DarkBot}
  * 

@@ -1,9 +1,6 @@
 package com.kodehawa.util;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.ModManager;
-
-import net.minecraft.src.Minecraft;
 
 public class Utils
 {

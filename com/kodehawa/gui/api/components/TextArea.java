@@ -6,7 +6,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 
 /**
@@ -18,7 +17,6 @@ import com.kodehawa.gui.api.render.ModGuiUtils;
 public class TextArea extends Item
 {
     public boolean focused = false;
-    private static final String allowedCharacters;
 
     public TextArea(String text, int x, int y, int w, int h, int color)
     {
@@ -32,6 +30,27 @@ public class TextArea extends Item
     }
 
     @Override
+    public void draw() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void drag(int x, int y) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void onClick(int x, int y) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean mouseOver(int x, int y) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+}
+
+   /* @Override
     public void draw()
     {
         // TODO Auto-generated method stub
@@ -86,12 +105,6 @@ public class TextArea extends Item
         return false;
     }
 
-    /**
-     * Please remember to get rid of the parameter; it's unneeded. TODO REMOVE
-     * PARAMS
-     *
-     * @param key
-     */
     public void keyPressed(int key)
     {
         char c = Keyboard.getEventCharacter();
@@ -128,9 +141,9 @@ public class TextArea extends Item
 
                 String[ ] cmd = this.text.split(" ");
                 final boolean isList = cmd [ 0 ].equalsIgnoreCase("list") ? true : false;
-                ConsoleHelper chelp = com.kodehawa.util.Console.chelper;
-                final String add = !isList ? chelp.parse(cmd) : chelp.parse(cmd).substring(0, chelp.parse(cmd).length() / 2);
-                final String add2 = !isList ? "" : chelp.parse(cmd).substring(chelp.parse(cmd).length() / 2);
+                //ConsoleHelper chelp = com.kodehawa.util.Console.chelper;
+                //final String add = !isList ? chelp.parse(cmd) : chelp.parse(cmd).substring(0, chelp.parse(cmd).length() / 2);
+                //final String add2 = !isList ? "" : chelp.parse(cmd).substring(chelp.parse(cmd).length() / 2);
                 this.parent.addLater(new Label(this.text, 0xffffffff)
                 {
                     @Override
@@ -143,7 +156,7 @@ public class TextArea extends Item
                         {
                             // TTFRenderer.drawTTFString( Colony.guiFont, add, (
                             // x * 2 ) + 6, ( y * 2 ) - 6, color );
-                            /* String, x, y, width, color */
+                            /String, x, y, width, color/
                         	CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString(add, x * 2, y * 2, 236, 0xffffff);
                         }
                         else
@@ -174,9 +187,9 @@ public class TextArea extends Item
                                 // add, (
                                 // x * 2 ) + 6, ( y * 2 ) - 6, color );
                                 /* String, x, y, width, color */
-                                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString(add2, x * 2, y * 2, 236, 0xffffff);
-                            }
-                            else
+                               // CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawSplitString(add2, x * 2, y * 2, 236, 0xffffff);
+                            //}
+                         /*   else
                             {
                                 // TTFRenderer.drawTTFString( Colony.guiFont,
                                 // "ERROR PROCESSING COMMAND", ( x * 2 ) + 6, (
@@ -199,4 +212,4 @@ public class TextArea extends Item
     {
         allowedCharacters = ChatAllowedCharacters.allowedCharacters;
     }
-}
+}      */

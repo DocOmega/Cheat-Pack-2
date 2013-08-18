@@ -10,12 +10,13 @@ import com.kodehawa.module.annotations.ModuleLoader;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.kodehawa.util.Tickable;
 
-public class CreativeFly extends ModuleBase implements Tickable {
+public class CreativeFly extends ModuleBase {
 
 	@ModuleLoader(type = "Module")
 	public CreativeFly( ) {
 		super("Creative Fly", "I believe I can fly~", "1.6.2", Keyboard.KEY_NUMPAD5,
 				EnumGuiCategory.PLAYER, true);
+        super.setTick(true);
 	}
 	
 	@Override

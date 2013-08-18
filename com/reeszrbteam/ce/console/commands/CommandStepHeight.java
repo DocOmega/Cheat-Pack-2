@@ -1,7 +1,7 @@
 package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.ModuleStep;
+import com.kodehawa.module.classes.Step;
 import com.reeszrbteam.ce.console.BaseCommand;
 
 public class CommandStepHeight extends BaseCommand {
@@ -17,7 +17,7 @@ public class CommandStepHeight extends BaseCommand {
 		try{
 			float result = Float.parseFloat(args [ 0 ]);
 			if(result <= 100.0F){
-			ModuleStep.setStepHeight(result);
+			Step.setStepHeight(result);
 			CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Step height changed to " + result + "!");
 			}
 			}

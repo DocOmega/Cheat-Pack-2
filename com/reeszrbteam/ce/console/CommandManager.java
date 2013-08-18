@@ -31,6 +31,8 @@ public class CommandManager
 		commands.add(new CommandFriend());
 		commands.add(new CommandStepHeight());
 		commands.add(new CommandAuraDistance());
+        commands.add(new CommandFlySpeed());
+        commands.add(new CommandBlockESP());
 	}
 
 	public void runCommands(String s)

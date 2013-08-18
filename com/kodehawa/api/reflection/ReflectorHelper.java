@@ -36,7 +36,7 @@ public class ReflectorHelper {
         }
         catch (Exception e)
         {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Can't assign a private value to a method" + e);
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Can't assign a public value to a private method" + e);
         }
 
         return null;

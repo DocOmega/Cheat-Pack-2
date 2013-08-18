@@ -12,12 +12,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.kodehawa.module.classes.Xray;
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.ModManager;
-import com.kodehawa.mods.ModuleXray;
-
 public class FileManager {
     public static File mainDir;
     public static File crashDir;
@@ -70,7 +68,7 @@ public class FileManager {
         	CheatingEssentials.getCheatingEssentials().CELogAgent("Writting X-Ray block list configuration file...");
             File file = new File( mainDir, "" );
             BufferedWriter bufferedwritter = new BufferedWriter( new FileWriter( file ) );
-            for( int i : ModuleXray.xrayBlocks ) {
+            for( int i : Xray.xrayBlocks ) {
             	bufferedwritter.write( i + "\r\n" );
             }
             bufferedwritter.close( );
@@ -98,7 +96,7 @@ public class FileManager {
             while( ( line = br.readLine( ) ) != null ) {
                 String curLine = line.toLowerCase( ).trim( );
                 int id = Integer.parseInt( curLine );
-                ModuleXray.xrayBlocks.add( id );
+                Xray.xrayBlocks.add( id );
             }
             br.close( );
         } catch( Exception ex ) {

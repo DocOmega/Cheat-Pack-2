@@ -34,10 +34,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.console.ConsoleHelper;
-import com.kodehawa.mods.ModManager;
 import com.kodehawa.mods.Vars;
-import com.kodehawa.util.ChatColour;
 
 public class FrenemyManager
 {
@@ -48,7 +45,6 @@ public class FrenemyManager
     
     public FrenemyManager()
     {
-    	CheatingEssentials.getCheatingEssentials().CELogAgent("FrenemyManager instance starting...");
         friendsFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEFriendsList.txt");
         enemyFile = new File(CheatingEssentials.modinstance.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEEnemiesList.txt");
 
@@ -194,7 +190,6 @@ public class FrenemyManager
 
             if (CheatingEssentials.modinstance.getMinecraftInstance().theWorld != null)
             {
-                ConsoleHelper.addMessage(ChatColour.BLUE + "Friends written!");
             }
         }
         catch (Exception e)

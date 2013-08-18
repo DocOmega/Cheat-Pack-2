@@ -7,10 +7,11 @@ import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.kodehawa.util.Tickable;
 
-public class AutoRespawn extends ModuleBase implements Tickable {
+public class AutoRespawn extends ModuleBase {
 
 	public AutoRespawn( ) {
 		super("Auto Respawn", "", "1.6.2", Keyboard.KEY_NUMPAD0, EnumGuiCategory.WORLD, true);
+        super.setTick(true);
 	}
 
 	@Override
@@ -22,12 +23,10 @@ public class AutoRespawn extends ModuleBase implements Tickable {
 
 	@Override
 	public void onEnableModule() {
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
 	}
 
 	@Override
 	public void onDisableModule() {
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 	}
 
 }

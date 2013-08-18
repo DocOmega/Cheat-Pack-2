@@ -11,10 +11,8 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.console.ConsoleHelper;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.gui.api.components.ModuleGui;
-import com.kodehawa.mods.ModManager;
 
 public class Wrapper
 {
@@ -46,24 +44,7 @@ public class Wrapper
 
     
     
-    public ModManager getModuleManager()
-    {
-        try
-        {
-            Field mang = CheatingEssentials.class.getDeclaredField("mmanager");
-            mang.setAccessible(true);
-            ModManager mm = (ModManager) mang.get(null);
-            return mm;
-        }
-        catch (Exception e)
-        {
-            System.err.println("********COULD NOT GET MODULE MANAGER********");
-            e.printStackTrace();
-            System.err.println("********SHUTTING DOWN********");
-            System.exit(1);
-            return null;
-        }
-    }
+
 
     public EventHandler getEventHandler()
     {
@@ -82,23 +63,7 @@ public class Wrapper
         }
     }
 
-    public ConsoleHelper getConsoleManager()
-    {
-        try
-        {
-            Field mang = CheatingEssentials.class.getDeclaredField("cmanager");
-            mang.setAccessible(true);
-            ConsoleHelper cm = (ConsoleHelper) mang.get(null);
-            return cm;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.err.println("Y0L0sw4q");
-            return null;
-        }
-    }
-
+  
     public ModuleGui getGui()
     {
         try

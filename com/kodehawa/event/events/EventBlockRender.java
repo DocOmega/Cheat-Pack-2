@@ -1,7 +1,7 @@
 package com.kodehawa.event.events;
 
+import com.kodehawa.util.Vector3D;
 import net.minecraft.src.Block;
-import paulscode.sound.Vector3D;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.event.EventCancellable;

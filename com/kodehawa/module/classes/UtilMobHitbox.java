@@ -22,4 +22,5 @@ public class UtilMobHitbox extends ModuleBase {
 	public void onDisableModule() {
 		RenderManager.field_85095_o = !RenderManager.field_85095_o;
 	}
+
 }

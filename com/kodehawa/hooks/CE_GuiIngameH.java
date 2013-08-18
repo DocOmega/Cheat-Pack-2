@@ -1,7 +1,7 @@
 package com.kodehawa.hooks;
 
-import com.kodehawa.gui.componentbase.CheatingEssentialsTGui;
 
+import com.kodehawa.module.ModuleManager;
 import com.reeszrbteam.ce.console.GuiConsole;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
@@ -14,7 +14,6 @@ import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.ModuleGui;
 import com.kodehawa.gui.api.render.ModGuiUtils;
-import com.kodehawa.mods.ModManager;
 import com.kodehawa.radar.Radar;
 import com.kodehawa.util.ChatColour;
 import com.kodehawa.util.KeyboardListener;
@@ -27,7 +26,6 @@ public class CE_GuiIngameH extends GuiIngame {
     private boolean radarActive;
     private boolean activese;
     private ModuleGui Gui;
-    private CheatingEssentialsTGui Gui2;
     private GuiConsole Console;
 	public static int tick = 0;
 
@@ -38,7 +36,6 @@ public class CE_GuiIngameH extends GuiIngame {
         utils = new ModGuiUtils();
 		radar = new Radar();
 		Gui = new ModuleGui( );
-        Gui2 = new CheatingEssentialsTGui(null);
         Console = new GuiConsole();
 		// TODO Auto-generated constructor stub
 	}
@@ -52,10 +49,10 @@ public class CE_GuiIngameH extends GuiIngame {
         	
 
     		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_G)){
-    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Gui);
+    			CheatingEssentials.getMinecraftInstance().displayGuiScreen(Gui);
     		}
     		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_GRAVE)){
-    			CheatingEssentials.getCheatingEssentials().getMinecraftInstance().displayGuiScreen(Console);
+    			CheatingEssentials.getMinecraftInstance().displayGuiScreen(Console);
     		}
     		
     	for(Frame e : Gui.frames) {
@@ -89,7 +86,6 @@ public class CE_GuiIngameH extends GuiIngame {
     			CheatingEssentials.getMinecraftInstance().displayHeight);
     	
         int var6 = var5.getScaledWidth();
-        int var7 = var5.getScaledHeight();
         FontRenderer var8 = CheatingEssentials.getMinecraftInstance().fontRenderer;
     	
         
@@ -97,10 +93,10 @@ public class CE_GuiIngameH extends GuiIngame {
          * This it's self-explanatory :)
          */
     	if(this.activese){
-   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( ModManager.getInstance().enabledMods.size( ) + 1 ) * 10 ) + 3, 0x77000000 );
+   		 this.drawRect( utils.getWidth() - 100, 150, var6, 150 + ( ( ModuleManager.getInstance().enabledModules.size() + 1 ) * 10 ) + 3, 0x77000000 );
    			this.drawString( var8, ChatColour.DARK_GRAY + "Enabled Modules", var6 - 98, 151, 0xffffff );
-   			for ( int i = 0; i < ModManager.getInstance().enabledMods.size( ); i++ ) {
-   				this.drawString( var8, ModManager.getInstance().enabledMods.get( i ), var6 - 98, 150 + ModManager.getInstance().enabledMods.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
+   			for ( int i = 0; i < ModuleManager.getInstance().enabledModules.size( ); i++ ) {
+   				this.drawString( var8, ModuleManager.getInstance().enabledModules.get( i ), var6 - 98, 150 + ModuleManager.getInstance().enabledModules.size( ) + ( ( 12 * ( i + 1 ) ) - ( i * 3 ) ), 0x00ff00 );
    			}
    	}
 	}

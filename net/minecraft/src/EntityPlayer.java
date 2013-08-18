@@ -98,7 +98,6 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     protected float speedOnGround = 0.1F;
     protected float speedInAir = 0.02F;
     private int field_82249_h;
-    private static volatile EntityPlayer instance;
 
     /**
      * An instance of a fishing rod's hook. If this isn't null, the icon image of the fishing rod is slightly different
@@ -108,7 +107,6 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     public EntityPlayer(World par1World, String par2Str)
     {
         super(par1World);
-        instance = this;
         this.username = par2Str;
         this.inventoryContainer = new ContainerPlayer(this.inventory, !par1World.isRemote, this);
         this.openContainer = this.inventoryContainer;
@@ -118,10 +116,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         this.field_70741_aB = 180.0F;
         this.fireResistance = 20;
     }
-    
-    public static EntityPlayer getInstance(){
-    	return instance;
-    }
+
 
     protected void func_110147_ax()
     {

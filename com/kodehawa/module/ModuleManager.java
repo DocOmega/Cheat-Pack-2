@@ -8,6 +8,7 @@ import java.util.List;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.annotations.ModuleExperimental;
 import com.kodehawa.module.classes.ChestESP;
+import com.kodehawa.module.loader.BaseLoader;
 import com.kodehawa.util.TestClassEnumerator;
 
 public class ModuleManager {
@@ -16,7 +17,7 @@ public class ModuleManager {
     public volatile ArrayList<ModuleBase> worldModules;
     public volatile ArrayList<ModuleBase> playerModules;
     public volatile ArrayList<ModuleBase> utilsModules;
-    public ArrayList<ModuleBase> enabledModules = new ArrayList<ModuleBase>();
+    public ArrayList<String> enabledModules = new ArrayList<String>();
     private volatile static ModuleManager instance;
 	
 	public ModuleManager( ){
@@ -53,17 +54,14 @@ public class ModuleManager {
                     e1.printStackTrace(); 
             }
     }
-    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + modules.size() + " module(s)!");
-    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + worldModules.size() + " World module(s)!");
-    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + playerModules.size() + " Player module(s)!");
-    CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + utilsModules.size() + " Utils module(s)!");
+
 	}
 	
 	public void addModule(final ModuleBase e) {
         synchronized (modules) {
             modules.add( e );
             if (e.getClass().isAnnotationPresent(ModuleExperimental.class)) {
-           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is experimental! Use at own risk!");
+           	 CheatingEssentials.getCheatingEssentials().CELogAgent("Module \"" + e.getName() + "\" is WIP! Use at own risk!");
            }
         }
 	}

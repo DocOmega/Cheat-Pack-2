@@ -4,20 +4,18 @@
  * 1- @Block.java
  * 2- @EntityPlayer.java
  * 3- @Minecraft.java
- * 4- @TileEntityChestRenderer.java
  */
 
 package com.kodehawa;
 
 import java.util.ArrayList;
 
+import com.kodehawa.core.DebugInfo;
+import com.kodehawa.core.Strings;
+import com.kodehawa.module.ModuleManager;
+import com.kodehawa.module.loader.BaseLoader;
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.console.ConsoleHelper;
-import com.kodehawa.core.CModLoader;
-import com.kodehawa.core.DebugInfo;
-import com.kodehawa.hooks.CE_GuiIngameH;
-import com.kodehawa.mods.ModManager;
 import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.FileManager;
 import com.kodehawa.util.KeyboardListener;
@@ -43,18 +41,18 @@ public final class CheatingEssentials {
      */
     
 	public CheatingEssentials( ) {
+        CELogAgent("Starting Cheating Essentials " + Strings.MOD_VERSION + "...");
         modinstance = this;
-        ModManager.getInstance();
-        //ModuleManager.getInstance();
-        ConsoleHelper.getInstance();
-        CModLoader.getMInstance();
+        ModuleManager.getInstance();
+        BaseLoader.getInstance();
         DebugInfo.debugInfo();
         FrenemyManager.getInstance();
         FileManager.getInstance();
+        CELogAgent("Cheating Essentials " + Strings.MOD_VERSION +  " started in Minecraft 1.6.2");
 	}
 	
     /**
-     * Rees crap
+     * ReesZRB crap
      */
 	public static void onStart(){
 		CELogAgent("Initializing Command interface...");
@@ -85,13 +83,7 @@ public final class CheatingEssentials {
 	public Utils getUtils() {
 		return Utils.getInstance();
 	}
-	
-	/**
-	 * Get the singleton Minecraft instance.
-	 * Used for something and for no call things like mc.d.ft., instead of this call the things like CheatingEssentials.getCheatingEssentials().getMinecraftInstance()....
-	 * And for some stability and prevent crashes when loading native MC methods to the mod modules / classes.
-	 */
-	
+
 	public static Minecraft getMinecraftInstance(){
 		return Minecraft.getMinecraft();
 	}
@@ -109,14 +101,6 @@ public final class CheatingEssentials {
 	        {
 			 modInternalTicksArray.remove(tickable);
 	        }
-	}
-
-	public static void replaceGUI(){
-		if(getMinecraftInstance().ingameGUI.getClass() != CE_GuiIngameH.class){
-			CELogAgent("GuiIngame MC " + Minecraft.getMinecraft().ingameGUI.getClass() );
-			getMinecraftInstance().ingameGUI = new CE_GuiIngameH(getMinecraftInstance());
-			CELogAgent("GuiIngame new " + Minecraft.getMinecraft().ingameGUI.getClass());
-		}
 	}
 	
 	public void tick() {

@@ -37,6 +37,7 @@ import org.lwjgl.util.glu.GLU;
 
 import com.google.common.collect.Lists;
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.hooks.HookManager;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -1424,9 +1425,8 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
-    	CheatingEssentials.replaceGUI();
-
-    	   
+    	HookManager.gameGui();
+        HookManager.rendererSystem();
 
     	if (this.rightClickDelayTimer > 0)
         {
@@ -1890,9 +1890,6 @@ public class Minecraft implements IPlayerUsage
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
-        //Tickable CE Init.
-        //cheatingEssentials.tick();
-
     }
     
 	

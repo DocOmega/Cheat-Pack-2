@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventBlockRender;
-import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.module.classes.Xray;
 
 public class Block
 {
@@ -475,7 +475,7 @@ public class Block
             EventBlockRender renderAsNormal = ( EventBlockRender ) EventHandler.getInstance()
                     .call( new EventBlockRender( this, EventBlockRender.EventType.RENDER_XRAY, blockID ) );
             if( renderAsNormal.isCancelled( ) ) {
-                return ModuleXray.xrayBlocks.contains( blockID );
+                return Xray.xrayBlocks.contains( blockID );
             }
     	
     	

@@ -30,6 +30,6 @@ public class BlockFilter {
 			   }
 		 }
 		 
-		 return 0;
+		 return 90000;
 	}
 }

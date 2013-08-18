@@ -3,7 +3,6 @@ package com.kodehawa.api;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.components.Frame;
 import com.kodehawa.gui.api.components.Item;
-import com.kodehawa.mods.Mods;
 import com.kodehawa.render.GLHelper;
 import com.kodehawa.util.wrapper.Wrapper;
 
@@ -44,10 +43,7 @@ public class ApiMethods {
     public static void addFrame( Frame e ) {
         
     }
-    
-    public static void addEnumMod( Mods ms ){
-    	ms.equals(getCE());
-    }
+
     
     /**
      * Adds the child to the Frame specified by the given name.

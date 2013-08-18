@@ -7,11 +7,12 @@ import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.kodehawa.util.Tickable;
 
-public class Unpushable extends ModuleBase implements Tickable {
+public class Unpushable extends ModuleBase {
 
 	public Unpushable( ) {
-		super("Unpushable", "", "1.6.2", Keyboard.KEY_NUMPAD1, EnumGuiCategory.PLAYER , true );
+		super("Unpushable", "", "1.6.2", Keyboard.KEY_NUMPAD7, EnumGuiCategory.PLAYER , true );
 		// TODO Auto-generated constructor stub
+        super.setTick(true);
 	}
 
 	@Override

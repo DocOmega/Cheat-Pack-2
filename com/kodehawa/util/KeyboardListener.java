@@ -1,13 +1,13 @@
 package com.kodehawa.util;
 
+import com.kodehawa.module.ModuleBase;
+import com.kodehawa.module.ModuleManager;
+import com.kodehawa.module.loader.BaseLoader;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.core.CModLoader;
 import com.kodehawa.event.EventHandler;
 import com.kodehawa.event.events.EventKey;
-import com.kodehawa.mods.Mod;
-import com.kodehawa.mods.ModManager;
 
 public class KeyboardListener {
 
@@ -18,8 +18,8 @@ public class KeyboardListener {
 	public KeyboardListener(){
 		
         keymap = new boolean[ 256 ];
-        CModLoader.loadModulesforKB();
-        handleKeys( );
+        BaseLoader.getKeybindingForModule();
+        handleKeys();
 	}
 	
 
@@ -32,12 +32,10 @@ public class KeyboardListener {
 	
     public void handleKeys( ) {
     	//TODO: Module Keys
-    	
-        for( Mod m : ModManager.getInstance().mods ) {
-            int key = m.getKeybind( );
+        for(ModuleBase m : ModuleManager.getInstance().modules) {
+            int key = m.getKeybinding();
             if( getKeyStateFromMap( key ) ) {
-                EventHandler.getInstance().call( new EventKey( this, m.getKeybind( ) ) );
-                m.toggle();
+               m.toggleModule();
                 break;
             }
           }
@@ -48,7 +46,7 @@ public class KeyboardListener {
         * Like the old CheckKey :)
         */
        public boolean getKeyStateFromMap( int i ) {
-        if( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().currentScreen != null ) {
+        if( CheatingEssentials.getMinecraftInstance().currentScreen != null ) {
             return false;
         }
         if( Keyboard.isKeyDown( i ) != keymap[ i ] ) {

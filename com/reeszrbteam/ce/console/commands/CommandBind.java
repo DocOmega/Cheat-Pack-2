@@ -1,10 +1,10 @@
 package com.reeszrbteam.ce.console.commands;
 
+import com.kodehawa.module.ModuleBase;
+import com.kodehawa.module.ModuleManager;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.Mod;
-import com.kodehawa.mods.ModManager;
 
 import com.reeszrbteam.ce.console.BaseCommand;
 
@@ -18,30 +18,30 @@ public class CommandBind extends BaseCommand{
 	public void runCommand(String s, String[] args) {
 		try {
 			if(args[0].equalsIgnoreCase("add")) {
-				for(Mod m: ModManager.getInstance().mods) {
+				for(ModuleBase m : ModuleManager.getInstance().modules) {
 					if(m.name.replace(" ", "").equalsIgnoreCase(args[1])) {
 						if(Keyboard.getKeyIndex(args[2].toUpperCase()) == 0) {
 							CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Invalid key.");
 							return;
 						}
-						m.setKeybind(Keyboard.getKeyIndex(args[2].toUpperCase()));
-						CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage(m.name + " bound to: " + Keyboard.getKeyName(m.getKeybind()));
+						m.setKeybinding(Keyboard.getKeyIndex(args[2].toUpperCase()));
+						CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage(m.name + " bound to: " + Keyboard.getKeyName(m.getKeybinding()));
 						break;
 					}
 				}
 			}
 			if(args[0].equalsIgnoreCase("del")) {
-				for(Mod m: ModManager.getInstance().mods) {
-					if(m.getKeybind() == Keyboard.getKeyIndex(args[1].toUpperCase())) {
-						m.setKeybind(0);
+				for(ModuleBase m : ModuleManager.getInstance().modules) {
+					if(m.getKeybinding() == Keyboard.getKeyIndex(args[1].toUpperCase())) {
+						m.setKeybinding(0);
 						CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Unbound: " + args[1].toUpperCase());
 						break;
 					}
 				}
 			}
 			if(args[0].equalsIgnoreCase("clearall")) {
-				for(Mod m: ModManager.getInstance().mods) {
-					m.setKeybind(0);
+				for(ModuleBase m : ModuleManager.getInstance().modules) {
+					m.setKeybinding(0);
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("All Keys Unbound.");
 				}
 			}

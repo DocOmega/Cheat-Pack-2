@@ -12,11 +12,12 @@ import com.kodehawa.util.EntityUtils;
 import com.kodehawa.util.Tickable;
 import com.kodehawa.util.Watcher;
 
-public class Mobaura extends ModuleBase implements Tickable {
+public class Mobaura extends ModuleBase {
 
 	public Mobaura( ) {
 		super("Mob Aura", "", "1.6.2", Keyboard.KEY_L,
 				EnumGuiCategory.PLAYER, true);
+        super.setTick(true);
 	}
 
 	public static double AURA_DISTANCE = 90D;
@@ -62,12 +63,10 @@ public class Mobaura extends ModuleBase implements Tickable {
 	@Override
 	public void onEnableModule() {
 		// TODO Auto-generated method stub
-    	CheatingEssentials.getCheatingEssentials().addToTick(this);
 	}
 
 	@Override
 	public void onDisableModule() {
 		// TODO Auto-generated method stub
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 	}
 }

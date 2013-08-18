@@ -11,24 +11,23 @@ import com.kodehawa.module.annotations.ModuleLoader;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.kodehawa.util.Tickable;
 
-public class Fly extends ModuleBase implements Tickable {
+public class Fly extends ModuleBase {
 
 	@ModuleLoader(type = "Module")
 	public Fly( ) {
 		super("Fly", "Fly like a bird!", "1.6.2", Keyboard.KEY_R,
 				EnumGuiCategory.PLAYER, true);
+        super.setTick(true);
 	}
 
 
 	@Override
     public void onEnableModule(){
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
 		CheatingEssentials.getMinecraftInstance().thePlayer.capabilities.isFlying = true;
 	}
 	
 	@Override
 	public void onDisableModule(){
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 		CheatingEssentials.getMinecraftInstance().thePlayer.capabilities.isFlying = false;
 	}
 	

@@ -45,13 +45,10 @@ public class Xray extends ModuleBase {
         xrayBlocks.add( 88 );
         xrayBlocks.add( 89 );
         xrayBlocks.add( 112 );
+        super.setTick(true);
 	}
 	
 	public void onEnableModule(){
-		float[] brightness = CheatingEssentials.getMinecraftInstance().theWorld.provider.lightBrightnessTable;
-        for(int i = 0; i < brightness.length; i++) {
-           brightness[i] = 1.0F; 
-           }
 		EventHandler.getInstance().registerListener( EventBlockRender.class, this );
         CheatingEssentials.getCheatingEssentials().getMinecraftInstance().renderGlobal.loadRenderers();
 	}
@@ -73,5 +70,13 @@ public class Xray extends ModuleBase {
             }
         }
 	}
-	
+
+    @Override
+    public void tick() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        float[] brightness = CheatingEssentials.getMinecraftInstance().theWorld.provider.lightBrightnessTable;
+        for(int i = 0; i < brightness.length; i++) {
+            brightness[i] = 1.0F;
+        }
+    }
 }

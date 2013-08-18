@@ -1,7 +1,6 @@
 package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.ModuleStep;
 import com.kodehawa.module.classes.Mobaura;
 import com.reeszrbteam.ce.console.BaseCommand;
 

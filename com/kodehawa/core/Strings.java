@@ -35,7 +35,7 @@ public class Strings {
 	 */
 	
 	public static String getModVersion(){
-		return "3.0.0 A5";	
+		return "3.2.0";
 		}
 	
 	/**

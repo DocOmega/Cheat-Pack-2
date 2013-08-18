@@ -1,7 +1,7 @@
 package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.ModuleXray;
+import com.kodehawa.module.classes.Xray;
 import com.kodehawa.util.FileManager;
 import com.reeszrbteam.ce.console.BaseCommand;
 import com.reeszrbteam.ce.util.BlockFilter;
@@ -22,9 +22,9 @@ public class CommandXray extends BaseCommand
 			{
 				int id = BlockFilter.BlockNametoID(args[1]);
 				String blockname = BlockFilter.IDtoBlockName(id);
-				if(!ModuleXray.xrayBlocks.contains(id))
+				if(!Xray.xrayBlocks.contains(id))
 				{
-					ModuleXray.xrayBlocks.add(id);
+					Xray.xrayBlocks.add(id);
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Added " + blockname + "(" + id + ") to xray list.");
 					CheatingEssentials.getMinecraftInstance().renderGlobal.loadRenderers();
 					FileManager.saveXrayList();
@@ -36,9 +36,9 @@ public class CommandXray extends BaseCommand
 			{
 				int id = BlockFilter.BlockNametoID(args[1]);
 				String blockname = BlockFilter.IDtoBlockName(id);
-				if(ModuleXray.xrayBlocks.contains(id))
+				if(Xray.xrayBlocks.contains(id))
 				{
-					ModuleXray.xrayBlocks.remove(ModuleXray.xrayBlocks.indexOf(id));
+					Xray.xrayBlocks.remove(Xray.xrayBlocks.indexOf(id));
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Removed " + blockname + "(" + id + ") from xray list.");
 					CheatingEssentials.getMinecraftInstance().renderGlobal.loadRenderers();
 					FileManager.saveXrayList();

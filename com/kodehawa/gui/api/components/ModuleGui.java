@@ -24,6 +24,8 @@ package com.kodehawa.gui.api.components;
 
 import java.util.ArrayList;
 
+import com.kodehawa.module.ModuleBase;
+import com.kodehawa.module.ModuleManager;
 import net.minecraft.src.Direction;
 import net.minecraft.src.EnumChatFormatting;
 import net.minecraft.src.GuiScreen;
@@ -34,8 +36,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
-import com.kodehawa.mods.Mod;
-import com.kodehawa.mods.ModManager;
 
 public class ModuleGui extends GuiScreen
 {
@@ -87,10 +87,7 @@ public class ModuleGui extends GuiScreen
         {
             for (Item t : e.children)
             {
-                if (t instanceof TextArea)
-                {
-                    ((TextArea) t).keyPressed(i);
-                }
+
             }
         }
     }
@@ -163,9 +160,9 @@ public class ModuleGui extends GuiScreen
 
     public void makeWorldFrame()
     {
-        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, /*0xFF000055*/0x96777777, 0xaa000000, "World" + " (" + ModManager.getInstance().worldMods.size() + ")");
+        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, /*0xFF000055*/0x96777777, 0xaa000000, "World" + " (" + ModuleManager.getInstance().worldModules.size() + ")");
 
-        for (Mod m : ModManager.getInstance().worldMods)
+        for (ModuleBase m : ModuleManager.getInstance().worldModules)
         {
             Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(wFrame.width - 6);
@@ -179,9 +176,9 @@ public class ModuleGui extends GuiScreen
     
     
     public void makeF3UtilsFrame(){
-    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0x96777777, 0xaa000000, "Utils" + " (" + ModManager.getInstance().f3utils.size() + ")");
+    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0x96777777, 0xaa000000, "Utils" + " (" + ModuleManager.getInstance().utilsModules.size() + ")");
     	
-    	for (Mod m : ModManager.getInstance().f3utils)
+    	for (ModuleBase m : ModuleManager.getInstance().utilsModules)
         {
             Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(f3Frame.width - 6);
@@ -196,9 +193,9 @@ public class ModuleGui extends GuiScreen
 
     public void makePlayerFrame()
     {
-        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0x96777777, 0xaa000000, "Player" + " (" + ModManager.getInstance().playerMods.size() + ")");
+        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0x96777777, 0xaa000000, "Player" + " (" + ModuleManager.getInstance().playerModules.size() + ")");
 
-        for (Mod m : ModManager.getInstance().playerMods)
+        for (ModuleBase m : ModuleManager.getInstance().playerModules)
         {
             Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(pFrame.width - 6);
@@ -220,7 +217,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (Mod m : ModManager.getInstance().mods)
+                for (ModuleBase m : ModuleManager.getInstance().modules)
                 {
                     Label l = new Label(m.name + " - " + Keyboard.getKeyName(m.keybind), 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
@@ -340,7 +337,7 @@ public class ModuleGui extends GuiScreen
                 this.draw();
                 this.children.clear();
 
-                for (String s : ModManager.getInstance().enabledMods)
+                for (String s : ModuleManager.getInstance().enabledModules)
                 {
                     Label l = new Label(s, 0xffffff);
                     l.setParent(this, (x) + 3, (y) - 21);
@@ -533,102 +530,6 @@ public class ModuleGui extends GuiScreen
         addFrame(iFrame);
     }
 
-    public void makeTestFrame()
-    {
-        Frame tFrame = new Frame(CheatingEssentials.modinstance, 10, 30, 120, 20, 0x96777777, 0xaa000055, "Console")
-        {
-            @Override
-            public void update()
-            {
-                this.draw();
-
-                if (this.children.size() > 10)
-                {
-                    this.removeLater(this.children.get(1));
-                }
-            }
-            @Override
-            public void draw()
-            {
-                // TODO Auto-generated method stub
-                if (bgcolor2 > -1)
-                {
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, bgcolor);
-                    ModGuiUtils.drawRect(x, y, x + width, y + oldHeight, (int)(bgcolor * 1.1));
-                }
-                else
-                {
-                    ModGuiUtils.drawGradientRect(x, y, x + width, y + oldHeight, bgcolor, bgcolor2);
-                    ModGuiUtils.drawRect(x, y + oldHeight, x + width, y + height, bgcolor2);
-                }
-
-                /**
-                 * Minimize button
-                 */
-                ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF00CC00);
-
-                if (minimized)
-                {
-                    ModGuiUtils.drawFilledCircle((x + width) - 8, y + 7, 2.5, 0xFF007700);
-                }
-
-                if (pinnable)
-                {
-                    ModGuiUtils.drawFilledCircle((x + width) - 16, y + 7, 2.5, 0xff72a9dc);
-
-                    if (pinned)
-                    {
-                        ModGuiUtils.drawFilledCircle((x + width) - 16, y + 7, 2.5, 0xaa000000);
-                    }
-                }
-
-                ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
-                CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
-
-                // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
-                // y,
-                // 0x87b5ff );
-
-                if (minimized)
-                {
-                    this.height = oldHeight;
-                }
-                else
-                {
-                    GL11.glPushMatrix();
-                    GL11.glScaled(0.5, 0.5, 0.5);
-                    CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString("Type \'clear\' to clear history. ", (this.x * 2) + 6, ((this.y + this.oldHeight) * 2) - 4, 0xffffff);
-                    GL11.glScaled(1, 1, 1);
-                    GL11.glPopMatrix();
-                    int diff = 0;
-
-                    if (this.children.size() > 0)
-                    {
-                        diff = this.children.size() * 2;
-                    }
-
-                    this.height = (int)((oldHeight + ((oldHeight * this.children.size()) / 1.4) + 5 + diff) / 1.1);
-                }
-
-                if (!minimized)
-                {
-                    for (Item e : children)
-                    {
-                        e.x = (this.x) + 3;
-                        int offset = oldHeight;
-                        offset /= 2;
-                        offset += 4;
-                        e.y = (this.y) + (offset * (this.children.indexOf(e) + 1)) + 10;
-                        e.update();
-                    }
-                }
-            }
-        };
-        tFrame.setPinnable(true);
-        tFrame.addChild(new TextArea("", tFrame.x, tFrame.y + (tFrame.children.size() * 12), 100, 10, 0x77770077));
-        addFrame(tFrame);
-    }
-
     public void addFrame(Frame e)
     {
         frames.add(e);
@@ -641,7 +542,7 @@ public class ModuleGui extends GuiScreen
         makeRadarFrame();
         makeInfoFrame();
         makeActivesFrame( );
-        makeTestFrame( );
+        //makeTestFrame( );
         makeF3UtilsFrame();
         makeKeybindsFrame();
     }

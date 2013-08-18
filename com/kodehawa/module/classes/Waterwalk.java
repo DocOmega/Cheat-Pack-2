@@ -7,10 +7,11 @@ import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.kodehawa.util.Tickable;
 
-public class Waterwalk extends ModuleBase implements Tickable {
+public class Waterwalk extends ModuleBase {
 
 	public Waterwalk( ) {
 		super("Water Walk", "", "1.6.2", Keyboard.KEY_J, EnumGuiCategory.WORLD, true);
+        super.setTick(true);
 	}
 
 	@Override
