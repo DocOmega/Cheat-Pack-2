@@ -22,10 +22,10 @@ public class DebugInfo {
         CheatingEssentials.getCheatingEssentials().CELogAgent("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
         CheatingEssentials.getCheatingEssentials().CELogAgent("OS: " + WordUtils.capitalizeFully(System.getProperty("os.name")));
 
-        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().modules.size() + " module(s)!");
-        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().worldModules.size() + " World module(s)!");
-        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().playerModules.size() + " Player module(s)!");
-        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().utilsModules.size() + " Utils module(s)!");
+        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().modules.size() + " total modules! (Without counting disabled ones)");
+        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().worldModules.size() + " World module)!");
+        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().playerModules.size() + " Player modules!");
+        CheatingEssentials.getCheatingEssentials().CELogAgent("Loaded " + ModuleManager.getInstance().utilsModules.size() + " Utils modules!");
 
     }
 }

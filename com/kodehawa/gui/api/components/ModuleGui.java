@@ -381,8 +381,6 @@ public class ModuleGui extends GuiScreen
 
                 ModGuiUtils.drawHorizontalLine(this.x + 2, (this.x + this.width) - 2, (this.y + this.oldHeight) - 6, 2, 0xff550055);
                 CheatingEssentials.modinstance.getMinecraftInstance().fontRenderer.drawString(this.text, this.x + 3, this.y + 3, 0xff87b5ff);
-                // TTFRenderer.drawTTFString( Colony.guiFont, this.text, x + 2,
-                // y, 0x87b5ff );
 
                 if (minimized)
                 {

@@ -34,7 +34,10 @@ public class HookNetClientHandler extends NetClientHandler
 
   	@Override
   	public void handleLogin(final Packet1Login par1Packet1Login) {
-          //CheatingEssentials.getMinecraftInstance().playerController = new HookPlayerControllerMP(CheatingEssentials.getMinecraftInstance(), this);
+        System.out.println("That works?" +
+                "...");
+        if(CheatingEssentials.getMinecraftInstance().playerController.getClass() != HookPlayerControllerMP.class){
+            CheatingEssentials.getMinecraftInstance().playerController = new HookPlayerControllerMP(CheatingEssentials.getMinecraftInstance(), this); }
           CheatingEssentials.getMinecraftInstance().statFileWriter.readStat(StatList.joinMultiplayerStat, 1);
           CheatingEssentials.getMinecraftInstance().theWorld = new WorldClient(this, new WorldSettings(0L, par1Packet1Login.gameType, false,
           par1Packet1Login.hardcoreMode, par1Packet1Login.terrainType), par1Packet1Login.dimension,
@@ -47,7 +50,7 @@ public class HookNetClientHandler extends NetClientHandler
           currentServerMaxPlayers = par1Packet1Login.maxPlayers;
           CheatingEssentials.getMinecraftInstance().playerController.setGameType(par1Packet1Login.gameType);
           CheatingEssentials.getMinecraftInstance().gameSettings.sendSettingsToServer();
-          //CheatingEssentials.getMinecraftInstance().myNetworkManager.addToSendQueue(new Packet250CustomPayload("MC|Brand", ClientBrandRetriever.getClientModName().getBytes(Charsets.UTF_8)));
+          CheatingEssentials.getMinecraftInstance().myNetworkManager.addToSendQueue(new Packet250CustomPayload("MC|Brand", ClientBrandRetriever.getClientModName().getBytes(Charsets.UTF_8)));
   }
 }
 

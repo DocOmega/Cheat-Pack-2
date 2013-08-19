@@ -1,9 +1,7 @@
 package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.Vars;
-import com.kodehawa.players.FrenemyManager;
-import com.kodehawa.util.ChatColour;
+import com.kodehawa.playerrelations.Enemy;
 
 import com.reeszrbteam.ce.console.BaseCommand;
 
@@ -20,10 +18,10 @@ public class CommandEnemy extends BaseCommand{
 			if(args[0].equalsIgnoreCase("add"))
 			{
 				String name = args[1];
-				if(!Vars.enemies.contains(name))
+				if(!Enemy.enemyList.contains(name))
 				{
-					Vars.enemies.add(name);
-					FrenemyManager.getInstance().writeEnemies();
+                    Enemy.enemyList.add(name);
+					Enemy.writeEnemyFile();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Enemied " + name + ".");
 				}else
 				{
@@ -33,10 +31,10 @@ public class CommandEnemy extends BaseCommand{
 			if(args[0].equalsIgnoreCase("del"))
 			{
 				String name = args[1];
-				if(Vars.enemies.contains(name))
+				if(Enemy.enemyList.contains(name))
 				{
-					Vars.enemies.remove(name);
-					FrenemyManager.getInstance().writeEnemies();
+                    Enemy.enemyList.remove(name);
+                    Enemy.writeEnemyFile();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Removed " + name + " from enemies.");
 				}else
 				{
@@ -47,8 +45,8 @@ public class CommandEnemy extends BaseCommand{
 			{
 				try
 				{
-					Vars.enemies.clear();
-					FrenemyManager.getInstance().writeEnemies();
+                    Enemy.enemyList.clear();
+					Enemy.writeEnemyFile();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Cleared friends.");
 				}catch(Exception e) {}
 			}

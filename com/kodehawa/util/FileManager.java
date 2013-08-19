@@ -12,12 +12,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.kodehawa.module.classes.BlockESP;
 import com.kodehawa.module.classes.Xray;
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
 public class FileManager {
     public static File mainDir;
+    public static File someDir;
     public static File crashDir;
     private static volatile FileManager instance;
 
@@ -26,18 +28,30 @@ public class FileManager {
     public FileManager( ) {
         crashDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir + File.separator + "log");
 		mainDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
+        someDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEBlockESPList.txt");
 
-        loadXrayList();
         if(!mainDir.exists()){
             mainDir.getParentFile().mkdirs();
             try {
 				mainDir.createNewFile();
+                saveXrayList();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        saveXrayList();
         }
+        if(!someDir.exists()){
+            someDir.getParentFile().mkdirs();
+            try{
+                someDir.createNewFile();
+                saveBlockESPList();
+            }
+            catch(IOException e){
+              e.printStackTrace();
+            }
+        }
+        loadXrayList();
+        loadBlockESPList();
     }
         
 
@@ -65,7 +79,7 @@ public class FileManager {
 	
     public static void saveXrayList( ) {
         try {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Writting X-Ray block list configuration file...");
+        	CheatingEssentials.getCheatingEssentials().CELogAgent("Writting X-Ray list configuration file...");
             File file = new File( mainDir, "" );
             BufferedWriter bufferedwritter = new BufferedWriter( new FileWriter( file ) );
             for( int i : Xray.xrayBlocks ) {
@@ -78,6 +92,51 @@ public class FileManager {
         	 ex.printStackTrace( );
         	 CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Error in CE init: " + ex.toString( ) );
 	            ex.printStackTrace( );
+        }
+    }
+
+    /**
+     * Save BlockESP configs. inb4flamewar
+     */
+    public static void saveBlockESPList(){
+        try {
+            CheatingEssentials.getCheatingEssentials().CELogAgent("Writting BlockESP block list configuration file...");
+            File file = new File( someDir, "" );
+            BufferedWriter bufferedwritter = new BufferedWriter( new FileWriter( file ) );
+            for( int i : BlockESP.espList ) {
+                bufferedwritter.write( i + "\r\n" );
+            }
+            bufferedwritter.close( );
+
+        } catch( Exception ex ) {
+            CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't write BlockESP configuration file! Custom blocks for X-Ray will be disabled!");
+            ex.printStackTrace( );
+            CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Error in CE init: " + ex.toString( ) );
+            ex.printStackTrace( );
+        }
+    }
+
+    /**
+     * Loads BlockESP list
+     */
+    public static void loadBlockESPList(){
+        try {
+            File file = new File( someDir, "" );
+            FileInputStream fstream = new FileInputStream( file.getAbsolutePath( ) );
+            DataInputStream in = new DataInputStream( fstream );
+            BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
+            String line;
+            while( ( line = br.readLine( ) ) != null ) {
+                String curLine = line.toLowerCase( ).trim( );
+                int id = Integer.parseInt( curLine );
+                BlockESP.espList.add( id );
+            }
+            br.close( );
+        } catch( Exception ex ) {
+            CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't load Block ESP list. Unreliable results!");
+            CheatingEssentials.getCheatingEssentials().CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
+            ex.printStackTrace( );
+            saveBlockESPList( );
         }
     }
     

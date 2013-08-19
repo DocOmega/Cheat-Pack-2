@@ -128,9 +128,10 @@ public abstract class ModuleBase implements Listener, Tickable {
        this.version = version;
        EventHandler.getInstance().registerListener( EventKey.class, this );
        EventHandler.getInstance().registerListener( EventRender3D.class, this );
-      }
+    }
 
-    
+
+
 
     /**
      * Set module as on.
@@ -159,13 +160,13 @@ public abstract class ModuleBase implements Listener, Tickable {
     		onEnableModule();
     		ModuleManager.getInstance().enabledModules.add(name);
             if(this.getTick())   {
-            CheatingEssentials.getCheatingEssentials().addToTick(this);  }
+            ModuleManager.getInstance().addToTick(this);  }
         }
     	else{
     		onDisableModule();
     		ModuleManager.getInstance().enabledModules.remove(name);
             if(this.getTick())   {
-            CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);  }
+                ModuleManager.getInstance().removeFromCurrentTick(this);  }
         }
     	  if( this.isActive( ) ) {
               if( this.getRender( ) ) {
@@ -339,54 +340,54 @@ public abstract class ModuleBase implements Listener, Tickable {
         return getWorld().playerEntities;
     }
 
-    protected static void displayGuiScreen(final GuiScreen e) {
+     protected static void displayGuiScreen(final GuiScreen e) {
         getMinecraft().displayGuiScreen(e);
-    }
+     }
 
-    protected static void sendPacket(final Packet packet) {
+     protected static void sendPacket(final Packet packet) {
         getSendQueue().addToSendQueue(packet);
-    }
+     }
 
-    protected static void sendChatMessage(final String message) {
+     protected static void sendChatMessage(final String message) {
         sendPacket(new Packet3Chat(message));
-    }
+     }
 
-    protected static NetClientHandler getSendQueue() {
+     protected static NetClientHandler getSendQueue() {
         return getPlayer().sendQueue;
-        }
+     }
 
 
-    protected static double getDistanceToEntity(final Entity e) {
+     protected static double getDistanceToEntity(final Entity e) {
         return getPlayer().getDistanceToEntity(e);
-        }
+     }
 
 
-    protected static double getDistanceSqToEntity(final Entity e) {
+     protected static double getDistanceSqToEntity(final Entity e) {
         return getPlayer().getDistanceSqToEntity(e);
-        }
+     }
 
-    protected static List<Entity> getLoadedEntities() {
+     protected static List<Entity> getLoadedEntities() {
         return getWorld().loadedEntityList;
          }
 
-    protected static EntityRenderer getEntityRenderer() {
+     protected static EntityRenderer getEntityRenderer() {
         return getMinecraft().entityRenderer;
          }
 
-    protected static PlayerControllerMP getPlayerController() {
+     protected static PlayerControllerMP getPlayerController() {
         return getMinecraft().playerController;
          }
 
-    protected static boolean getCanEntityBeSeen(final Entity e) {
+     protected static boolean getCanEntityBeSeen(final Entity e) {
         return getPlayer().canEntityBeSeen(e);
          }
     
-    protected void setFly(boolean state){
+     protected void setFly(boolean state){
         getMinecraft().thePlayer.capabilities.allowFlying = state;
 		getMinecraft().thePlayer.sendPlayerAbilities();
 	}
 
-      protected static List<Entity> getEntitiesInRange(final double range) {
+     protected static List<Entity> getEntitiesInRange(final double range) {
         final List<Entity> list = new LinkedList<Entity>();
 
         for (final Entity e : getLoadedEntities()) {
@@ -427,8 +428,8 @@ public abstract class ModuleBase implements Listener, Tickable {
         /**
         * Disables a Module for incompatibility
         */
-        private void disableIncompat(final Class<? extends ModuleBase> module) {
-        final ModuleBase incompat = ModuleManager.getInstance().getModuleByClass(module);
+      private void disableIncompat(final Class<? extends ModuleBase> module) {
+      final ModuleBase incompat = ModuleManager.getInstance().getModuleByClass(module);
 
         if (!incompat.isActive()) {
                 return;
@@ -441,20 +442,20 @@ public abstract class ModuleBase implements Listener, Tickable {
         incompat.setActive(false);
          }
 
-    /**
-     * Sets module as enabled and change their state.
-     */
-    public abstract void onEnableModule( );
+     /**
+      * Sets module as enabled and change their state.
+      */
+      public abstract void onEnableModule( );
 	
-	/**
-	 * Sets module as disabled and change their state.
-	 */
-	public abstract void onDisableModule( );
+	 /**
+	  * Sets module as disabled and change their state.
+	  */
+	  public abstract void onDisableModule( );
     
-	/**
-	 * Sets module as renderizable one and gets render state.
-	 */
-	public void onRenderInModule( ){}
+	 /**
+	  * Sets module as renderizable one and gets render state.
+	  */
+	  public void onRenderInModule( ){}
 
     @Override
     public void tick(){}

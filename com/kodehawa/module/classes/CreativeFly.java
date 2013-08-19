@@ -21,12 +21,10 @@ public class CreativeFly extends ModuleBase {
 	
 	@Override
     public void onEnableModule(){
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
 	}
 	
 	@Override 
 	public void onDisableModule(){
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 		super.setFly(false);
 	}
 	

@@ -2,6 +2,8 @@ package com.kodehawa.gui.api.components;
 
 import java.util.List;
 
+import com.kodehawa.playerrelations.Enemy;
+import com.kodehawa.playerrelations.Friend;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityBat;
@@ -19,7 +21,6 @@ import org.lwjgl.opengl.GL11;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
 import com.kodehawa.hooks.CE_GuiIngameH;
-import com.kodehawa.mods.Vars;
 
 public class Radar
 {
@@ -70,11 +71,11 @@ public class Radar
 						String u = p.username;
                         int color = 0xffffff;
 
-                        if (Vars.friends.contains(u))
+                        if (Friend.friendList.contains(u))
                         {
                             color = 0x00ff00;
                         }
-                        else if (Vars.enemies.contains(u))
+                        else if (Enemy.enemyList.contains(u))
                         {
                             color = 0xff0000;
                         }

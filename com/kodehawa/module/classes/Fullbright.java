@@ -13,7 +13,6 @@ public class Fullbright extends ModuleBase {
 	public Fullbright( ) {
 		super("Full Bright", "No more darkness!", "1.6.2",
 				Keyboard.KEY_F, EnumGuiCategory.WORLD, true);
-		// TODO Auto-generated constructor stub
         super.setTick(true);
 	}
 

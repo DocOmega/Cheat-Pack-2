@@ -7,7 +7,6 @@ import net.minecraft.src.TileEntityEnderChest;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.Vars;
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.annotations.ModuleLoader;
 import com.kodehawa.module.enums.EnumGuiCategory;

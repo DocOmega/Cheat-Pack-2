@@ -31,7 +31,6 @@ public class Sprint extends ModuleBase {
 
 	@Override
 	public void onDisableModule() {
-		// TODO Auto-generated method stub
 	}
 
 }

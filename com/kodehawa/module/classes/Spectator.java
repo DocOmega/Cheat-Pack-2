@@ -9,7 +9,7 @@ import com.kodehawa.module.ModuleManager;
 import com.kodehawa.module.enums.EnumGuiCategory;
 import com.reeszrbteam.ce.util.EntitySpectator;
 
-public class Spectator extends ModuleBase implements com.kodehawa.util.Tickable{
+public class Spectator extends ModuleBase {
 
 	private EntityOtherPlayerMP entity = null;
 	public EntitySpectator freecamEnt = null;
@@ -17,7 +17,7 @@ public class Spectator extends ModuleBase implements com.kodehawa.util.Tickable{
 	
 	public Spectator() {
 		super("Spectate", "Spectate and Spy on People", "1.6.2", 0, EnumGuiCategory.PLAYER, true);
-		// TODO Auto-generated constructor stub
+        super.setTick(true);
 	}
 
 	@Override

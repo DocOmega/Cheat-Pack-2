@@ -24,7 +24,7 @@ import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldClient;
 
-public class HookPlayerControllerMP
+public class HookPlayerControllerMP  extends PlayerControllerMP
 {
     /** The Minecraft instance. */
     private final Minecraft mc;
@@ -64,6 +64,7 @@ public class HookPlayerControllerMP
 
     public HookPlayerControllerMP(Minecraft par1Minecraft, NetClientHandler par2NetClientHandler)
     {
+        super(par1Minecraft, par2NetClientHandler);
         this.currentGameType = EnumGameType.SURVIVAL;
         this.mc = par1Minecraft;
         this.netClientHandler = par2NetClientHandler;

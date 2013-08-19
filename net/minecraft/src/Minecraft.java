@@ -164,7 +164,7 @@ public class Minecraft implements IPlayerUsage
     /** Join player counter */
     private int joinPlayerCounter;
     private final boolean isDemo;
-    private INetworkManager myNetworkManager;
+    public INetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
 
     /** The profiler instance */

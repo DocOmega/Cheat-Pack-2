@@ -11,6 +11,7 @@ import java.util.zip.ZipInputStream;
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
+import com.kodehawa.util.FileManager;
 
 
 public class CJarLoader extends Thread {
@@ -20,9 +21,11 @@ public class CJarLoader extends Thread {
      */
     File jarDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance( ).mcDataDir + File.separator + "modules"
             + File.separator + "files" );
+    private static volatile CJarLoader instance;
     
     public CJarLoader( ) {
         // TODO Auto-generated constructor stub
+        instance = this;
     	if( !jarDir.exists( ) ) {
             jarDir.mkdirs( );
             jarDir.mkdir( );
@@ -73,21 +76,21 @@ public class CJarLoader extends Thread {
                                     clazz = ucl.loadClass( yolo.getName( ).substring( 0, yolo.getName( ).length( ) - 6 )
                                             .replace( "/", "." ) );
                                     log( "Class loaded: " + yolo.getName( ).replace( "/", "." ) );
-                                 if(yolo.getName().startsWith("Player-") && yolo.getName().endsWith(".class")){
+                                 if(yolo.getName().startsWith("Player_") && yolo.getName().endsWith(".class")){
                                 	  Constructor ctr = clazz.getConstructor( );
                                       ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                       log( "Player Module added: " + yolo.getName( ).replace( "/", "." ) );
                                       ModuleManager.getInstance().addPlayerModule( q );
                                       ModuleManager.getInstance().addModule( q );
                                  }
-                                 if(yolo.getName().startsWith("World-") && yolo.getName().endsWith(".class")){
+                                 if(yolo.getName().startsWith("World_") && yolo.getName().endsWith(".class")){
                                	  Constructor ctr = clazz.getConstructor( );
                                      ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                      log( "World Module added: " + yolo.getName( ).replace( "/", "." ) );
                                      ModuleManager.getInstance().addWorldModule( q );
                                      ModuleManager.getInstance().addModule( q );
                                 }
-                                if(yolo.getName().startsWith("Util-") && yolo.getName().endsWith(".class")){
+                                if(yolo.getName().startsWith("Util_") && yolo.getName().endsWith(".class")){
                                   	  Constructor ctr = clazz.getConstructor( );
                                         ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                         log( "Utils Module added: " + yolo.getName( ).replace( "/", "." ) );
@@ -117,7 +120,7 @@ public class CJarLoader extends Thread {
             for( StackTraceElement ele : ex.getStackTrace( ) ) {
                 logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
             }
-            //CheatingEssentials.getCheatingEssentials().writeCrash(logString);
+            FileManager.getInstance().writeCrash(logString);
         }
     }
          
@@ -152,4 +155,11 @@ public class CJarLoader extends Thread {
 		requestStop();
 		}
 	}
+
+    public static CJarLoader getInstance(){
+        if(instance == null){
+            instance = new CJarLoader();
+        }
+        return instance;
+    }
 }

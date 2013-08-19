@@ -33,6 +33,7 @@ public class CommandManager
 		commands.add(new CommandAuraDistance());
         commands.add(new CommandFlySpeed());
         commands.add(new CommandBlockESP());
+        commands.add(new CommandBreadcrumb());
 	}
 
 	public void runCommands(String s)

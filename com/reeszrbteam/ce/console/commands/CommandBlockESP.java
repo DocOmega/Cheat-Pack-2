@@ -2,6 +2,7 @@ package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.classes.BlockESP;
+import com.kodehawa.util.FileManager;
 import com.reeszrbteam.ce.console.BaseCommand;
 import com.reeszrbteam.ce.util.BlockFilter;
 
@@ -18,7 +19,8 @@ public class CommandBlockESP extends BaseCommand {
 					int id = BlockFilter.BlockNametoID(args[1]);
 					String derp = BlockFilter.IDtoBlockName(id);
 					BlockESP.espList.add(id);
-					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Added " + derp + "(" + id + ")" + " to the BlockESP list.");
+                    FileManager.saveBlockESPList();
+                    CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Added " + derp + "(" + id + ")" + " to the BlockESP list.");
 				}else{
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Could not add Air Block into BlockESP!");
 				}
@@ -28,6 +30,7 @@ public class CommandBlockESP extends BaseCommand {
 				String derp2 = BlockFilter.IDtoBlockName(id);
 				if(BlockESP.espList.contains(id)) {
 					BlockESP.espList.remove(BlockESP.espList.indexOf(id));
+                    FileManager.saveBlockESPList();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Removed " + derp2 + "(" + id + ")" + " from BlockESP.");
 				} else {
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage(derp2 + "(" + id + ")" + " is not in the BlockESP list.");
@@ -35,6 +38,7 @@ public class CommandBlockESP extends BaseCommand {
 			}
 			if(args[0].equalsIgnoreCase("clear")) {
 				BlockESP.espList.clear();
+                FileManager.saveBlockESPList();
 				CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Cleared BlockESP.");
 			}
 		} catch(Exception e) {

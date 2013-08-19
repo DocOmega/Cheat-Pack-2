@@ -28,12 +28,10 @@ public class Step extends ModuleBase {
 
 	@Override
 	public void onEnableModule(){
-		CheatingEssentials.getCheatingEssentials().addToTick(this);
 	}
 	
 	@Override
 	public void onDisableModule(){
-		CheatingEssentials.getCheatingEssentials().removeFromCurrentTick(this);
 		setStep(0.5F);
 	}
 	

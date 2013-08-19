@@ -1,8 +1,7 @@
 package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.CheatingEssentials;
-import com.kodehawa.mods.Vars;
-import com.kodehawa.players.FrenemyManager;
+import com.kodehawa.playerrelations.Friend;
 import com.reeszrbteam.ce.console.BaseCommand;
 
 public class CommandFriend extends BaseCommand {
@@ -20,10 +19,10 @@ public class CommandFriend extends BaseCommand {
 			if(args[0].equalsIgnoreCase("add"))
 			{
 				String name = args[1];
-				if(!Vars.friends.contains(name))
+				if(!Friend.friendList.contains(name))
 				{
-					Vars.friends.add(name);
-					FrenemyManager.getInstance().writeFriends();
+                    Friend.friendList.add(name);
+					Friend.writeFriendList();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Added " + name + " to friend list.");
 				}else
 				{
@@ -33,10 +32,10 @@ public class CommandFriend extends BaseCommand {
 			if(args[0].equalsIgnoreCase("del"))
 			{
 				String name = args[1];
-				if(Vars.friends.contains(name))
+				if(Friend.friendList.contains(name))
 				{
-					Vars.friends.remove(name);
-					FrenemyManager.getInstance().writeEnemies();
+                    Friend.friendList.remove(name);
+                    Friend.writeFriendList();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Removed " + name + " from friends.");
 				}else
 				{
@@ -47,8 +46,8 @@ public class CommandFriend extends BaseCommand {
 			{
 				try
 				{
-					Vars.friends.clear();
-					FrenemyManager.getInstance().writeEnemies();
+                    Friend.friendList.clear();
+					Friend.writeFriendList();
 					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Cleared friends.");
 				}catch(Exception e) {}
 			}

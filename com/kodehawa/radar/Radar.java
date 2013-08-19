@@ -1,5 +1,7 @@
 package com.kodehawa.radar;
 
+import com.kodehawa.playerrelations.Enemy;
+import com.kodehawa.playerrelations.Friend;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityBat;
@@ -9,14 +11,12 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntitySlime;
 import net.minecraft.src.EntitySquid;
 import net.minecraft.src.EntityVillager;
-import net.minecraft.src.FontRenderer;
 import net.minecraft.src.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.gui.api.render.ModGuiUtils;
-import com.kodehawa.mods.Vars;
 
 public class Radar extends Thread {
 
@@ -39,14 +39,7 @@ public class Radar extends Thread {
 			ModGuiUtils.dr( ModGuiUtils.getWidth( ) - 59.5, 10, ModGuiUtils.getWidth( ) - 60.5, 110, 0xff00ffff );
 			
 			ModGuiUtils.drawCircle( ModGuiUtils.getWidth( ) - 60, 60, 1, 0xffffffff );
-			
-			FontRenderer fontrenderer = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().fontRenderer;
-			String u1 = "X:" + (int) CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.posX;
-			String u2 = "Z:" + (int) CheatingEssentials.getCheatingEssentials().getMinecraftInstance().thePlayer.posZ;
-			//fontrenderer.drawString(/* fontrenderer.FONT_HEIGHT/2 + */ChatColour.WHITE + u1, ModGuiUtils.getWidth( ) - 98, 112, 0);
-			//fontrenderer.drawString(/* fontrenderer.FONT_HEIGHT/2 + */ ChatColour.WHITE + u2, ModGuiUtils.getWidth( ) - 58, 112, 200);
 
-			
 			java.util.List list1 = CheatingEssentials.getCheatingEssentials().getMinecraftInstance().theWorld.loadedEntityList;
 			
 			GL11.glLineWidth( 1.0F );
@@ -71,11 +64,11 @@ public class Radar extends Thread {
 							String u = p.username;
 	                        int color = 0xffffff;
 
-	                        if (Vars.friends.contains(u))
+	                        if (Friend.friendList.contains(u))
 	                        {
 	                            color = 0x00ff00;
 	                        }
-	                        else if (Vars.enemies.contains(u))
+	                        else if (Enemy.enemyList.contains(u))
 	                        {
 	                            color = 0xff0000;
 	                        }

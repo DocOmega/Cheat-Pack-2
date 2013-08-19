@@ -10,13 +10,15 @@ package com.kodehawa;
 
 import java.util.ArrayList;
 
+import com.kodehawa.api.CJarLoader;
 import com.kodehawa.core.DebugInfo;
 import com.kodehawa.core.Strings;
 import com.kodehawa.module.ModuleManager;
 import com.kodehawa.module.loader.BaseLoader;
+import com.kodehawa.playerrelations.Enemy;
+import com.kodehawa.playerrelations.Friend;
 import net.minecraft.src.Minecraft;
 
-import com.kodehawa.players.FrenemyManager;
 import com.kodehawa.util.FileManager;
 import com.kodehawa.util.KeyboardListener;
 import com.kodehawa.util.Tickable;
@@ -44,9 +46,11 @@ public final class CheatingEssentials {
         CELogAgent("Starting Cheating Essentials " + Strings.MOD_VERSION + "...");
         modinstance = this;
         ModuleManager.getInstance();
+        CJarLoader.getInstance();
         BaseLoader.getInstance();
         DebugInfo.debugInfo();
-        FrenemyManager.getInstance();
+        Enemy.getInstance();
+        Friend.getInstance();
         FileManager.getInstance();
         CELogAgent("Cheating Essentials " + Strings.MOD_VERSION +  " started in Minecraft 1.6.2");
 	}
@@ -57,7 +61,7 @@ public final class CheatingEssentials {
 	public static void onStart(){
 		CELogAgent("Initializing Command interface...");
         CommandManager.getInstance();
-		CELogAgent("Initialized Command interface...");
+		CELogAgent("Initialized Command interface.");
 	}
 
 	/**
@@ -88,24 +92,9 @@ public final class CheatingEssentials {
 		return Minecraft.getMinecraft();
 	}
 
-	public void addToTick(Tickable tickable) {
-		 if (!modInternalTicksArray.contains(tickable))
-	        {
-			 modInternalTicksArray.add(tickable);
-	        }
-		
-	}
-	
-	public void removeFromCurrentTick(Tickable tickable) {
-		 if (modInternalTicksArray.contains(tickable))
-	        {
-			 modInternalTicksArray.remove(tickable);
-	        }
-	}
-	
 	public void tick() {
 
-		for(Tickable tickable : modInternalTicksArray){
+		for(Tickable tickable : ModuleManager.getInstance().modInternalTicksArray){
 			tickable.tick();
 		}
 

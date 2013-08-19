@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import com.kodehawa.CheatingEssentials;
+import com.kodehawa.core.Strings;
 import com.kodehawa.module.annotations.ModuleExperimental;
 import com.kodehawa.module.classes.ChestESP;
 import com.kodehawa.module.loader.BaseLoader;
 import com.kodehawa.util.TestClassEnumerator;
+import com.kodehawa.util.Tickable;
 
 public class ModuleManager {
 
@@ -18,6 +20,8 @@ public class ModuleManager {
     public volatile ArrayList<ModuleBase> playerModules;
     public volatile ArrayList<ModuleBase> utilsModules;
     public ArrayList<String> enabledModules = new ArrayList<String>();
+    public ArrayList<Tickable> modInternalTicksArray = new ArrayList<Tickable>();
+
     private volatile static ModuleManager instance;
 	
 	public ModuleManager( ){
@@ -27,7 +31,7 @@ public class ModuleManager {
         utilsModules = new ArrayList<ModuleBase>();
 
         CheatingEssentials.getCheatingEssentials().CELogAgent(
-        		"Scanning minecraft.jar for built-in modules and loading them...");
+        		"Module System: Starting in Cheating Essentials " + Strings.MOD_VERSION + " for Minecraft 1.6.2...");
         
         List<Class<?>> modulesFound = new ArrayList<Class<?>>();
         
@@ -115,7 +119,21 @@ public class ModuleManager {
                         return Collections.unmodifiableList(modules);
                 }
         }
-     
+
+    public void addToTick(Tickable tickable) {
+        if (!modInternalTicksArray.contains(tickable))
+        {
+            modInternalTicksArray.add(tickable);
+        }
+
+    }
+
+    public void removeFromCurrentTick(Tickable tickable) {
+        if (modInternalTicksArray.contains(tickable))
+        {
+            modInternalTicksArray.remove(tickable);
+        }
+    }
 
  	public static ModuleManager getInstance(){
  		if(instance == null){

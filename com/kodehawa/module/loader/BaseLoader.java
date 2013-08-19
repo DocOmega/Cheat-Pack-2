@@ -58,6 +58,7 @@ public final class BaseLoader {
 		ModuleManager.getInstance().addWorldModule(new PlayerESP( ));
 		ModuleManager.getInstance().addWorldModule(new MobESP( ));
 		ModuleManager.getInstance().addWorldModule(new Tracers( ));
+        ModuleManager.getInstance().addWorldModule(new Breadcrumb( ));
         ModuleManager.getInstance().addUtilModule(new UtilMobHitbox( ));
         ModuleManager.getInstance().addUtilModule(new UtilReloadChunks( ));
         ModuleManager.getInstance().addUtilModule(new UtilAdvancedTooltips(  ));
@@ -71,7 +72,29 @@ public final class BaseLoader {
         for(ModuleBase m : ModuleManager.getInstance().utilsModules){
             ModuleManager.getInstance().modules.add(m);
         }
+
+
+        for(ModuleBase m : ModuleManager.getInstance().modules){
+
+        if(!m.enabled){
+            if(ModuleManager.getInstance().utilsModules.contains(m)){
+                CheatingEssentials.CELogAgent("Util Module: " + m + "it's disabled due to internal petition");
+                ModuleManager.getInstance().utilsModules.remove( m );
+            }
+
+            if(ModuleManager.getInstance().playerModules.contains(m)){
+                CheatingEssentials.CELogAgent("Player Module: " + m + "it's disabled due to internal petition");
+                ModuleManager.getInstance().playerModules.remove( m );
+            }
+
+            else if(ModuleManager.getInstance().worldModules.contains(m)){
+                CheatingEssentials.CELogAgent("World Module: " + m + "it's disabled due to internal petition");
+                ModuleManager.getInstance().worldModules.remove( m );
+            }
+
+        }
 	}
+    }
 
     public static void getKeybindingForModule(){
         xray = new Xray();
