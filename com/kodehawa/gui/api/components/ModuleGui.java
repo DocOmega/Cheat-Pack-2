@@ -209,7 +209,7 @@ public class ModuleGui extends GuiScreen
 
     public void makeKeybindsFrame()
     {
-        Frame kFrame = new Frame(CheatingEssentials.modinstance, 130, 50, 120, 20, 0x96777777, 0xaa000000, "Keybinds")
+        Frame kFrame = new Frame(CheatingEssentials.modinstance, 10, 30, 120, 20, 0x96777777, 0xaa000000, "Keybinds")
         {
             @Override
             public void update()

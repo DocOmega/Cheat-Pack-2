@@ -2,10 +2,8 @@ package com.kodehawa.core;
 
 import com.kodehawa.CheatingEssentials;
 
-import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
 import org.apache.commons.lang3.text.WordUtils;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.text.NumberFormat;

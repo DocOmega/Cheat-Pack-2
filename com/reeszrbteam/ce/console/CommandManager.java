@@ -34,6 +34,7 @@ public class CommandManager
         commands.add(new CommandFlySpeed());
         commands.add(new CommandBlockESP());
         commands.add(new CommandBreadcrumb());
+        commands.add(new CommandGuiMode());
 	}
 
 	public void runCommands(String s)

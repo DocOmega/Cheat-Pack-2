@@ -16,7 +16,8 @@ public class HookCallableScreenName implements Callable {
         }
 
         public String callScreenName() {
-                return Renderer.getRendererMinecraft(this.entityRender).currentScreen.getClass().getCanonicalName();
+              //  return Renderer.getRendererMinecraft(this.entityRender).currentScreen.getClass().getCanonicalName();
+            return null;
         }
 
         public Object call() {

@@ -5,6 +5,7 @@ import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
 import com.kodehawa.module.annotations.ModuleLoader;
 import com.kodehawa.module.classes.*;
+import com.kodehawa.module.enums.EnumGuiCategory;
 
 import static com.kodehawa.module.ModuleManager.*;
 

@@ -3,6 +3,9 @@ package com.kodehawa.hooks;
 
 import com.kodehawa.module.ModuleManager;
 import com.reeszrbteam.ce.console.GuiConsole;
+import com.reeszrbteam.ce.gui.click.YouAlwaysWinClickGui;
+import com.reeszrbteam.ce.gui.click.elements.YAWWindow;
+
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
 import net.minecraft.src.Minecraft;
@@ -27,7 +30,9 @@ public class CE_GuiIngameH extends GuiIngame {
     private boolean activese;
     private ModuleGui Gui;
     private GuiConsole Console;
+    private YouAlwaysWinClickGui yawgui;
 	public static int tick = 0;
+	public static int guimode = 0;
 
 	
 	public CE_GuiIngameH(Minecraft par1Minecraft) {
@@ -37,6 +42,7 @@ public class CE_GuiIngameH extends GuiIngame {
 		radar = new Radar();
 		Gui = new ModuleGui( );
         Console = new GuiConsole();
+        yawgui = new YouAlwaysWinClickGui();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -49,17 +55,34 @@ public class CE_GuiIngameH extends GuiIngame {
         	
 
     		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_G)){
-    			CheatingEssentials.getMinecraftInstance().displayGuiScreen(Gui);
+    			if(guimode == 0){
+    				CheatingEssentials.getMinecraftInstance().displayGuiScreen(Gui);
+    			}else
+    			if(guimode == 1)
+    			{
+    				CheatingEssentials.getMinecraftInstance().displayGuiScreen(yawgui);
+    			}
     		}
     		if( KeyboardListener.getInstance().getKeyStateFromMap(Keyboard.KEY_GRAVE)){
     			CheatingEssentials.getMinecraftInstance().displayGuiScreen(Console);
     		}
     		
-    	for(Frame e : Gui.frames) {
-    		if(e.pinned) {
-    		e.update();
-    		e.draw();
-    		}
+    		if(guimode == 0){
+    			for(Frame e : Gui.frames) {
+        			if(e.pinned) {
+        				e.update();
+        				e.draw();
+        			}
+        		}
+    		}else
+    		if(guimode == 1){
+    			for(YAWWindow window: YouAlwaysWinClickGui.windows) {
+        			if(!(CheatingEssentials.getMinecraftInstance().currentScreen instanceof YouAlwaysWinClickGui)) {
+        				if(window.isPinned()) {
+        					window.draw(0, 0);
+        				}
+        			}
+        		}
     		}
         }
         

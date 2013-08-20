@@ -12,23 +12,38 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.kodehawa.module.ModuleBase;
+import com.kodehawa.module.ModuleManager;
 import com.kodehawa.module.classes.BlockESP;
 import com.kodehawa.module.classes.Xray;
 import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
+import org.lwjgl.input.Keyboard;
+
 public class FileManager {
     public static File mainDir;
     public static File someDir;
     public static File crashDir;
+    public static File keyDir;
     private static volatile FileManager instance;
 
-    private Minecraft mc;
-    
     public FileManager( ) {
         crashDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir + File.separator + "log");
+        keyDir = new File(CheatingEssentials.getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEKeybinds.txt");
 		mainDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEXrayBlockList.txt");
         someDir = new File( CheatingEssentials.getCheatingEssentials().getMinecraftInstance().mcDataDir, "/config/Cheating Essentials/CEBlockESPList.txt");
+
+        if(!keyDir.exists()){
+           keyDir.getParentFile().mkdirs();
+            try{
+              keyDir.createNewFile();
+              saveKeybinding();
+            }
+            catch (IOException e){
+               e.printStackTrace();
+            }
+        }
 
         if(!mainDir.exists()){
             mainDir.getParentFile().mkdirs();
@@ -52,6 +67,7 @@ public class FileManager {
         }
         loadXrayList();
         loadBlockESPList();
+        loadKeybindings();
     }
         
 
@@ -89,9 +105,7 @@ public class FileManager {
         	
         } catch( Exception ex ) {
         	CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't write X-Ray configuration file! Custom blocks for X-Ray will be disabled!");
-        	 ex.printStackTrace( );
         	 CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Error in CE init: " + ex.toString( ) );
-	            ex.printStackTrace( );
         }
     }
 
@@ -110,9 +124,55 @@ public class FileManager {
 
         } catch( Exception ex ) {
             CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't write BlockESP configuration file! Custom blocks for X-Ray will be disabled!");
-            ex.printStackTrace( );
             CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Error in CE init: " + ex.toString( ) );
-            ex.printStackTrace( );
+        }
+    }
+
+    /**
+     * Save keybindings
+      */
+    public static void saveKeybinding(){
+        try{
+           CheatingEssentials.CELogAgent("Writing keybinding configuration file...");
+            File file = new File(keyDir, "");
+            BufferedWriter bufferedwriter = new BufferedWriter( new FileWriter( file ));
+            for(ModuleBase m : ModuleManager.getInstance().modules){
+                bufferedwriter.write("key-" + m.getName().toLowerCase().replace(" ", "") + ":" + Keyboard.getKeyName(m.getKeybinding()));
+                bufferedwriter.write("\r\n");
+            }
+            bufferedwriter.close();
+        }
+        catch (Exception e){
+            CheatingEssentials.CELogErrorAgent("Can't write Keybinding configuration file!");
+            CheatingEssentials.CELogErrorAgent("Error in CE init: " + e.toString());
+        }
+    }
+
+    public static void loadKeybindings(){
+        try{
+           CheatingEssentials.CELogAgent("Loading Keybindings...");
+           File file = new File(keyDir, "");
+           FileInputStream imput = new FileInputStream( file.getAbsolutePath() );
+           DataInputStream stream = new DataInputStream( imput );
+           BufferedReader bufferedreader = new BufferedReader( new InputStreamReader( stream ));
+           String apetecan;
+           while( (apetecan = bufferedreader.readLine() ) != null ){
+                String line1 = apetecan.toLowerCase().trim();
+                String[ ] s = line1.split(":");
+                String mod = s[0];
+               int key = Keyboard.getKeyIndex(s[1].toUpperCase());
+               for(ModuleBase m : ModuleManager.getInstance().modules){
+                   if(mod.equalsIgnoreCase("key-" + m.getName().toLowerCase().replace(" ", ""))) {
+                       m.setKeybinding(key);
+                   //CheatingEssentials.CELogAgent("Binded " + m.getName() + " to: " + Keyboard.getKeyName(key) + " succefully" );
+                   }
+               }
+            }
+        }
+        catch (Exception e){
+            saveKeybinding();
+            CheatingEssentials.CELogErrorAgent("Can't read Keybinding configuration file!");
+            CheatingEssentials.CELogErrorAgent("Error in CE init: " + e.toString());
         }
     }
 

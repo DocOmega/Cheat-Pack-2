@@ -1,5 +1,6 @@
 package com.kodehawa.module;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import com.kodehawa.util.Tickable;
  */
 public abstract class ModuleBase implements Listener, Tickable {
 
+    public static volatile ArrayList<ModuleBase> module = new ArrayList<ModuleBase>();
 
     /**
      * Where in the GUI to place this cheat
@@ -111,12 +113,14 @@ public abstract class ModuleBase implements Listener, Tickable {
        this(name, desc, "1.6.2", key, EnumGuiCategory.UTILS, true);
         EventHandler.getInstance().registerListener( EventKey.class, this );
         EventHandler.getInstance().registerListener( EventRender3D.class, this );
+        module.add(this);
       }
 
     public ModuleBase(final String name, final String desc, final EnumGuiCategory type) {
        this(name, desc, "1.6.2", -1, type, true);
         EventHandler.getInstance().registerListener( EventKey.class, this );
         EventHandler.getInstance().registerListener( EventRender3D.class, this );
+        module.add(this);
        }
 
     public ModuleBase(final String name, final String desc, final String version, final int key, final EnumGuiCategory type, final boolean enabled) {
@@ -128,6 +132,7 @@ public abstract class ModuleBase implements Listener, Tickable {
        this.version = version;
        EventHandler.getInstance().registerListener( EventKey.class, this );
        EventHandler.getInstance().registerListener( EventRender3D.class, this );
+       module.add(this);
     }
 
 
@@ -180,7 +185,7 @@ public abstract class ModuleBase implements Listener, Tickable {
     	}
     	catch( Exception e ){
     		for(ModuleBase m : ModuleManager.getInstance().modules){
-    		CheatingEssentials.getCheatingEssentials().CELogAgent("Can't load module " + m.getName() + " - Because of " + e.toString());
+    		CheatingEssentials.CELogAgent("Can't load module " + m.getName() + " - Because of " + e.toString());
     		}
     		e.printStackTrace();
     	}

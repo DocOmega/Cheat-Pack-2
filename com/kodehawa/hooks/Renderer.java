@@ -162,7 +162,7 @@ public class Renderer extends EntityRenderer
 
     public Renderer(Minecraft par1Minecraft)
     {
-    	super(par1Minecraft);
+        super(par1Minecraft);
         this.mc = par1Minecraft;
         this.itemRenderer = new ItemRenderer(par1Minecraft);
         this.lightmapTexture = new DynamicTexture(16, 16);
@@ -170,11 +170,10 @@ public class Renderer extends EntityRenderer
         this.lightmapColors = this.lightmapTexture.func_110565_c();
     }
 
-    /**
-     * Updates the entity renderer
-     */
+
     public void updateRenderer()
     {
+        super.updateRenderer();
         this.updateFovModifierHand();
         this.updateTorchFlicker();
         this.fogColor2 = this.fogColor1;
@@ -208,7 +207,7 @@ public class Renderer extends EntityRenderer
         this.fogColor1 += (var3 - this.fogColor1) * 0.1F;
         ++this.rendererUpdateCount;
         this.itemRenderer.updateEquippedItem();
-        this.addRainParticles();
+        //this.addRainParticles();
         this.field_82832_V = this.field_82831_U;
 
         if (BossStatus.field_82825_d)
@@ -228,11 +227,10 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Finds what block or object the mouse is over at the specified partial tick time. Args: partialTickTime
-     */
+
     public void getMouseOver(float par1)
     {
+        super.getMouseOver(par1);
         if (this.mc.renderViewEntity != null)
         {
             if (this.mc.theWorld != null)
@@ -324,11 +322,9 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Update FOV modifier hand
-     */
     private void updateFovModifierHand()
     {
+
         EntityPlayerSP var1 = (EntityPlayerSP)this.mc.renderViewEntity;
         this.fovMultiplierTemp = var1.getFOVMultiplier();
         this.fovModifierHandPrev = this.fovModifierHand;
@@ -345,9 +341,6 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Changes the field of view of the player depending on if they are underwater or not
-     */
     private float getFOVModifier(float par1, boolean par2)
     {
         if (this.debugViewDirection > 0)
@@ -405,9 +398,6 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Setups all the GL settings for view bobbing. Args: partialTickTime
-     */
     private void setupViewBobbing(float par1)
     {
         if (this.mc.renderViewEntity instanceof EntityPlayer)
@@ -424,9 +414,6 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * sets up player's eye (or camera in third person mode)
-     */
     private void orientCamera(float par1)
     {
         EntityLivingBase var2 = this.mc.renderViewEntity;
@@ -535,9 +522,7 @@ public class Renderer extends EntityRenderer
         this.cloudFog = this.mc.renderGlobal.hasCloudFog(var4, var6, var8, par1);
     }
 
-    /**
-     * sets up projection, view effects, camera position/rotation
-     */
+
     private void setupCameraTransform(float par1, int par2)
     {
         this.farPlaneDistance = (float)(256 >> this.mc.gameSettings.renderDistance);
@@ -631,11 +616,13 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Render player hand
-     */
     private void renderHand(float par1, int par2)
     {
+        //TODO: Apetecan de handeporeld
+        for(ModuleBase m: ModuleManager.getInstance().modules){
+            m.onRenderInModule();
+        }
+
         if (this.debugViewDirection <= 0)
         {
             GL11.glMatrixMode(GL11.GL_PROJECTION);
@@ -699,9 +686,6 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Disable secondary texture unit used by lightmap
-     */
     public void disableLightmap(double par1)
     {
         OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
@@ -709,9 +693,6 @@ public class Renderer extends EntityRenderer
         OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
-    /**
-     * Enable lightmap in secondary texture unit
-     */
     public void enableLightmap(double par1)
     {
         OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
@@ -733,9 +714,6 @@ public class Renderer extends EntityRenderer
         OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
-    /**
-     * Recompute a random value that is applied to block color in updateLightmap()
-     */
     private void updateTorchFlicker()
     {
         this.torchFlickerDX = (float)((double)this.torchFlickerDX + (Math.random() - Math.random()) * Math.random() * Math.random());
@@ -884,9 +862,6 @@ public class Renderer extends EntityRenderer
         }
     }
 
-    /**
-     * Gets the night vision brightness
-     */
     private float getNightVisionBrightness(EntityPlayer par1EntityPlayer, float par2)
     {
         int var3 = par1EntityPlayer.getActivePotionEffect(Potion.nightVision).getDuration();
@@ -900,7 +875,7 @@ public class Renderer extends EntityRenderer
     {
         this.mc.mcProfiler.startSection("lightTex");
 
-        if (this.lightmapUpdateNeeded)
+       if (this.lightmapUpdateNeeded)
         {
             this.updateLightmap(par1);
         }
@@ -1226,11 +1201,7 @@ public class Renderer extends EntityRenderer
 
             this.mc.mcProfiler.endStartSection("hand");
 
-            for(ModuleBase m: ModuleManager.getInstance().modules){
-            	m.onRenderInModule();
-            }
-            
-            if (this.cameraZoom == 1.0D)
+           if (this.cameraZoom == 1.0D)
             {
                 GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
                 this.renderHand(par1, var13);
@@ -1262,91 +1233,6 @@ public class Renderer extends EntityRenderer
             GL11.glDisable(GL11.GL_FOG);
             this.setupFog(1, par2);
             GL11.glPopMatrix();
-        }
-    }
-
-    private void addRainParticles()
-    {
-        float var1 = this.mc.theWorld.getRainStrength(1.0F);
-
-        if (!this.mc.gameSettings.fancyGraphics)
-        {
-            var1 /= 2.0F;
-        }
-
-        if (var1 != 0.0F)
-        {
-            this.random.setSeed((long)this.rendererUpdateCount * 312987231L);
-            EntityLivingBase var2 = this.mc.renderViewEntity;
-            WorldClient var3 = this.mc.theWorld;
-            int var4 = MathHelper.floor_double(var2.posX);
-            int var5 = MathHelper.floor_double(var2.posY);
-            int var6 = MathHelper.floor_double(var2.posZ);
-            byte var7 = 10;
-            double var8 = 0.0D;
-            double var10 = 0.0D;
-            double var12 = 0.0D;
-            int var14 = 0;
-            int var15 = (int)(100.0F * var1 * var1);
-
-            if (this.mc.gameSettings.particleSetting == 1)
-            {
-                var15 >>= 1;
-            }
-            else if (this.mc.gameSettings.particleSetting == 2)
-            {
-                var15 = 0;
-            }
-
-            for (int var16 = 0; var16 < var15; ++var16)
-            {
-                int var17 = var4 + this.random.nextInt(var7) - this.random.nextInt(var7);
-                int var18 = var6 + this.random.nextInt(var7) - this.random.nextInt(var7);
-                int var19 = var3.getPrecipitationHeight(var17, var18);
-                int var20 = var3.getBlockId(var17, var19 - 1, var18);
-                BiomeGenBase var21 = var3.getBiomeGenForCoords(var17, var18);
-
-                if (var19 <= var5 + var7 && var19 >= var5 - var7 && var21.canSpawnLightningBolt() && var21.getFloatTemperature() >= 0.2F)
-                {
-                    float var22 = this.random.nextFloat();
-                    float var23 = this.random.nextFloat();
-
-                    if (var20 > 0)
-                    {
-                        if (Block.blocksList[var20].blockMaterial == Material.lava)
-                        {
-                            this.mc.effectRenderer.addEffect(new EntitySmokeFX(var3, (double)((float)var17 + var22), (double)((float)var19 + 0.1F) - Block.blocksList[var20].getBlockBoundsMinY(), (double)((float)var18 + var23), 0.0D, 0.0D, 0.0D));
-                        }
-                        else
-                        {
-                            ++var14;
-
-                            if (this.random.nextInt(var14) == 0)
-                            {
-                                var8 = (double)((float)var17 + var22);
-                                var10 = (double)((float)var19 + 0.1F) - Block.blocksList[var20].getBlockBoundsMinY();
-                                var12 = (double)((float)var18 + var23);
-                            }
-
-                            this.mc.effectRenderer.addEffect(new EntityRainFX(var3, (double)((float)var17 + var22), (double)((float)var19 + 0.1F) - Block.blocksList[var20].getBlockBoundsMinY(), (double)((float)var18 + var23)));
-                        }
-                    }
-                }
-            }
-
-            if (var14 > 0 && this.random.nextInt(3) < this.rainSoundCounter++)
-            {
-                this.rainSoundCounter = 0;
-
-                if (var10 > var2.posY + 1.0D && var3.getPrecipitationHeight(MathHelper.floor_double(var2.posX), MathHelper.floor_double(var2.posZ)) > MathHelper.floor_double(var2.posY))
-                {
-                    this.mc.theWorld.playSound(var8, var10, var12, "ambient.weather.rain", 0.1F, 0.5F, false);
-                }
-                else
-                {
-                    this.mc.theWorld.playSound(var8, var10, var12, "ambient.weather.rain", 0.2F, 1.0F, false);
-                }
-            }
         }
     }
 
@@ -1877,6 +1763,7 @@ public class Renderer extends EntityRenderer
      */
     public static int performanceToFps(int par0)
     {
+
         short var1 = 200;
 
         if (par0 == 1)

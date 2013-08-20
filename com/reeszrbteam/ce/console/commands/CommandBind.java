@@ -2,6 +2,7 @@ package com.reeszrbteam.ce.console.commands;
 
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
+import com.kodehawa.util.FileManager;
 import org.lwjgl.input.Keyboard;
 
 import com.kodehawa.CheatingEssentials;
@@ -25,7 +26,8 @@ public class CommandBind extends BaseCommand{
 							return;
 						}
 						m.setKeybinding(Keyboard.getKeyIndex(args[2].toUpperCase()));
-						CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage(m.name + " bound to: " + Keyboard.getKeyName(m.getKeybinding()));
+                        FileManager.saveKeybinding();
+                        CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage(m.name + " bound to: " + Keyboard.getKeyName(m.getKeybinding()));
 						break;
 					}
 				}
@@ -34,7 +36,8 @@ public class CommandBind extends BaseCommand{
 				for(ModuleBase m : ModuleManager.getInstance().modules) {
 					if(m.getKeybinding() == Keyboard.getKeyIndex(args[1].toUpperCase())) {
 						m.setKeybinding(0);
-						CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Unbound: " + args[1].toUpperCase());
+                        FileManager.saveKeybinding();
+                        CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("Unbound: " + args[1].toUpperCase());
 						break;
 					}
 				}
@@ -42,7 +45,8 @@ public class CommandBind extends BaseCommand{
 			if(args[0].equalsIgnoreCase("clearall")) {
 				for(ModuleBase m : ModuleManager.getInstance().modules) {
 					m.setKeybinding(0);
-					CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("All Keys Unbound.");
+                    FileManager.saveKeybinding();
+                    CheatingEssentials.getCheatingEssentials().getUtils().addChatMessage("All Keys Unbound.");
 				}
 			}
 		} catch(Exception e) {

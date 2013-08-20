@@ -13,7 +13,7 @@ import com.kodehawa.module.loader.BaseLoader;
 import com.kodehawa.util.TestClassEnumerator;
 import com.kodehawa.util.Tickable;
 
-public class ModuleManager {
+public final class ModuleManager {
 
     public volatile ArrayList<ModuleBase> modules;
     public volatile ArrayList<ModuleBase> worldModules;
@@ -36,8 +36,8 @@ public class ModuleManager {
         List<Class<?>> modulesFound = new ArrayList<Class<?>>();
         
         try {
-            modulesFound = TestClassEnumerator.getClassesInPackage(ChestESP.class.getPackage().getName());
-    } catch (final IOException e2) {
+            //modulesFound = TestClassEnumerator.getClassesInPackage(ChestESP.class.getPackage().getName());
+    } catch (final Exception e2) {
             // TODO Auto-generated catch block
             e2.printStackTrace();
     }

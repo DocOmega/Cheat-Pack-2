@@ -68,6 +68,7 @@ public class Button extends Item
         {
             if (this.m != null)
             {
+                CheatingEssentials.getMinecraftInstance().sndManager.playSoundFX("random.click", 1.0F, 1.0F);
                 this.m.toggleModule();
             }
             else
