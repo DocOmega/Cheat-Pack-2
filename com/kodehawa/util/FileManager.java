@@ -8,15 +8,11 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
 import com.kodehawa.module.classes.BlockESP;
 import com.kodehawa.module.classes.Xray;
-import net.minecraft.src.Minecraft;
 
 import com.kodehawa.CheatingEssentials;
 import org.lwjgl.input.Keyboard;
@@ -69,25 +65,6 @@ public class FileManager {
         loadBlockESPList();
         loadKeybindings();
     }
-        
-
-    public static void writeCrash( String alah ) {
-        try {
-            crashDir.getParentFile().mkdirs();
-            crashDir.createNewFile();
-            DateFormat format = new SimpleDateFormat( "MM_dd_yyyy-HH_mm_ss" );
-            Date date = new Date( );
-            File file = new File( crashDir.getAbsolutePath( ), "CECrashLog-".concat( format.format( date ) ).concat(
-                    ".log" ) );
-            BufferedWriter outWrite = new BufferedWriter( new FileWriter( file ) );
-            outWrite.write( alah );
-            outWrite.close( );
-        } catch( Exception error ) {
-           CheatingEssentials.getCheatingEssentials().CELogErrorAgent( "Can't write a crash log. Ohh the irony." );
-        }
-    }
-    
-	
 	/**
 	 * Now with a configurable Xray :D
 	 * Write the entire file again when a block it's changed in-game
@@ -137,7 +114,7 @@ public class FileManager {
             File file = new File(keyDir, "");
             BufferedWriter bufferedwriter = new BufferedWriter( new FileWriter( file ));
             for(ModuleBase m : ModuleManager.getInstance().modules){
-                bufferedwriter.write("key-" + m.getName().toLowerCase().replace(" ", "") + ":" + Keyboard.getKeyName(m.getKeybinding()));
+                bufferedwriter.write("cekey-" + m.getName().toLowerCase().replace(" ", "") + ":" + Keyboard.getKeyName(m.getKeybinding()));
                 bufferedwriter.write("\r\n");
             }
             bufferedwriter.close();
@@ -150,7 +127,6 @@ public class FileManager {
 
     public static void loadKeybindings(){
         try{
-           CheatingEssentials.CELogAgent("Loading Keybindings...");
            File file = new File(keyDir, "");
            FileInputStream imput = new FileInputStream( file.getAbsolutePath() );
            DataInputStream stream = new DataInputStream( imput );
@@ -162,7 +138,7 @@ public class FileManager {
                 String mod = s[0];
                int key = Keyboard.getKeyIndex(s[1].toUpperCase());
                for(ModuleBase m : ModuleManager.getInstance().modules){
-                   if(mod.equalsIgnoreCase("key-" + m.getName().toLowerCase().replace(" ", ""))) {
+                   if(mod.equalsIgnoreCase("cekey-" + m.getName().toLowerCase().replace(" ", ""))) {
                        m.setKeybinding(key);
                    //CheatingEssentials.CELogAgent("Binded " + m.getName() + " to: " + Keyboard.getKeyName(key) + " succefully" );
                    }
@@ -193,8 +169,8 @@ public class FileManager {
             }
             br.close( );
         } catch( Exception ex ) {
-            CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't load Block ESP list. Unreliable results!");
-            CheatingEssentials.getCheatingEssentials().CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
+            CheatingEssentials.CELogErrorAgent("Can't load Block ESP list. Unreliable results!");
+            CheatingEssentials.CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
             saveBlockESPList( );
         }
@@ -219,8 +195,8 @@ public class FileManager {
             }
             br.close( );
         } catch( Exception ex ) {
-        	CheatingEssentials.getCheatingEssentials().CELogErrorAgent("Can't load X-Ray list. Unreliable results!");
-        	CheatingEssentials.getCheatingEssentials().CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
+        	CheatingEssentials.CELogErrorAgent("Can't load X-Ray list. Unreliable results!");
+        	CheatingEssentials.CELogErrorAgent( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
             saveXrayList( );
     } 

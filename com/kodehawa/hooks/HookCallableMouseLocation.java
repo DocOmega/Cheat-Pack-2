@@ -1,14 +1,10 @@
 package com.kodehawa.hooks;
 
-import net.minecraft.src.EntityRenderer;
 import org.lwjgl.input.Mouse;
 
 import java.util.concurrent.Callable;
 
-/**
- * Created with IntelliJ IDEA. User: amarylis Date: 7/5/13 Time: 11:19 AM To
- * change this template use File | Settings | File Templates.
- */
+
 public class HookCallableMouseLocation implements Callable {
         final int field_90026_a;
 

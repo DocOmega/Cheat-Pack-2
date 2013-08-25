@@ -1,5 +1,6 @@
 package com.kodehawa.module.classes;
 
+import com.reeszrbteam.ce.util.EntitySpectator;
 import net.minecraft.src.EntityPlayer;
 
 import org.lwjgl.input.Keyboard;
@@ -17,7 +18,7 @@ public class Step extends ModuleBase {
 	@ModuleLoader(type = "Module")
 	public Step( ) {
 		super("Step", "More than a slab!", "1.6.2", Keyboard.KEY_NUMPAD1,
-				EnumGuiCategory.WORLD, true);
+				EnumGuiCategory.PLAYER, true);
 		// TODO Auto-generated constructor stub
         super.setTick(true);
 	}

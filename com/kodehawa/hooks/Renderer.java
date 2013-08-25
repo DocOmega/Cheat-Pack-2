@@ -173,7 +173,6 @@ public class Renderer extends EntityRenderer
 
     public void updateRenderer()
     {
-        super.updateRenderer();
         this.updateFovModifierHand();
         this.updateTorchFlicker();
         this.fogColor2 = this.fogColor1;
@@ -230,7 +229,6 @@ public class Renderer extends EntityRenderer
 
     public void getMouseOver(float par1)
     {
-        super.getMouseOver(par1);
         if (this.mc.renderViewEntity != null)
         {
             if (this.mc.theWorld != null)

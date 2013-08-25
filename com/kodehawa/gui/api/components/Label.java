@@ -22,21 +22,18 @@ public class Label extends Item
     @Override
     public void draw()
     {
-        // TODO Auto-generated method stub
         CheatingEssentials.getMinecraftInstance().fontRenderer.drawString(text, x + 3, y + 3, bgcolor);
     }
 
     @Override
     public void drag(int x, int y)
     {
-        // TODO Auto-generated method stub
         return;
     }
 
     @Override
     public void onClick(int x, int y)
     {
-        // TODO Auto-generated method stub
         return;
     }
 
@@ -51,7 +48,6 @@ public class Label extends Item
     @Override
     public boolean mouseOver(int x, int y)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 }

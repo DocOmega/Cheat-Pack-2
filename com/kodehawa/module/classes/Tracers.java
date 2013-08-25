@@ -19,7 +19,7 @@ public class Tracers extends ModuleBase{
 
 	public Tracers()
 	{
-		super("Tracers", "Draws a line to nearby players.", "1.6.2", 0, EnumGuiCategory.WORLD, true);
+		super("Tracers", "Draws a line to nearby players.", "1.6.2", 0, EnumGuiCategory.RENDER, true);
 	}
 	
 	@Override

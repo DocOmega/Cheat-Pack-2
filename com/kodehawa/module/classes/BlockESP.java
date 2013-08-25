@@ -19,18 +19,14 @@ public class BlockESP extends ModuleBase{
 	public static BlockCoord[] espBlocks = new BlockCoord[10000000];
 	
 	public BlockESP() {
-		super("Block ESP", "Draws ESP on Blocks", "1.6.2", Keyboard.KEY_NUMPAD8, EnumGuiCategory.WORLD, true);
+		super("Block ESP", "Draws ESP on Blocks", "1.6.2", Keyboard.KEY_NUMPAD8, EnumGuiCategory.RENDER, true);
 	}
 
 	@Override
-	public void onEnableModule() {
-		
-	}
+	public void onEnableModule() {}
 
 	@Override
-	public void onDisableModule() {
-		
-	}
+	public void onDisableModule() {}
 	
 	private int timer = 0;
 
@@ -57,7 +53,7 @@ public class BlockESP extends ModuleBase{
 	@Override
 	public void onRenderInModule() {
 		if(isActive()) {
-			timer++;
+            timer++;
 
 			if(timer >= 60) {
 				refresh();

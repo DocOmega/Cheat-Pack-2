@@ -12,12 +12,12 @@ public class WindowRender extends YAWWindow
 	{
 		super("Render", 278, 14);
 	}
-	
+
 	public YAWWindow init()
 	{
 		for(ModuleBase mod: ModuleManager.getInstance().modules)
 		{
-			if(mod.getType() == EnumGuiCategory.WORLD)
+			if(mod.getType() == EnumGuiCategory.RENDER)
 			{
 				addButton(mod);
 			}

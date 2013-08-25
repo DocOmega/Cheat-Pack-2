@@ -8,8 +8,11 @@ import java.lang.reflect.Modifier;
 import com.kodehawa.CheatingEssentials;
 
 public class ReflectorHelper {
-	
-	
+
+    /**
+     * Help in reflection methods and fields when used.
+     */
+
     public static Object getPrivateValue(Class class1, Object obj, String s) throws IllegalArgumentException, SecurityException, NoSuchFieldException
     {
         try
@@ -18,10 +21,7 @@ public class ReflectorHelper {
             field.setAccessible(true);
             return field.get(obj);
         }
-        catch (Exception e)
-        {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Can't assign a public field!" + e);
-        }
+        catch (Exception e){}
 
         return null;
     }
@@ -30,18 +30,29 @@ public class ReflectorHelper {
     {
         try
         {
-            Method method = class1.getDeclaredMethod(s);
-            method.setAccessible(true);
-            return method.invoke(obj);
+            Method[] methods = class1.getDeclaredMethods();
+            for (int i = 0; i < methods.length; i++){
+                if (methods[i].getName().equals(s)){
+                    getPrivateMethod(class1, obj, i);
+                }
         }
-        catch (Exception e)
-        {
-        	CheatingEssentials.getCheatingEssentials().CELogAgent("Can't assign a public value to a private method" + e);
         }
+        catch (Exception e){}
 
         return null;
     }
-	
+
+    public static Object getPrivateMethod(Class class1, Object o, int num) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        try{
+            Method m = class1.getDeclaredMethods()[num];
+            CheatingEssentials.CELogAgent( "Method id / integer: " + class1.getDeclaredMethods()[num] );
+            m.setAccessible(true);
+            return m.invoke(o);
+        }
+        catch (Exception e){}
+        return null;
+    }
+
     public static void setFinalStatic(Field field, Object newValue) throws Exception {
         field.setAccessible(true);
 
@@ -50,6 +61,25 @@ public class ReflectorHelper {
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
         field.set(null, newValue);
+    }
+
+    public static Field findFieldOfTypeInClass(final Class source, final Class type) {
+        for (final Field e : source.getDeclaredFields()) {
+            if (e.getType().equals(type)) {
+                return e;
+            }
+    }
+        return null;
+    }
+
+
+    public static Method findMethodOfTypeInClass(final Class source, final Class type){
+        for(Method m : source.getDeclaredMethods()){
+            if(m.getTypeParameters().equals(type)){
+                return m;
+            }
+        }
+        return null;
     }
 
 }

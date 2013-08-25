@@ -2,18 +2,18 @@ package com.reeszrbteam.ce.util;
 
 import com.kodehawa.CheatingEssentials;
 
-import net.minecraft.src.EntityOtherPlayerMP;
-import net.minecraft.src.MovementInput;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
-public class EntitySpectator extends EntityOtherPlayerMP
+public class EntitySpectator extends EntityPlayer
 {
+    volatile static EntitySpectator instance;
+
 	public EntitySpectator(World par1World, String par2Str)
 	{
 		super(par1World, par2Str);
 	}
-	
-	public MovementInput movementInput = null;
+
+    public MovementInput movementInput = null;
 
 	public boolean flyMode = false;
 	
@@ -73,4 +73,25 @@ public class EntitySpectator extends EntityOtherPlayerMP
 			noClip = false;
 		}
 	}
+
+    public static EntitySpectator getInstance(){
+        if(instance == null){
+            instance = new EntitySpectator(CheatingEssentials.getMinecraftInstance().theWorld, "");
+        }
+        return instance;
+    }
+
+    @Override
+    public void sendChatToPlayer(ChatMessageComponent var1) {
+    }
+
+    @Override
+    public boolean canCommandSenderUseCommand(int var1, String var2) {
+        return false;
+    }
+
+    @Override
+    public ChunkCoordinates getPlayerCoordinates() {
+        return null;
+    }
 }

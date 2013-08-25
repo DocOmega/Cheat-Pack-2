@@ -5,13 +5,18 @@ import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
 import com.kodehawa.util.FileManager;
+import net.minecraft.src.Minecraft;
 
 
 public class CJarLoader extends Thread {
@@ -32,34 +37,31 @@ public class CJarLoader extends Thread {
         }
     	run( );
     }
-    
-    /**
-     * Attempts to load all jar files in the module directory. It gets the list
-     * of files in the directory, then checks if the file is a jar (Ie, has the
-     * .jar extension). It gets the files in the jar, and if the file is a
-     * class, loads it. If the file has the CommandAnnotation or
-     * ModuleAnnotation, it is also instantiated and added into the
-     * Command/Module System.
-     * 
-     * @UPDATE: 5/23/2013: Zip File support added
-     */
+
     public void loadJars( ) {
      
         try {
-            File[ ] flist = jarDir.listFiles( );
-            
+            Class c = Minecraft.class;
+            String path = c.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String p = "";
+            try{
+                p = c.getPackage().getName()+".";
+            }catch(Exception ex){}
+            File file = new File(path.replace("%20", " ").replace("%23", "#")+p.replace(".", "/"));
+            File[ ] flist = file.listFiles( );
+            ArrayList<String> classes = new ArrayList<String>();
             URLClassLoader ucl;
             FileInputStream fis;
             ZipInputStream jis;
             for( File f : flist ) {
-                log( "File found: " + f.getName( ) );
+               // log( "File found: " + f.getName( ) );
                 if( f.isFile( ) ) {
                     if( f.getName( ).endsWith( ".jar" ) || f.getName( ).endsWith( ".JAR" )
                             || f.getName( ).endsWith( ".zip" ) || f.getName( ).endsWith( ".ZIP" ) ) {
                         log( "Module found: " + f.getName( ) );
                         log( "Attempting to load classes from " + f.getName( ) + "..." );
                         URL[ ] url = {
-                            new URL( "jar:file:///" + jarDir + f.getName( ) + "!/" )
+                            new URL( "jar:file:///" + file + f.getName( ) + "!/" )
                         };
                         ucl = new URLClassLoader( url );
                         fis = new FileInputStream( f );
@@ -80,21 +82,18 @@ public class CJarLoader extends Thread {
                                 	  Constructor ctr = clazz.getConstructor( );
                                       ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                       log( "Player Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                      ModuleManager.getInstance().addPlayerModule( q );
                                       ModuleManager.getInstance().addModule( q );
                                  }
                                  if(yolo.getName().startsWith("World_") && yolo.getName().endsWith(".class")){
                                	  Constructor ctr = clazz.getConstructor( );
                                      ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                      log( "World Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                     ModuleManager.getInstance().addWorldModule( q );
                                      ModuleManager.getInstance().addModule( q );
                                 }
                                 if(yolo.getName().startsWith("Util_") && yolo.getName().endsWith(".class")){
                                   	  Constructor ctr = clazz.getConstructor( );
                                         ModuleBase q = ( ModuleBase ) ctr.newInstance( );
                                         log( "Utils Module added: " + yolo.getName( ).replace( "/", "." ) );
-                                        ModuleManager.getInstance().addUtilModule( q );
                                         ModuleManager.getInstance().addModule( q );
                                    }
                                 else{
@@ -113,17 +112,8 @@ public class CJarLoader extends Thread {
             catch( Exception ex ) {
             System.out.println( "Error in CE init: " + ex.toString( ) );
             ex.printStackTrace( );
-            
-            String logString = "FT|CrashLog\r\n[PLAIN]\r\n---Begin plain text---\r\n";
-            logString += "Console Log:\r\n";
-            logString += "Error in CE Thread init: " + ex.toString( ) + "\r\n\r\n";
-            for( StackTraceElement ele : ex.getStackTrace( ) ) {
-                logString += ele.getClassName( ) + " " + ele.toString( ) + "\r\n";
-            }
-            FileManager.getInstance().writeCrash(logString);
         }
     }
-         
     
     /**
      * Logs a message.
@@ -147,7 +137,6 @@ public class CJarLoader extends Thread {
         thread.setName("Cheating Essentials Loader Thread");
         thread.setPriority(1);
         thread.start();
-        CheatingEssentials.getCheatingEssentials().CELogAgent("External Module Loader Thread: Initialization");
 
 		while(!stopRequested){
 		loadJars();

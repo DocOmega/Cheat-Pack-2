@@ -1,35 +1,12 @@
-/*
-* Copyright (c) 2013 David Rubio
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
-
 package com.kodehawa.gui.api.components;
 
 import java.util.ArrayList;
 
 import com.kodehawa.module.ModuleBase;
 import com.kodehawa.module.ModuleManager;
-import net.minecraft.src.Direction;
-import net.minecraft.src.EnumChatFormatting;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.MathHelper;
+import com.kodehawa.module.enums.EnumGuiCategory;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.*;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -40,7 +17,7 @@ import com.kodehawa.gui.api.render.ModGuiUtils;
 public class ModuleGui extends GuiScreen
 {
     /**
-     * @author godshawk
+     * @author godshawk | Luna
      */
 
     public ArrayList<Frame> frames;
@@ -92,12 +69,10 @@ public class ModuleGui extends GuiScreen
         }
     }
 
+
     @Override
     public void drawScreen(int i, int j, float f)
     {
-    	
-        this.drawDefaultBackground();
-        this.drawString(this.fontRenderer, EnumChatFormatting.YELLOW + "Version 3.1.0", this.width / 2 - 32, this.height / 9 - 96, 16777965);
         for (Frame e : frames)
         {
             e.update();
@@ -158,32 +133,55 @@ public class ModuleGui extends GuiScreen
         }
     }
 
+
     public void makeWorldFrame()
     {
-        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, /*0xFF000055*/0x96777777, 0xaa000000, "World" + " (" + ModuleManager.getInstance().worldModules.size() + ")");
+        Frame wFrame = new Frame(CheatingEssentials.modinstance, 10, 10, 120, 20, /*0xFF000055*/0x96777777, 0xaa000000, "World");
 
-        for (ModuleBase m : ModuleManager.getInstance().worldModules)
+        for (ModuleBase m : ModuleManager.getInstance().modules)
         {
-            Button b = new Button(m.name, 0x00007700, 0xffffff, m);
+            if(m.getType() == EnumGuiCategory.WORLD){
+                Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(wFrame.width - 6);
             b.setHeight(wFrame.oldHeight - 8);
             wFrame.addChild(b);
+            }
         }
 
         wFrame.setPinnable(true);
         addFrame(wFrame);
     }
+
+    public void makeRenderFrame()
+    {
+        Frame rFrame = new Frame(CheatingEssentials.modinstance, 130, 50, 120, 20, 0x96777777, 0xaa000000, "Render");
+
+        for (ModuleBase m : ModuleManager.getInstance().modules)
+        {
+            if(m.getType() == EnumGuiCategory.RENDER){
+                Button b = new Button(m.name, 0x00007700, 0xffffff, m);
+                b.setWidth(rFrame.width - 6);
+                b.setHeight(rFrame.oldHeight - 8);
+                rFrame.addChild(b);
+            }
+        }
+
+        rFrame.setPinnable(true);
+        addFrame(rFrame);
+    }
     
     
     public void makeF3UtilsFrame(){
-    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0x96777777, 0xaa000000, "Utils" + " (" + ModuleManager.getInstance().utilsModules.size() + ")");
+    	Frame f3Frame = new Frame(CheatingEssentials.getCheatingEssentials(), 10, 50, 120, 20, 0x96777777, 0xaa000000, "Utils");
     	
-    	for (ModuleBase m : ModuleManager.getInstance().utilsModules)
+    	for (ModuleBase m : ModuleManager.getInstance().modules)
         {
-            Button b = new Button(m.name, 0x00007700, 0xffffff, m);
+            if(m.getType() == EnumGuiCategory.UTILS){
+                Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(f3Frame.width - 6);
             b.setHeight(f3Frame.oldHeight - 8);
             f3Frame.addChild(b);
+            }
         }
 
         f3Frame.setPinnable(true);
@@ -193,14 +191,16 @@ public class ModuleGui extends GuiScreen
 
     public void makePlayerFrame()
     {
-        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0x96777777, 0xaa000000, "Player" + " (" + ModuleManager.getInstance().playerModules.size() + ")");
+        Frame pFrame = new Frame(CheatingEssentials.modinstance, 130, 10, 120, 20, 0x96777777, 0xaa000000, "Player");
 
-        for (ModuleBase m : ModuleManager.getInstance().playerModules)
+        for (ModuleBase m : ModuleManager.getInstance().modules)
         {
+            if(m.getType() == EnumGuiCategory.PLAYER){
             Button b = new Button(m.name, 0x00007700, 0xffffff, m);
             b.setWidth(pFrame.width - 6);
             b.setHeight(pFrame.oldHeight - 8);
             pFrame.addChild(b);
+        }
         }
 
         pFrame.setPinnable(true);
@@ -411,7 +411,6 @@ public class ModuleGui extends GuiScreen
 
     public void makeInfoFrame()
     {
-    	//10, 10, 120, 20
         final Frame iFrame = new Frame(CheatingEssentials.modinstance, 250, 10, 120, 20, 0x96777777, 0xaa000000, "Player Info")
         {
             @Override
@@ -443,12 +442,13 @@ public class ModuleGui extends GuiScreen
                 try
                 {
                     children.clear();
-                    addChild(new Label("FPS: " + mc.debugFPS, 0xffffff));
-                    addChild(new Label("X: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posX, 0xffffff));
-                    addChild(new Label("Y: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posY, 0xffffff));
-                    addChild(new Label("Z: " + (int) CheatingEssentials.modinstance.getMinecraftInstance().thePlayer.posZ, 0xffffff));
+                    addChild(new Label("FPS: " + Minecraft.debugFPS, 0xffffff));
+                    addChild(new Label("X: " + (int) CheatingEssentials.getMinecraftInstance().thePlayer.posX, 0xffffff));
+                    addChild(new Label("Y: " + (int) CheatingEssentials.getMinecraftInstance().thePlayer.posY, 0xffffff));
+                    addChild(new Label("Z: " + (int) CheatingEssentials.getMinecraftInstance().thePlayer.posZ, 0xffffff));
                     addChild(new Label("Dimension: " + dim, 0xffffff));
                     addChild(new Label("Facing: " + dir, 0xffffff ));
+                    addChild(new Label("Username: " + mc.thePlayer.username, 0xffffff));
                     addChild(new Label("", 0xffffff));
                 }
                 catch (Exception e)
@@ -540,7 +540,7 @@ public class ModuleGui extends GuiScreen
         makeRadarFrame();
         makeInfoFrame();
         makeActivesFrame( );
-        //makeTestFrame( );
+        makeRenderFrame();
         makeF3UtilsFrame();
         makeKeybindsFrame();
     }

@@ -28,7 +28,6 @@ public class Mobaura extends ModuleBase {
 	
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < getMinecraft().theWorld.loadedEntityList.size(); i++)
         {
             Entity ent = (Entity) getMinecraft().theWorld.loadedEntityList.get(i);
@@ -53,7 +52,6 @@ public class Mobaura extends ModuleBase {
 
             if ((getDistanceSqToEntity(ent) <= AURA_DISTANCE) && !ent.isDead && getMinecraft().thePlayer.canEntityBeSeen(ent))
             {
-                
             	getMinecraft().playerController.attackEntity(getMinecraft().thePlayer, ent);
             	
             }
@@ -61,12 +59,9 @@ public class Mobaura extends ModuleBase {
 	}
 
 	@Override
-	public void onEnableModule() {
-		// TODO Auto-generated method stub
-	}
+	public void onEnableModule() {}
 
 	@Override
-	public void onDisableModule() {
-		// TODO Auto-generated method stub
-	}
+	public void onDisableModule() {}
+
 }

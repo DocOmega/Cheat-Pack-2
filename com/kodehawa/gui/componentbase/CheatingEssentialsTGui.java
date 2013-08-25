@@ -1,8 +1,5 @@
 package com.kodehawa.gui.componentbase;
 
-import com.kodehawa.CheatingEssentials;
-import com.kodehawa.gui.api.components.Label;
-import com.kodehawa.util.ChatColour;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 

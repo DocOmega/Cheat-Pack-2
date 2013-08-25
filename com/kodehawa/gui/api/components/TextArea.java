@@ -1,12 +1,7 @@
 package com.kodehawa.gui.api.components;
 
-import net.minecraft.src.ChatAllowedCharacters;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
-import com.kodehawa.CheatingEssentials;
-import com.kodehawa.gui.api.render.ModGuiUtils;
 
 /**
  * Lool, this is only getting used for the console

@@ -15,7 +15,6 @@ public class NoFall extends ModuleBase {
         super.setTick(true);
 	}
 
-
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub

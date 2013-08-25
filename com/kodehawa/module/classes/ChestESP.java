@@ -16,7 +16,7 @@ public class ChestESP extends ModuleBase {
 
 	@ModuleLoader(type = "Module")
 	public ChestESP( ) {
-		super("Chest Finder", "Find ALL chests!", "1.6.2", Keyboard.KEY_N, EnumGuiCategory.WORLD, true);
+		super("Chest Finder", "Find ALL chests!", "1.6.2", Keyboard.KEY_N, EnumGuiCategory.RENDER, true);
 	}
 	
 	@Override

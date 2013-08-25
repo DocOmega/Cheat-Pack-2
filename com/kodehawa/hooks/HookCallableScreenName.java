@@ -1,13 +1,8 @@
 package com.kodehawa.hooks;
 
-import net.minecraft.src.EntityRenderer;
 
 import java.util.concurrent.Callable;
 
-/**
- * Created with IntelliJ IDEA. User: amarylis Date: 7/5/13 Time: 11:16 AM To
- * change this template use File | Settings | File Templates.
- */
 public class HookCallableScreenName implements Callable {
         final Renderer entityRender;
 
@@ -16,8 +11,7 @@ public class HookCallableScreenName implements Callable {
         }
 
         public String callScreenName() {
-              //  return Renderer.getRendererMinecraft(this.entityRender).currentScreen.getClass().getCanonicalName();
-            return null;
+              return Renderer.getRendererMinecraft(this.entityRender).currentScreen.getClass().getCanonicalName();
         }
 
         public Object call() {

@@ -1,5 +1,6 @@
 package com.kodehawa.module.classes;
 
+import com.kodehawa.module.annotations.ModuleExperimental;
 import net.minecraft.src.EntityOtherPlayerMP;
 import net.minecraft.src.EntityPlayerSP;
 
@@ -11,12 +12,13 @@ import com.reeszrbteam.ce.util.EntitySpectator;
 
 public class Spectator extends ModuleBase {
 
-	private EntityOtherPlayerMP entity = null;
-	public EntitySpectator freecamEnt = null;
+	private EntityOtherPlayerMP entity = /* new EntityOtherPlayerMP(CheatingEssentials.getMinecraftInstance().theWorld, "") */ null;
+	public EntitySpectator freecamEnt = /* new EntitySpectator(CheatingEssentials.getMinecraftInstance().theWorld, "")*/ null;
 	private double freecamX, freecamY, freecamZ, freecamPitch, freecamYaw;
-	
+
+    @ModuleExperimental( setAs = "Crasheable / WIP / Unstable" )
 	public Spectator() {
-		super("Spectate", "Spectate and Spy on People", "1.6.2", 0, EnumGuiCategory.PLAYER, true);
+		super("Spectate", "Spectate and Spy on People", "1.6.2", 0, EnumGuiCategory.RENDER, true);
         super.setTick(true);
 	}
 
@@ -56,7 +58,7 @@ public class Spectator extends ModuleBase {
 				{
 					CheatingEssentials.getMinecraftInstance().renderViewEntity = freecamEnt;
 				}
-			}else if(getEnabled())
+			}else if(isActive())
 			{
 				this.toggleModule();
 			}

@@ -2,8 +2,6 @@ package com.reeszrbteam.ce.gui.click.elements;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
 import com.kodehawa.CheatingEssentials;
 import com.kodehawa.module.ModuleBase;
 import com.reeszrbteam.ce.gui.click.YouAlwaysWinClickGui;
@@ -20,8 +18,8 @@ public class YAWWindow
 	private boolean isExtended;
 	private boolean isPinned;
 	
-	public int dragX;
-	public int dragY;
+	public static int dragX;
+	public static int dragY;
 	public int lastDragX;
 	public int lastDragY;
 	protected boolean dragging;

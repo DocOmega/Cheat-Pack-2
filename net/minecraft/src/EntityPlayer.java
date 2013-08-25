@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.kodehawa.CheatingEssentials;
-
 public abstract class EntityPlayer extends EntityLivingBase implements ICommandSender
 {
     /** Inventory of the player */
@@ -122,11 +120,6 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         super.func_110147_ax();
         this.func_110140_aT().func_111150_b(SharedMonsterAttributes.field_111264_e).func_111128_a(1.0D);
     }
-    
-    public void setStepHeight(float number){
-    	this.stepHeight = number;
-    }
-   
 
     protected void entityInit()
     {
@@ -134,6 +127,10 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
         this.dataWatcher.addObject(17, Float.valueOf(0.0F));
         this.dataWatcher.addObject(18, Integer.valueOf(0));
+    }
+
+    public void setStepHeight(float number){
+        this.stepHeight = number;
     }
 
     /**
@@ -1612,7 +1609,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     /**
      * Causes this entity to do an upwards motion (jumping).
      */
-    public void jump()
+    protected void jump()
     {
         super.jump();
         this.addStat(StatList.jumpStat, 1);

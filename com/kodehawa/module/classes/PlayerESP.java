@@ -13,7 +13,7 @@ import com.reeszrbteam.ce.util.*;
 public class PlayerESP extends ModuleBase{
 
 	public PlayerESP() {
-		super("Player ESP", "Draws an ESP around Players", "1.6.2", 0, EnumGuiCategory.WORLD, true);
+		super("Player ESP", "Draws an ESP around Players", "1.6.2", 0, EnumGuiCategory.RENDER, true);
 	}
 
 	@Override

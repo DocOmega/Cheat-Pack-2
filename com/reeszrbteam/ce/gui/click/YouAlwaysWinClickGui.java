@@ -18,16 +18,15 @@ public class YouAlwaysWinClickGui extends GuiScreen
 	public YAWWindow world = new WindowWorld().init();
 	public YAWWindow info = new WindowInfo();
 	public YAWWindow radar = new WindowRadar();
+   // public YAWWindow render = new WindowRender();
 	
 	public void initGui()
 	{
 		guiHub.setOpen(true);
 	}
 	
-	public void onGuiClosed()
-	{
-	}
-	
+	public void onGuiClosed(){}
+
 	public static void sendPanelToFront(YAWWindow window)
 	{
 		if(windows.contains(window))

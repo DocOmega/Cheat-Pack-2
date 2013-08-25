@@ -18,7 +18,7 @@ public class KeyboardListener {
 	public KeyboardListener(){
 		
         keymap = new boolean[ 256 ];
-        BaseLoader.getKeybindingForModule();
+        BaseLoader.keyInit();
         handleKeys();
 	}
 	

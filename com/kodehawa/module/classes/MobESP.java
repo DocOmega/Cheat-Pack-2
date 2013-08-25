@@ -14,7 +14,7 @@ import com.kodehawa.module.enums.EnumGuiCategory;
 public class MobESP extends ModuleBase{
 
 	public MobESP() {
-		super("Mob ESP", "Draws an ESP around All Mobs", "1.6.2", 0, EnumGuiCategory.WORLD, true);
+		super("Mob ESP", "Draws an ESP around All Mobs", "1.6.2", 0, EnumGuiCategory.RENDER, true);
 	}
 
 	@Override

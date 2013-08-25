@@ -246,7 +246,6 @@ public class Frame extends Item
     @Override
     public boolean mouseOver(int x, int y)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
